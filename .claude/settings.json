@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm uninstall *)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(curl -sf http://localhost:3000)",
+      "Bash(curl -sf http://localhost:3001)",
+      "Bash(node \"C:/Users/princ/AppData/Local/Temp/claude/d--newscalexpertx/d85fe7c5-bd47-4673-951b-6f68e8f48e89/scratchpad/verify.mjs\")",
+      "Bash(cp \"C:/Users/princ/AppData/Local/Temp/claude/d--newscalexpertx/d85fe7c5-bd47-4673-951b-6f68e8f48e89/scratchpad/verify.mjs\" \"d:/newscalexpertx/verify.tmp.mjs\")",
+      "Bash(node verify.tmp.mjs)",
+      "Bash(find \"/c/Users/princ/AppData/Local/ms-playwright/chromium-1228\" -maxdepth 3)",
+      "Read(//c/Users/princ/AppData/Local/ms-playwright/chromium-1228/**)",
+      "Bash(git check-ignore *)",
+      "Bash(node -e ' *)",
+      "Bash(node -e \"console.log\\(require\\('lenis/package.json'\\).version\\)\")",
+      "Bash(node verify2.tmp.mjs)",
+      "Bash(node verify3.tmp.mjs)"
+    ]
+  }
+}
