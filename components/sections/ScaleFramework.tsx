@@ -49,10 +49,10 @@ export default function ScaleFramework() {
 
   return (
     <section id="framework" className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12 md:py-24">
-      <Eyebrow index="02" label="The Proprietary SCALE Framework™" />
+      <Eyebrow index="02" label="The Proprietary SCALE Framework™" className="text-center md:text-left" />
 
       {/* Header */}
-      <div className="mt-6 max-w-4xl">
+      <div className="mt-6 mx-auto max-w-4xl text-center md:mx-0 md:text-left">
         <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-ink dark:text-white sm:text-3xl md:text-4xl leading-[1.1]">
           <TextReveal as="span" className="block" text="One Operating System." />
           <TextReveal as="span" className="block text-amber" text="Zero Coordination Chaos™." delay={0.12} />
@@ -63,7 +63,7 @@ export default function ScaleFramework() {
       </div>
 
       {/* Interactive Tabs Header */}
-      <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-b border-black/[0.08] dark:border-white/10 pb-4">
+      <div className="mt-12 flex flex-wrap items-center justify-center gap-3 border-b border-black/[0.08] dark:border-white/10 pb-4 md:justify-between">
         {STEPS.map((step, idx) => {
           const isActive = activeTab === idx;
           return (
@@ -72,13 +72,13 @@ export default function ScaleFramework() {
               onClick={() => setActiveTab(idx)}
               className={`group flex items-center gap-3 rounded-2xl px-5 py-3 transition-all duration-300 ${
                 isActive
-                  ? "bg-accent text-white shadow-lg shadow-accent/25"
+                  ? "bg-accent text-ink shadow-lg shadow-accent/25"
                   : "bg-surface dark:bg-[#141419] border border-black/[0.08] dark:border-white/10 text-ink dark:text-white hover:border-accent"
               }`}
             >
               <span
                 className={`font-display text-lg font-black ${
-                  isActive ? "text-amber" : "text-accent dark:text-indigo-400"
+                  isActive ? "text-amber" : "text-accent dark:text-amber"
                 }`}
               >
                 {step.letter}
@@ -108,7 +108,7 @@ export default function ScaleFramework() {
                     {STEPS[activeTab].letter}
                   </span>
                   <div>
-                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-accent dark:text-indigo-400">
+                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-accent dark:text-amber">
                       Phase 0{activeTab + 1}
                     </span>
                     <h3 className="font-display text-2xl font-bold text-ink dark:text-white sm:text-3xl">
@@ -137,7 +137,7 @@ export default function ScaleFramework() {
                       key={item}
                       className="flex items-center gap-3 rounded-xl border border-black/[0.06] dark:border-white/10 bg-surface dark:bg-[#1c1c24] p-3.5 shadow-sm"
                     >
-                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-accent/10 dark:bg-accent/20 font-mono text-xs font-bold text-accent dark:text-indigo-400">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-accent/10 dark:bg-accent/20 font-mono text-xs font-bold text-accent dark:text-amber">
                         ✓
                       </span>
                       <span className="font-display text-xs font-semibold text-ink dark:text-white">

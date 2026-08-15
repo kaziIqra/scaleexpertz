@@ -23,7 +23,7 @@ const SERVICES: ServiceCard[] = [
       "Your website should build trust, answer questions, and convert visitors—even while you sleep.",
     icon: "🌐",
     span: "md:col-span-2 lg:col-span-4",
-    accent: "from-indigo-500/10 to-purple-500/5",
+    accent: "from-amber/15 to-gold/10",
   },
   {
     functionName: "Marketing",
@@ -32,7 +32,7 @@ const SERVICES: ServiceCard[] = [
       "We create predictable demand through strategic marketing that turns attention into customers.",
     icon: "📈",
     span: "md:col-span-2 lg:col-span-2",
-    accent: "from-blue-500/10 to-indigo-500/5",
+    accent: "from-gold/15 to-amber/10",
   },
   {
     functionName: "Branding",
@@ -87,10 +87,10 @@ export default function Services() {
       id="services"
       className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12 md:py-24"
     >
-      <Eyebrow index="03" label="Services & Stack" />
+      <Eyebrow index="03" label="Services & Stack" className="text-center lg:text-left" />
 
       {/* Header & Intro Copy matching PDF exact specs */}
-      <div className="mt-6 grid gap-6 lg:grid-cols-12 lg:items-end">
+      <div className="mt-6 grid gap-6 text-center lg:grid-cols-12 lg:items-end lg:text-left">
         <div className="lg:col-span-7">
           <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl md:text-4xl leading-[1.1]">
             <TextReveal as="span" className="block" text="Everything You Need." />

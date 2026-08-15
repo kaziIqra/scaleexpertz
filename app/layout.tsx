@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { clashDisplay, inter, jetbrainsMono } from "@/lib/fonts";
+import { jetbrainsMono, switzer } from "@/lib/fonts";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import { MotionPrefProvider, MotionToggle } from "@/components/providers/MotionPref";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
@@ -40,7 +40,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${clashDisplay.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased dark`}
+      className={`${switzer.variable} ${jetbrainsMono.variable} antialiased dark`}
     >
       <body className="bg-paper font-sans text-body transition-colors duration-400">
         <script dangerouslySetInnerHTML={{ __html: PRELOADER_SKIP }} />

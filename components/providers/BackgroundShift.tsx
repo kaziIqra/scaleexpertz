@@ -4,18 +4,18 @@ import { useEffect } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 const LIGHT_STOPS = [
-  { sel: "#top", color: "#fafaf7" },
-  { sel: "#services", color: "#f5f4ee" },
-  { sel: "#process", color: "#fafaf7" },
-  { sel: "#work", color: "#f6f4ec" },
-  { sel: "#faq", color: "#fafaf7" },
+  { sel: "#top", color: "#faf8f0" },
+  { sel: "#services", color: "#f7f1e0" },
+  { sel: "#process", color: "#faf8f0" },
+  { sel: "#work", color: "#f5edd8" },
+  { sel: "#faq", color: "#faf8f0" },
 ];
 
 const DARK_STOPS = [
   { sel: "#top", color: "#0c0c0e" },
-  { sel: "#services", color: "#111116" },
+  { sel: "#services", color: "#12110e" },
   { sel: "#process", color: "#0c0c0e" },
-  { sel: "#work", color: "#111116" },
+  { sel: "#work", color: "#14120c" },
   { sel: "#faq", color: "#0c0c0e" },
 ];
 
@@ -42,14 +42,14 @@ export default function BackgroundShift() {
           const currentIsDark = document.documentElement.classList.contains("dark");
           const targetColor = currentIsDark
             ? DARK_STOPS.find((s) => s.sel === `#${el.id}`)?.color || "#0c0c0e"
-            : LIGHT_STOPS.find((s) => s.sel === `#${el.id}`)?.color || "#fafaf7";
+            : LIGHT_STOPS.find((s) => s.sel === `#${el.id}`)?.color || "#faf8f0";
           gsap.to("body", { backgroundColor: targetColor, duration: 0.8, overwrite: "auto" });
         },
         onEnterBack: () => {
           const currentIsDark = document.documentElement.classList.contains("dark");
           const targetColor = currentIsDark
             ? DARK_STOPS.find((s) => s.sel === `#${el.id}`)?.color || "#0c0c0e"
-            : LIGHT_STOPS.find((s) => s.sel === `#${el.id}`)?.color || "#fafaf7";
+            : LIGHT_STOPS.find((s) => s.sel === `#${el.id}`)?.color || "#faf8f0";
           gsap.to("body", { backgroundColor: targetColor, duration: 0.8, overwrite: "auto" });
         },
       })

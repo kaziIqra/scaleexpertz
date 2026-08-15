@@ -103,18 +103,18 @@ export default function TeamsPage() {
           <div className="absolute right-[10%] top-[15%] h-[40vmin] w-[40vmin] rounded-full bg-[#d4af37]/[0.1] blur-[120px]" aria-hidden />
           <div className="absolute left-[10%] top-[35%] h-[30vmin] w-[30vmin] rounded-full bg-accent/[0.1] blur-[120px]" aria-hidden />
 
-          <div className="relative z-10 mx-auto max-w-[1440px] px-6 md:px-12">
+          <div className="relative z-10 mx-auto max-w-[1440px] px-6 text-center md:px-12 md:text-left">
             <FadeUp delay={0.15} play={done}>
               <Eyebrow index="01" label="Meet the team" />
             </FadeUp>
             
-            <h1 className="mt-4 font-display text-[clamp(2rem,4.5vw,3.5rem)] font-bold leading-[1.05] tracking-[-0.03em] text-white max-w-4xl">
+            <h1 className="mt-4 mx-auto font-display text-[clamp(2rem,4.5vw,3.5rem)] font-bold leading-[1.05] tracking-[-0.03em] text-white max-w-4xl md:mx-0">
               <TextReveal text="Meet The Team" as="span" className="block" play={done} delay={0.2} />
               <TextReveal text="Behind Every Growth Decision." as="span" className="block text-[#d4af37]" play={done} delay={0.35} />
             </h1>
             
             <FadeUp delay={0.5} play={done}>
-              <p className="mt-6 max-w-2xl text-sm sm:text-base leading-relaxed text-white/80 font-medium">
+              <p className="mt-6 mx-auto max-w-2xl text-sm sm:text-base leading-relaxed text-white/80 font-medium md:mx-0">
                 At ScaleXpertz, growth isn&apos;t handed from one department to another. Every strategy, campaign, website, automation, and system is built by people who take ownership from start to finish. We&apos;re intentionally small, so every client gets experienced minds—not layers of management.
               </p>
             </FadeUp>
@@ -124,7 +124,7 @@ export default function TeamsPage() {
         {/* 2. Our Philosophy */}
         <section className="mx-auto max-w-[1440px] px-6 py-10 md:px-12">
           <motion.div 
-            className="rounded-3xl border border-white/10 bg-[#141419]/80 p-6 md:p-10 shadow-2xl backdrop-blur-md flex flex-col md:flex-row md:items-center justify-between gap-6"
+            className="rounded-3xl border border-white/10 bg-[#141419]/80 p-6 md:p-10 shadow-2xl backdrop-blur-md flex flex-col items-center text-center md:flex-row md:items-center md:text-left justify-between gap-6"
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -230,7 +230,7 @@ export default function TeamsPage() {
         {/* 4. How We Work */}
         <section className="mx-auto max-w-[1440px] px-6 py-16 md:px-12 md:py-24 border-t border-white/10">
           <div className="grid gap-12 md:grid-cols-5 md:gap-8 items-center">
-            <div className="md:col-span-2">
+            <div className="md:col-span-2 text-center md:text-left">
               <FadeUp>
                 <Eyebrow index="02" label="How We Work" />
                 <h2 className="mt-6 font-display text-4xl font-bold tracking-[-0.03em] text-white md:text-5xl">
@@ -238,7 +238,7 @@ export default function TeamsPage() {
                 </h2>
               </FadeUp>
             </div>
-            <div className="md:col-span-3">
+            <div className="md:col-span-3 text-center md:text-left">
               <FadeUp delay={0.15}>
                 <div className="space-y-4 text-lg md:text-xl leading-relaxed text-white/80 font-medium">
                   <p className="font-mono text-sm text-[#d4af37] font-semibold uppercase tracking-wider">
@@ -265,7 +265,7 @@ export default function TeamsPage() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, ease: EASE_OUT_EXPO }}
           >
-            <div>
+            <div className="text-center md:text-left">
               <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#d4af37] font-semibold">Join Us</span>
               <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white md:text-4xl">
                 We&apos;re Always Looking For Exceptional People.
@@ -273,7 +273,7 @@ export default function TeamsPage() {
               <p className="mt-6 text-base md:text-lg leading-relaxed text-white/80 font-medium">
                 Not because we&apos;re hiring all the time. Because we&apos;re building for the long term. If you&apos;re passionate about solving real business problems, obsessed with learning, and take ownership of your work, we&apos;d love to hear from you.
               </p>
-              <div className="mt-8">
+              <div className="mt-8 flex justify-center md:justify-start">
                 <Link
                   href="/careers"
                   className="inline-flex items-center gap-2 rounded-full bg-[#d4af37] px-7 py-3.5 text-sm font-semibold text-black shadow-card transition-all duration-300 hover:bg-[#e5be48]"
@@ -283,11 +283,11 @@ export default function TeamsPage() {
               </div>
             </div>
 
-            <div className="flex flex-col justify-center border-t border-white/10 pt-8 md:border-t-0 md:pt-0">
+            <div className="flex flex-col justify-center border-t border-white/10 pt-8 text-center md:border-t-0 md:pt-0 md:text-left">
               <h3 className="font-mono text-xs uppercase tracking-wider text-white/50 font-semibold mb-6">
                 Frequently Hired Roles:
               </h3>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap justify-center gap-3 md:justify-start">
                 {[
                   "Graphic Designer",
                   "Video Editor",
@@ -327,7 +327,7 @@ export default function TeamsPage() {
               <Magnetic strength={12}>
                 <Link
                   href="/apply"
-                  className="inline-flex items-center gap-2 rounded-full bg-accent px-9 py-5 text-base font-semibold text-white shadow-card transition-colors duration-300 hover:bg-accent-strong"
+                  className="inline-flex items-center gap-2 rounded-full bg-accent px-9 py-5 text-base font-semibold text-ink shadow-card transition-colors duration-300 hover:bg-accent-strong"
                 >
                   Let&apos;s Build Something Meaningful Together &rarr;
                 </Link>

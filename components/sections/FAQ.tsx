@@ -46,12 +46,12 @@ export default function FAQ() {
   return (
     <section id="faq" className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12 md:py-24">
       <div className="grid gap-10 md:grid-cols-5 md:gap-8">
-        <div className="md:col-span-2">
+        <div className="md:col-span-2 text-center md:text-left">
           <Eyebrow index="07" label="Frequently Asked Questions" />
           <h2 className="mt-4 font-display text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl md:text-4xl">
             Questions Founders Usually Ask.
           </h2>
-          <p className="mt-3 max-w-sm text-sm sm:text-base text-body">
+          <p className="mt-3 mx-auto max-w-sm text-sm sm:text-base text-body md:mx-0">
             If you&apos;re wondering the same thing, you&apos;re probably not the first.
           </p>
 
@@ -63,7 +63,7 @@ export default function FAQ() {
             <div className="mt-5">
               <a
                 href="#diagnosis"
-                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/40 active:scale-95"
+                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent-strong px-5 py-2.5 text-xs font-bold text-ink shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/40 active:scale-95"
               >
                 <span>Book Your Founder Growth Diagnosis</span>
                 <svg className="h-3.5 w-3.5 shrink-0 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">
@@ -121,15 +121,15 @@ export default function FAQ() {
           })}
 
           {/* mobile closing box */}
-          <div className="mt-10 border-t border-black/[0.07] pt-8 md:hidden">
+          <div className="mt-10 border-t border-black/[0.07] pt-8 text-center md:hidden">
             <h3 className="font-display text-lg font-bold text-ink">Still have questions?</h3>
             <p className="mt-2 text-sm text-body leading-relaxed font-medium">
               Let&apos;s talk. Sometimes a 30-minute conversation brings more clarity than hours of research.
             </p>
-            <div className="mt-4">
+            <div className="mt-4 flex justify-center">
               <a
                 href="#diagnosis"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent to-indigo-600 px-6 py-3.5 text-xs font-bold text-white shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/40 active:scale-95"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent-strong px-6 py-3.5 text-xs font-bold text-ink shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/40 active:scale-95"
               >
                 <span>Book Your Founder Growth Diagnosis</span>
                 <svg className="h-3.5 w-3.5 shrink-0 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">

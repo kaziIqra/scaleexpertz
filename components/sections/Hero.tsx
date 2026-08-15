@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Logo3D from "@/components/ui/Logo3D";
 import Magnetic from "@/components/ui/Magnetic";
 import Marquee from "@/components/ui/Marquee";
@@ -20,12 +19,12 @@ const SERVICES = [
 ];
 
 const DISCIPLINES = [
-  { name: "Website", x: -175, y: -120, icon: "🌐" },
-  { name: "Marketing", x: 175, y: -125, icon: "📈" },
-  { name: "Branding", x: -160, y: 10, icon: "🎨" },
-  { name: "AI", x: 150, y: 10, icon: "🤖" },
-  { name: "Finance", x: -145, y: 140, icon: "💰" },
-  { name: "Technology", x: 145, y: 140, icon: "⚙️" },
+  { index: "01", name: "Website", x: -175, y: -120 },
+  { index: "02", name: "Marketing", x: 175, y: -125 },
+  { index: "03", name: "Branding", x: -160, y: 10 },
+  { index: "04", name: "AI", x: 150, y: 10 },
+  { index: "05", name: "Finance", x: -145, y: 140 },
+  { index: "06", name: "Technology", x: 145, y: 140 },
 ];
 
 function FadeUp({
@@ -64,7 +63,7 @@ function useIsDesktop() {
   return isDesktop;
 }
 
-/** Visual diagram showing floating disciplines merging into ScaleXpertz */
+/** Visual diagram — Logo3D hub with black indexed service tags */
 function SystemMergeVisual({ play }: { play: boolean }) {
   return (
     <div className="relative flex h-[480px] w-full max-w-[540px] items-center justify-center">
@@ -72,31 +71,20 @@ function SystemMergeVisual({ play }: { play: boolean }) {
       <div className="absolute h-72 w-72 rounded-full bg-accent/15 blur-3xl" />
       <div className="absolute h-56 w-56 rounded-full bg-amber/15 blur-3xl" />
 
-      {/* Outer converging dashed circle */}
-      <svg className="absolute inset-0 h-full w-full pointer-events-none" viewBox="0 0 540 480">
-        <circle
-          cx="270"
-          cy="240"
-          r="180"
-          fill="none"
-          stroke="currentColor"
-          className="text-ink/[0.12]"
-          strokeWidth="1.5"
-          strokeDasharray="4 8"
-        />
-        {/* Connecting lines towards central ScaleXpertz node */}
+      {/* Hairline connectors toward the hub */}
+      <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 540 480">
         {DISCIPLINES.map((d, i) => (
           <motion.line
             key={d.name}
-            x1={270 + d.x * 0.95}
-            y1={240 + d.y * 0.95}
+            x1={270 + d.x * 0.88}
+            y1={240 + d.y * 0.88}
             x2="270"
             y2="240"
-            stroke="rgba(79, 70, 229, 0.25)"
-            strokeWidth="1.5"
-            initial={{ pathLength: 0 }}
-            animate={play ? { pathLength: 1 } : {}}
-            transition={{ duration: 1.2, delay: 0.8 + i * 0.1, ease: "easeOut" }}
+            stroke="rgba(212, 175, 55, 0.35)"
+            strokeWidth="1"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={play ? { pathLength: 1, opacity: 1 } : {}}
+            transition={{ duration: 1, delay: 0.7 + i * 0.08, ease: "easeOut" }}
           />
         ))}
       </svg>
@@ -108,46 +96,36 @@ function SystemMergeVisual({ play }: { play: boolean }) {
         transition={{ duration: 0.9, delay: 0.6, ease: EASE_OUT_EXPO }}
         className="relative z-20 flex flex-col items-center"
       >
-        {/* ground shadow anchoring the mark in space */}
         <div className="absolute left-1/2 top-[60%] h-14 w-60 -translate-x-1/2 rounded-[50%] bg-black/25 blur-2xl dark:bg-black/55" />
         <div className="relative aspect-[912/700] w-[280px]">
           <Logo3D className="h-full w-full" />
         </div>
-        <span className="mt-5 rounded-full border border-accent/25 bg-white/85 dark:bg-[#141419]/85 px-4 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-accent dark:text-indigo-300 shadow-card backdrop-blur-md">
+        <p className="mt-5 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-accent">
           One Connected System
-        </span>
+        </p>
       </motion.div>
 
-      {/* Floating separate discipline nodes */}
+      {/* Indexed black plates — no emoji, no glass pills */}
       {DISCIPLINES.map((d, i) => (
         <motion.div
           key={d.name}
-          initial={{ opacity: 0, x: d.x * 1.3, y: d.y * 1.3 }}
+          initial={{ opacity: 0, x: d.x * 1.25, y: d.y * 1.25 }}
           animate={play ? { opacity: 1, x: d.x, y: d.y } : {}}
           transition={{
-            duration: 1,
-            delay: 0.3 + i * 0.1,
+            duration: 0.9,
+            delay: 0.35 + i * 0.08,
             ease: EASE_OUT_EXPO,
           }}
           className="absolute z-10"
         >
-          <motion.div
-            animate={{
-              y: [0, -6, 0],
-            }}
-            transition={{
-              duration: 4 + i,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.3,
-            }}
-            className="flex items-center gap-2 rounded-2xl border border-black/[0.08] dark:border-white/15 bg-white/80 dark:bg-[#141419]/80 px-4 py-2.5 shadow-card backdrop-blur-md"
-          >
-            <span className="text-base">{d.icon}</span>
-            <span className="font-display text-xs font-semibold tracking-tight text-ink">
+          <div className="flex items-baseline gap-2.5 border border-accent/40 bg-night px-3.5 py-2 shadow-[0_8px_24px_rgba(0,0,0,0.2)]">
+            <span className="font-mono text-[10px] font-bold tracking-[0.15em] text-accent">
+              {d.index}
+            </span>
+            <span className="font-display text-xs font-semibold tracking-tight text-white">
               {d.name}
             </span>
-          </motion.div>
+          </div>
         </motion.div>
       ))}
     </div>
@@ -195,8 +173,8 @@ export default function Hero() {
       {/* readability scrim: text column stays high-contrast over the 3D visual */}
       <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 hidden w-[58%] bg-gradient-to-r from-paper via-paper/50 to-transparent lg:block" />
 
-      {/* main hero content */}
-      <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col justify-center px-6 pb-16 pt-24 md:px-12 md:pb-24 md:pt-28">
+      {/* main hero content — centered on mobile, left-aligned from lg for desktop split */}
+      <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col items-center justify-center px-6 pb-16 pt-24 text-center md:px-12 md:pb-24 md:pt-28 lg:items-start lg:text-left">
         <FadeUp delay={0.15} play={done}>
           <p className="font-mono text-xs uppercase tracking-[0.25em] text-ink/60">
             <span className="mr-3 text-amber">✦</span>
@@ -208,7 +186,7 @@ export default function Hero() {
         <h1 className="mt-4 font-display text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-ink md:mt-6">
           <TextReveal as="span" className="block text-ink dark:text-white" text="Your Next Hire" play={done} delay={0.2} />
           <TextReveal as="span" className="block text-ink/80 dark:text-white/85" text="Should Be" play={done} delay={0.5} />
-          <TextReveal as="span" className="block text-accent dark:text-indigo-400" text="Your Last Agency." play={done} delay={0.8} />
+          <TextReveal as="span" className="block text-accent dark:text-amber" text="Your Last Agency." play={done} delay={0.8} />
         </h1>
 
         {/* Subheadline appears after 1s pause following headline reveal */}
@@ -217,7 +195,7 @@ export default function Hero() {
             <p className="font-display text-sm font-semibold text-ink dark:text-white sm:text-base">
               Every new agency solves one problem. And creates another to manage.
             </p>
-            <p className="mt-2 text-sm leading-relaxed text-body dark:text-slate-300 sm:text-base">
+            <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-body dark:text-slate-300 sm:text-base lg:line-clamp-none">
               ScaleXpertz brings strategy, branding, websites, marketing, AI and execution under one team—so you can focus on growing your business instead of coordinating it.
             </p>
           </div>
@@ -225,12 +203,12 @@ export default function Hero() {
 
         {/* Primary and Secondary CTAs */}
         <FadeUp delay={2.1} play={done} className="mt-8 md:mt-10">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-            <div className="flex flex-col items-start gap-1">
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:gap-6 lg:items-start">
+            <div className="flex flex-col items-center gap-1 lg:items-start">
               <Magnetic>
                 <a
                   href="#diagnosis"
-                  className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-indigo-600 to-accent bg-[length:200%_auto] px-8 py-4 text-base font-bold text-white shadow-xl shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-2xl hover:shadow-accent/40 active:scale-95 group"
+                  className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-8 py-4 text-base font-bold text-ink shadow-xl shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-2xl hover:shadow-accent/40 active:scale-95 group"
                 >
                   Book a Strategy Call
                   <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">
@@ -238,14 +216,14 @@ export default function Hero() {
                   </svg>
                 </a>
               </Magnetic>
-              <span className="pl-3 font-mono text-[11px] text-ink/70 dark:text-slate-400">
+              <span className="font-mono text-[11px] text-ink/70 dark:text-slate-400 lg:pl-3">
                 Usually replies within one business day.
               </span>
             </div>
 
             <a
               href="#services"
-              className="group inline-flex items-center gap-3 font-medium text-ink dark:text-white self-start sm:self-center py-2"
+              className="group inline-flex items-center gap-3 font-medium text-ink dark:text-white self-center py-2 lg:self-center"
             >
               <span className="relative text-base font-semibold">
                 See How We Work
@@ -271,27 +249,33 @@ export default function Hero() {
           </div>
 
           {/* Trust line below CTA */}
-          <div className="mt-6 flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-amber">
+          <div className="mt-6 flex items-center justify-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-amber lg:justify-start">
             <span className="h-2 w-2 rounded-full bg-amber" />
             One Team. Every Growth Solution.
           </div>
         </FadeUp>
 
-        {/* Mobile Visual */}
+        {/* Mobile Visual — black indexed tags matching desktop orbit */}
         <FadeUp delay={1.2} play={done} className="mt-12 lg:hidden">
-          <div className="relative mx-auto flex w-full max-w-sm flex-wrap items-center justify-center gap-2.5 rounded-2xl border border-black/[0.08] dark:border-white/15 bg-surface/90 dark:bg-[#141419]/90 p-5 shadow-card backdrop-blur-md">
-            <p className="w-full text-center font-mono text-[10px] uppercase tracking-wider text-ink/60 dark:text-slate-400 mb-1">
-              Everything merges into ScaleXpertz:
+          <div className="relative mx-auto w-full max-w-sm">
+            <p className="mb-4 text-center font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-accent">
+              One Connected System
             </p>
-            {DISCIPLINES.map((d) => (
-              <span
-                key={d.name}
-                className="flex items-center gap-1.5 rounded-full border border-black/[0.06] dark:border-white/15 bg-surface dark:bg-[#1c1c24] px-3 py-1.5 text-xs font-semibold text-ink dark:text-white shadow-sm"
-              >
-                <span>{d.icon}</span>
-                <span>{d.name}</span>
-              </span>
-            ))}
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {DISCIPLINES.map((d) => (
+                <span
+                  key={d.name}
+                  className="inline-flex items-baseline gap-2 border border-accent/40 bg-night px-3 py-2"
+                >
+                  <span className="font-mono text-[10px] font-bold tracking-[0.15em] text-accent">
+                    {d.index}
+                  </span>
+                  <span className="font-display text-xs font-semibold tracking-tight text-white">
+                    {d.name}
+                  </span>
+                </span>
+              ))}
+            </div>
           </div>
         </FadeUp>
       </div>

@@ -21,16 +21,16 @@ export default async function ApplyPage({
       <Navbar />
       <main className="mx-auto max-w-[1440px] px-6 pb-20 pt-28 md:px-12 md:pt-36">
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-16">
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 text-center lg:text-left">
             <Eyebrow index="03" label="Apply" />
             <h1 className="mt-4 font-display text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl md:text-4xl">
               Show us what you've shipped.
             </h1>
-            <p className="mt-4 max-w-md text-sm sm:text-base leading-relaxed text-body font-medium">
+            <p className="mt-4 mx-auto max-w-md text-sm sm:text-base leading-relaxed text-body font-medium lg:mx-0">
               No cover-letter theatre. A few honest lines and a link to your
               best work tell us more than any resume format ever could.
             </p>
-            <ul className="mt-10 space-y-4">
+            <ul className="mt-10 inline-flex flex-col space-y-4 text-left">
               {[
                 "We reply to every application within a week",
                 "Interviews are two calls, not five rounds",

@@ -45,7 +45,7 @@ const CASE_STUDIES: CaseStudy[] = [
       { label: "Revenue", value: "₹31.2L" },
       { label: "ROAS", value: "12X" },
     ],
-    image: "/works/toy ecommerce.jpeg",
+    image: "/works/toy-ecommerce.jpeg",
   },
   {
     id: "jewellery-ecommerce",
@@ -64,7 +64,7 @@ const CASE_STUDIES: CaseStudy[] = [
       { label: "Revenue", value: "₹80.0L" },
       { label: "Orders", value: "11,500+" },
     ],
-    image: "/works/jwellrey ecommerce.jpeg",
+    image: "/works/jewellery-ecommerce.jpeg",
   },
   {
     id: "astrology-ecommerce",
@@ -83,7 +83,7 @@ const CASE_STUDIES: CaseStudy[] = [
       { label: "Revenue", value: "₹22.6L" },
       { label: "ROAS", value: "6.7X" },
     ],
-    image: "/works/astrology ecommerce.jpeg",
+    image: "/works/astrology-ecommerce.jpeg",
   },
   {
     id: "ev-mobility",
@@ -121,7 +121,7 @@ const CASE_STUDIES: CaseStudy[] = [
       { label: "B2B CPL", value: "₹14.73" },
       { label: "Awareness Reach", value: "86,779" },
     ],
-    image: "/works/from_zero_history.jpeg",
+    image: "/works/from-zero-history.jpeg",
   },
 ];
 
@@ -149,13 +149,13 @@ export default function FeaturedWork() {
       className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12 md:py-24"
     >
       {/* Header section */}
-      <div>
+      <div className="text-center md:text-left">
         <Eyebrow index="05" label="Proof Over Promises" />
-        <h2 className="mt-4 max-w-4xl font-display text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl md:text-4xl leading-[1.1]">
+        <h2 className="mt-4 mx-auto max-w-4xl font-display text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl md:text-4xl leading-[1.1] md:mx-0">
           <TextReveal as="span" className="block" text="Proof Over Promises." />
           <TextReveal as="span" className="block text-accent" text="Results are easy to claim. Proof is harder to fake." delay={0.1} />
         </h2>
-        <p className="mt-4 max-w-2xl text-sm sm:text-base leading-relaxed text-body font-medium">
+        <p className="mt-4 mx-auto max-w-2xl text-sm sm:text-base leading-relaxed text-body font-medium md:mx-0">
           Every business comes with a different challenge. Different industries. Different customers. Different goals. That&apos;s why we don&apos;t believe in one-size-fits-all strategies. We understand the business first, build the right system second, and let the numbers speak for themselves.
         </p>
       </div>
@@ -174,13 +174,13 @@ export default function FeaturedWork() {
           >
             <div>
               {/* Image thumbnail */}
-              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-paper">
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-ink/5 ring-1 ring-black/[0.06] dark:bg-white/5 dark:ring-white/10">
                 <Image
                   src={p.image}
                   alt={p.client}
                   fill
                   sizes="(min-width: 768px) 30vw, 90vw"
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                   priority={i < 2}
                 />
                 <span className="absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 font-mono text-[10px] uppercase font-semibold text-white backdrop-blur-md">
@@ -207,7 +207,7 @@ export default function FeaturedWork() {
       </div>
 
       {/* Closing Statement & Primary CTA */}
-      <div className="mt-20 rounded-3xl border border-black/[0.06] bg-surface p-8 md:p-12 shadow-card flex flex-col md:flex-row md:items-center justify-between gap-8">
+      <div className="mt-20 rounded-3xl border border-black/[0.06] bg-surface p-8 md:p-12 shadow-card flex flex-col items-center text-center md:flex-row md:items-center md:text-left justify-between gap-8">
         <div className="max-w-2xl">
           <span className="font-mono text-xs uppercase tracking-widest text-amber font-semibold">Our Philosophy</span>
           <h3 className="mt-3 font-display text-2xl font-bold tracking-tight text-ink md:text-3xl">
@@ -218,13 +218,13 @@ export default function FeaturedWork() {
           </p>
         </div>
 
-        <div className="shrink-0">
+        <div className="shrink-0 flex justify-center md:justify-start">
           <Magnetic strength={12}>
             <a
               href="/ScaleXpertz_Case_Studies_Report.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-indigo-600 to-accent bg-[length:200%_auto] px-8 py-4 text-base font-bold text-white shadow-xl shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-2xl hover:shadow-accent/40 active:scale-95 group"
+              className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-8 py-4 text-base font-bold text-ink shadow-xl shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-2xl hover:shadow-accent/40 active:scale-95 group"
             >
               Explore Our Growth Research &rarr;
             </a>
@@ -262,7 +262,7 @@ export default function FeaturedWork() {
                 ✕
               </button>
 
-              <span className="rounded-full bg-accent/10 dark:bg-accent/20 px-3 py-1 font-mono text-xs font-semibold text-accent dark:text-indigo-400">
+              <span className="rounded-full bg-accent/10 dark:bg-accent/20 px-3 py-1 font-mono text-xs font-semibold text-accent dark:text-amber">
                 {selectedCase.category} • {selectedCase.client}
               </span>
 
@@ -302,7 +302,7 @@ export default function FeaturedWork() {
                 </div>
 
                 <div className="rounded-2xl border border-accent/30 bg-accent/5 dark:bg-accent/10 p-5">
-                  <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-accent dark:text-indigo-400">
+                  <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-accent dark:text-amber">
                     The System We Built
                   </h4>
                   <p className="mt-2 text-sm leading-relaxed text-ink/90 dark:text-slate-200">
@@ -316,7 +316,7 @@ export default function FeaturedWork() {
                   href="/ScaleXpertz_Case_Studies_Report.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-ink dark:bg-accent px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white shadow-card transition-colors duration-300 hover:bg-accent dark:hover:bg-indigo-600"
+                  className="inline-flex items-center gap-2 rounded-full bg-ink dark:bg-accent px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white dark:text-ink shadow-card transition-colors duration-300 hover:bg-accent hover:text-ink dark:hover:bg-accent-strong"
                 >
                   Download Report PDF →
                 </a>

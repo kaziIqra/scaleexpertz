@@ -2,7 +2,7 @@ import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
 import TrustStrip from "@/components/sections/TrustStrip";
 import IntroStatement from "@/components/sections/IntroStatement";
-import ScaleFramework from "@/components/sections/ScaleFramework";
+import JourneyMap from "@/components/sections/JourneyMap";
 import Services from "@/components/sections/Services";
 import WhatYouWontGet from "@/components/sections/WhatYouWontGet";
 import FeaturedWork from "@/components/sections/FeaturedWork";
@@ -31,8 +31,8 @@ export default function Home() {
         {/* Section 2: Five Experts, Five Priorities, One Business (Coordination Chaos™) */}
         <IntroStatement />
 
-        {/* Section 3: The Proprietary SCALE Framework™ */}
-        <ScaleFramework />
+        {/* Section 3: The Proprietary SCALE Framework™ (scroll journey map) */}
+        <JourneyMap />
         
         {/* Section 4: Everything You Need. One Team To Deliver It. */}
         <Services />

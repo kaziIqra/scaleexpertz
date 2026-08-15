@@ -135,16 +135,16 @@ export default function Footer() {
       <div className="mx-auto max-w-[1440px] px-6 pb-10 pt-20 md:px-12 md:pt-28">
         <div className="grid gap-12 md:grid-cols-12 md:gap-8">
           {/* brand + newsletter */}
-          <div className="md:col-span-4">
+          <div className="md:col-span-4 text-center md:text-left">
             <p className="font-display text-2xl font-semibold tracking-tight text-ink">
               ScaleXpertz<span className="text-accent">.</span>
             </p>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-body">
+            <p className="mt-4 mx-auto max-w-xs text-sm leading-relaxed text-body md:mx-0">
               The all-in-one partner for businesses that want to scale
               everything at once.
             </p>
 
-            <form onSubmit={onSubscribe} className="mt-8 max-w-xs">
+            <form onSubmit={onSubscribe} className="mt-8 mx-auto max-w-xs md:mx-0">
               <label
                 htmlFor="newsletter"
                 className="font-mono text-xs uppercase tracking-[0.2em] text-ink/50"
@@ -190,7 +190,7 @@ export default function Footer() {
             <nav
               key={col.heading}
               aria-label={col.heading}
-              className="md:col-span-2"
+              className="md:col-span-2 text-center md:text-left"
             >
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink/50">
                 {col.heading}
@@ -212,7 +212,7 @@ export default function Footer() {
           ))}
 
           {/* contact + socials */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 text-center md:text-left">
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink/50">
               Contact
             </p>
@@ -235,7 +235,7 @@ export default function Footer() {
               </li>
               <li>Remote-first, worldwide</li>
             </ul>
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex justify-center gap-3 md:justify-start">
               {SOCIALS.map((s) => (
                 <a
                   key={s.label}
@@ -252,7 +252,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-black/[0.05] pt-6">
+        <div className="mt-16 flex flex-col items-center justify-center gap-4 border-t border-black/[0.05] pt-6 text-center sm:flex-row sm:flex-wrap sm:justify-between sm:text-left">
           <p className="text-xs text-ink/40">
             © {new Date().getFullYear()} ScaleXpertz. All rights reserved.
           </p>

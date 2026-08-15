@@ -3,7 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --color-paper-val: #fafaf7;
+  --color-paper-val: #faf8f0;
   --color-surface-val: #ffffff;
   --color-ink-val: #0a0a0a;
   --color-body-val: #52525b;
@@ -26,13 +26,16 @@ html.dark {
   --color-surface: var(--color-surface-val);
   --color-ink: var(--color-ink-val);
   --color-body: var(--color-body-val);
-  --color-accent: #4f46e5;
-  --color-accent-strong: #4338ca;
+  /* Logo gold — primary brand accent (was purple #4f46e5) */
+  --color-accent: #d4af37;
+  --color-accent-strong: #b8962e;
   --color-amber: #f59e0b;
+  --color-gold: #d4af37;
   --color-night: #0c0c0e;
 
-  --font-display: var(--font-clash), var(--font-inter), ui-sans-serif, sans-serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* Switzer via next/font/local (--font-switzer); NHG alternative — see lib/fonts.ts */
+  --font-display: var(--font-switzer), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-switzer), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px rgb(0 0 0 / 0.06);
@@ -41,8 +44,6 @@ html.dark {
   --animate-scroll-line: scroll-line 2.4s cubic-bezier(0.76, 0, 0.24, 1) infinite;
   --animate-shimmer: shimmer 3.5s linear infinite;
   --animate-drift: drift 7s ease-in-out infinite;
-
-  --color-gold: #d4af37;
 
   @keyframes scroll-line {
     0% {
@@ -84,7 +85,10 @@ html {
 }
 
 body {
-  background: var(--color-paper);
+  background:
+    radial-gradient(ellipse 80% 50% at 100% 0%, rgba(212, 175, 55, 0.12), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 0% 100%, rgba(212, 175, 55, 0.08), transparent 50%),
+    var(--color-paper);
   color: var(--color-body);
   font-family: var(--font-sans);
   overflow-x: hidden;
@@ -93,7 +97,10 @@ body {
 }
 
 html.dark body {
-  background-color: #0c0c0e !important;
+  background:
+    radial-gradient(ellipse 80% 50% at 100% 0%, rgba(212, 175, 55, 0.1), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 0% 100%, rgba(212, 175, 55, 0.06), transparent 50%),
+    #0c0c0e !important;
   color: #cbd5e1;
 }
 
@@ -116,7 +123,7 @@ html.dark .shadow-card-hover {
 
 ::selection {
   background: var(--color-accent);
-  color: #ffffff;
+  color: #0a0a0a;
 }
 
 :focus-visible {

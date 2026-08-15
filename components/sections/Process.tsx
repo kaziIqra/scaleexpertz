@@ -19,7 +19,7 @@ const STEPS = [
     number: "01",
     title: "Discover",
     text: "We map your business, customers, and numbers before anything gets designed. Strategy first — every service starts from the same brief.",
-    hex: "#4f46e5",
+    hex: "#d4af37",
     tags: ["Workshops", "Audit", "One brief"],
     icon: (
       <svg viewBox="0 0 24 24" className="h-10 w-10 md:h-14 md:w-14" aria-hidden>

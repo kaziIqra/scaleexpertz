@@ -98,7 +98,7 @@ export default function Navbar() {
               priority
               className="h-7 sm:h-8 w-auto"
             />
-            <span>ScaleXpertz<span className="text-accent dark:text-indigo-400">.</span></span>
+            <span>ScaleXpertz<span className="text-accent dark:text-amber">.</span></span>
           </a>
 
           <nav className="hidden items-center gap-4 lg:gap-6 md:flex" aria-label="Primary">
@@ -173,7 +173,7 @@ export default function Navbar() {
               <a
                 href="#diagnosis"
                 onClick={goTo("#diagnosis")}
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-indigo-600 px-5 py-2.5 text-xs lg:text-sm font-bold text-white shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/40 active:scale-95"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent-strong px-5 py-2.5 text-xs lg:text-sm font-bold text-ink shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/40 active:scale-95"
               >
                 Book a Call
               </a>
@@ -290,7 +290,7 @@ export default function Navbar() {
               <a
                 href="#contact"
                 onClick={goTo("#contact")}
-                className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-4 text-base font-medium text-white"
+                className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-4 text-base font-medium text-ink"
               >
                 Book a Call
               </a>

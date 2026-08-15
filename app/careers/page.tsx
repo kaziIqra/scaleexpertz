@@ -156,19 +156,19 @@ export default function CareersPage() {
   return (
     <>
       <Navbar />
-      <main className="mx-auto max-w-[1440px] px-6 pb-20 pt-28 md:px-12 md:pt-36">
+      <main className="mx-auto max-w-[1440px] px-6 pb-20 pt-28 text-center md:px-12 md:pt-36 md:text-left">
         <Eyebrow index="02" label="Careers" />
-        <h1 className="mt-4 max-w-3xl font-display text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl md:text-4xl">
+        <h1 className="mt-4 mx-auto max-w-3xl font-display text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl md:mx-0 md:text-4xl">
           Do the best work of your career, weekly.
         </h1>
-        <p className="mt-4 max-w-xl text-sm sm:text-base leading-relaxed text-body font-medium">
+        <p className="mt-4 mx-auto max-w-xl text-sm sm:text-base leading-relaxed text-body font-medium md:mx-0">
           We're a small senior team that replaces five vendors for our clients.
           That only works when every person here can own a problem end to end —
           which makes this a very good place to grow fast.
         </p>
 
         {/* perks */}
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-6 text-left sm:grid-cols-2 lg:grid-cols-4">
           {PERKS.map((p, i) => (
             <div
               key={p.title}
@@ -184,8 +184,8 @@ export default function CareersPage() {
         </div>
 
         {/* open roles */}
-        <div className="mt-16">
-          <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-ink md:text-3xl">
+        <div className="mt-16 text-left">
+          <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-ink text-center md:text-left md:text-3xl">
             Open roles
           </h2>
           <div className="mt-8">

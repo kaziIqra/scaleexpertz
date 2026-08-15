@@ -2,31 +2,48 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import {
+  LuClipboardCheck,
+  LuClock,
+  LuLayoutGrid,
+  LuRoute,
+  LuScanSearch,
+  LuVideo,
+} from "react-icons/lu";
+import type { IconType } from "react-icons";
 import Eyebrow from "@/components/ui/Eyebrow";
 import TextReveal from "@/components/ui/TextReveal";
 import Magnetic from "@/components/ui/Magnetic";
 import { EASE_OUT_EXPO } from "@/lib/animations";
 
+function IconBadge({ icon: Icon, size = 20 }: { icon: IconType; size?: number }) {
+  return (
+    <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-accent/20 bg-accent/10 text-accent">
+      <Icon size={size} strokeWidth={1.75} aria-hidden />
+    </span>
+  );
+}
+
 const INCLUDED_ITEMS = [
   {
-    icon: "🧠",
+    icon: LuScanSearch,
     title: "Growth Bottleneck Analysis",
     description: "Identify the biggest obstacle preventing your business from growing faster.",
   },
   {
-    icon: "📊",
+    icon: LuLayoutGrid,
     title: "Business Systems Review",
     description:
       "Evaluate how your branding, marketing, website, technology, AI, and operations work together—and where they're creating friction.",
   },
   {
-    icon: "📈",
+    icon: LuRoute,
     title: "90-Day Growth Roadmap",
     description:
       "Discover the highest-impact opportunities to accelerate your business over the next 90 days.",
   },
   {
-    icon: "✅",
+    icon: LuClipboardCheck,
     title: "Founder Action Plan",
     description:
       "Leave with practical, actionable recommendations you can implement immediately—whether we work together or not.",
@@ -75,22 +92,24 @@ export default function FounderDiagnosis() {
           
           {/* Left Side - Copy & Offer Breakdown */}
           <div className="lg:col-span-7">
-            <Eyebrow index="06" label="Founder Growth Diagnosis" />
-            <h2 className="mt-4 font-display text-2xl font-semibold tracking-[-0.03em] sm:text-3xl md:text-4xl leading-[1.1]">
-              <TextReveal text="Every Business Has Blind Spots." as="span" className="block" />
-              <TextReveal text="Let's Find Yours." as="span" className="block text-amber" delay={0.12} />
-            </h2>
+            <div className="text-center lg:text-left">
+              <Eyebrow index="06" label="Founder Growth Diagnosis" />
+              <h2 className="mt-4 font-display text-2xl font-semibold tracking-[-0.03em] sm:text-3xl md:text-4xl leading-[1.1]">
+                <TextReveal text="Every Business Has Blind Spots." as="span" className="block" />
+                <TextReveal text="Let's Find Yours." as="span" className="block text-amber" delay={0.12} />
+              </h2>
 
-            <p className="mt-4 text-sm sm:text-base text-white/80 leading-relaxed font-medium max-w-2xl">
-              Your next breakthrough might not require a bigger budget. It might require a clearer perspective. Every business has opportunities that are easy to miss from the inside.
-            </p>
-            <p className="mt-2 text-xs sm:text-sm text-white/60 leading-relaxed max-w-2xl">
-              Our Founder Growth Diagnosis helps uncover the bottlenecks, hidden opportunities, and strategic gaps that could be limiting your next stage of growth. Because the right decisions start with the right understanding.
-            </p>
+              <p className="mt-4 mx-auto text-sm sm:text-base text-white/80 leading-relaxed font-medium max-w-2xl lg:mx-0">
+                Your next breakthrough might not require a bigger budget. It might require a clearer perspective. Every business has opportunities that are easy to miss from the inside.
+              </p>
+              <p className="mt-2 mx-auto text-xs sm:text-sm text-white/60 leading-relaxed max-w-2xl lg:mx-0">
+                Our Founder Growth Diagnosis helps uncover the bottlenecks, hidden opportunities, and strategic gaps that could be limiting your next stage of growth. Because the right decisions start with the right understanding.
+              </p>
+            </div>
 
             {/* What's Included */}
             <div className="mt-12">
-              <h3 className="font-mono text-xs uppercase tracking-widest text-amber font-semibold">
+              <h3 className="font-mono text-xs uppercase tracking-widest text-amber font-semibold text-center lg:text-left">
                 What&apos;s Included in Your 45-Min Session:
               </h3>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -100,7 +119,7 @@ export default function FounderDiagnosis() {
                     className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="text-xl">{item.icon}</span>
+                      <IconBadge icon={item.icon} size={20} />
                       <h4 className="font-display text-base font-semibold text-white">
                         {item.title}
                       </h4>
@@ -179,10 +198,25 @@ export default function FounderDiagnosis() {
               </div>
 
               {/* Session Meta badges */}
-              <div className="mt-6 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-xs font-mono text-white/80">
-                <span>⏱️ 45 Minutes</span>
-                <span>💻 Online Meeting</span>
-                <span className="text-amber font-bold">🆓 ₹0 Investment</span>
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-xs font-mono text-white/80">
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="inline-flex h-6 w-6 items-center justify-center rounded-md border border-accent/20 bg-accent/10 text-accent">
+                    <LuClock size={14} strokeWidth={1.75} aria-hidden />
+                  </span>
+                  45 Minutes
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="inline-flex h-6 w-6 items-center justify-center rounded-md border border-accent/20 bg-accent/10 text-accent">
+                    <LuVideo size={14} strokeWidth={1.75} aria-hidden />
+                  </span>
+                  Online Meeting
+                </span>
+                <span className="inline-flex items-center gap-1.5 font-bold text-amber">
+                  <span className="inline-flex h-6 w-6 items-center justify-center rounded-md border border-accent/20 bg-accent/10 font-display text-[11px] font-bold leading-none text-accent">
+                    ₹
+                  </span>
+                  ₹0 Investment
+                </span>
               </div>
 
               {submitted ? (
@@ -255,7 +289,7 @@ export default function FounderDiagnosis() {
                     <Magnetic strength={10}>
                       <button
                         type="submit"
-                        className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-indigo-600 to-accent bg-[length:200%_auto] px-6 py-4 text-sm sm:text-base font-bold text-white shadow-xl shadow-accent/30 transition-all duration-500 hover:bg-[position:right_center] hover:scale-[1.02] hover:shadow-2xl hover:shadow-accent/50 active:scale-98"
+                        className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-6 py-4 text-sm sm:text-base font-bold text-ink shadow-xl shadow-accent/30 transition-all duration-500 hover:bg-[position:right_center] hover:scale-[1.02] hover:shadow-2xl hover:shadow-accent/50 active:scale-98"
                       >
                         <span className="tracking-tight">Book Your Founder Growth Diagnosis</span>
                         <svg className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">

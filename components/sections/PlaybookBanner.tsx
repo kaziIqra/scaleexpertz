@@ -17,25 +17,25 @@ export default function PlaybookBanner() {
         <div className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-amber/20 blur-3xl" />
 
         <div className="relative z-10 grid gap-8 lg:grid-cols-12 lg:items-center">
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-8 text-center lg:text-left">
             <Eyebrow index="06" label="The ScaleXpertz Growth Playbook™" />
             <h2 className="mt-4 font-display text-2xl font-bold tracking-tight text-ink dark:text-white sm:text-3xl md:text-4xl leading-tight">
               The Operating System Behind <span className="text-amber">Sustainable Growth.</span>
             </h2>
-            <p className="mt-3 text-sm sm:text-base leading-relaxed text-body dark:text-slate-300 font-medium max-w-2xl">
+            <p className="mt-3 mx-auto text-sm sm:text-base leading-relaxed text-body dark:text-slate-300 font-medium max-w-2xl lg:mx-0">
               Want to see our full methodology, 90-Day Growth Sprint™ breakdown, and execution framework before making a decision? Download the 15-page ScaleXpertz Growth Playbook™.
             </p>
-            <div className="mt-6 flex flex-wrap items-center gap-4 text-xs font-semibold text-ink dark:text-white">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-ink dark:text-white lg:justify-start">
               <span className="flex items-center gap-1.5"><span className="text-amber">✓</span> 15-Page Strategy Guide</span>
               <span className="flex items-center gap-1.5"><span className="text-amber">✓</span> Coordination Chaos™ Fix</span>
               <span className="flex items-center gap-1.5"><span className="text-amber">✓</span> 90-Day Sprint Roadmap</span>
             </div>
           </div>
 
-          <div className="lg:col-span-4 flex flex-col items-start lg:items-end justify-center">
+          <div className="lg:col-span-4 flex flex-col items-center justify-center text-center lg:items-end lg:text-right">
             <button
               onClick={() => setModalOpen(true)}
-              className="inline-flex items-center gap-3 rounded-full bg-accent px-8 py-4 font-display text-sm font-bold text-white shadow-xl shadow-accent/25 transition-all duration-300 hover:scale-105 hover:bg-accent-strong"
+              className="inline-flex items-center gap-3 rounded-full bg-accent px-8 py-4 font-display text-sm font-bold text-ink shadow-xl shadow-accent/25 transition-all duration-300 hover:scale-105 hover:bg-accent-strong"
             >
               📖 Download Growth Playbook™
             </button>
@@ -100,7 +100,7 @@ export default function PlaybookBanner() {
 
                   <button
                     type="submit"
-                    className="w-full rounded-full bg-accent py-3.5 font-display text-sm font-bold text-white shadow-lg transition-transform hover:scale-105"
+                    className="w-full rounded-full bg-accent py-3.5 font-display text-sm font-bold text-ink shadow-lg transition-transform hover:scale-105"
                   >
                     Download Playbook PDF →
                   </button>

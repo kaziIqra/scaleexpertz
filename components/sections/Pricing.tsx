@@ -1,12 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import Eyebrow from "@/components/ui/Eyebrow";
 import TextReveal from "@/components/ui/TextReveal";
-import Magnetic from "@/components/ui/Magnetic";
-import SprintModal, { SprintData } from "@/components/ui/SprintModal";
-import { EASE_OUT_EXPO } from "@/lib/animations";
+import PricingCalculator, { SprintData } from "@/components/ui/PricingCalculator";
 
 const SPRINTS: SprintData[] = [
   {
@@ -14,6 +11,7 @@ const SPRINTS: SprintData[] = [
     title: "B2C Growth Sprint™",
     subtitle: "Build a complete growth infrastructure that attracts, converts, and retains customers.",
     price: "₹5,00,000",
+    basePrice: 500000,
     duration: "90 Days",
     tagline: "Customers Don't Buy Content. They Buy Brands They Trust.",
     builtFor: [
@@ -51,6 +49,19 @@ const SPRINTS: SprintData[] = [
       "Automated CRM & Lead Workflows",
       "Weekly Growth Reports",
     ],
+    features: [
+      "Strategy + branding included",
+      "Website + conversion pages",
+      "Meta & Google acquisition",
+      "CRM & automation setup",
+      "Weekly strategy reviews",
+    ],
+    addons: [
+      { id: "b2c-landing", label: "Extra Landing Pages", price: 80000 },
+      { id: "b2c-creator", label: "Creator Network Boost", price: 50000 },
+      { id: "b2c-shoot", label: "Extra Content Shoot", price: 75000 },
+      { id: "b2c-ai", label: "AI Automation Pack", price: 60000 },
+    ],
     milestones: [
       { percent: "50%", stage: "Kickoff & Strategy", desc: "Business positioning & 90-day roadmap" },
       { percent: "30%", stage: "Mid-Sprint Execution", desc: "Systems implementation & campaign launch" },
@@ -64,6 +75,7 @@ const SPRINTS: SprintData[] = [
     title: "B2B Growth Sprint™",
     subtitle: "Build predictable revenue systems through one coordinated growth engine.",
     price: "₹5,50,000",
+    basePrice: 550000,
     duration: "90 Days",
     tagline: "Build a Business That Doesn't Depend on Luck. Build One That Runs on Systems.",
     builtFor: [
@@ -101,6 +113,19 @@ const SPRINTS: SprintData[] = [
       "CRM & Pipeline Systems",
       "Custom Growth Roadmap",
     ],
+    features: [
+      "Industry positioning included",
+      "Executive authority system",
+      "Sales funnel + CRM",
+      "Pipeline automation",
+      "Weekly executive reviews",
+    ],
+    addons: [
+      { id: "b2b-linkedin", label: "LinkedIn Authority Pack", price: 70000 },
+      { id: "b2b-funnel", label: "Extra Sales Funnel", price: 90000 },
+      { id: "b2b-crm", label: "CRM Deep Integration", price: 55000 },
+      { id: "b2b-exec", label: "Executive Content Academy", price: 45000 },
+    ],
     milestones: [
       { percent: "50%", stage: "Kickoff & Strategy", desc: "Positioning, messaging & system design" },
       { percent: "30%", stage: "Mid-Sprint Execution", desc: "Revenue systems & sales infrastructure" },
@@ -114,6 +139,7 @@ const SPRINTS: SprintData[] = [
     title: "Custom Growth Solutions™",
     subtitle: "Growth infrastructure designed around your exact business objectives.",
     price: "₹40,000",
+    basePrice: 40000,
     duration: "Flexible Scope",
     tagline: "Every Business Is Different. Your Growth Strategy Should Be Too.",
     builtFor: [
@@ -146,6 +172,20 @@ const SPRINTS: SprintData[] = [
       "Solution Blueprint",
       "Implementation & Handoff",
     ],
+    features: [
+      "Scoped discovery included",
+      "Dedicated growth manager",
+      "Custom timeline & milestones",
+      "Weekly progress reviews",
+      "Handoff documentation",
+    ],
+    addons: [
+      { id: "custom-brand", label: "Brand Identity", price: 35000 },
+      { id: "custom-web", label: "Website Build", price: 80000 },
+      { id: "custom-ads", label: "Performance Ads Setup", price: 50000 },
+      { id: "custom-ai", label: "AI Automation", price: 45000 },
+      { id: "custom-screen", label: "Extra Screen / Page", price: 8000, unit: "/pg" },
+    ],
     milestones: [
       { percent: "50%", stage: "Kickoff & Discovery", desc: "Scope alignment & strategic foundation" },
       { percent: "30%", stage: "Mid-Project Execution", desc: "Core deliverables development" },
@@ -157,109 +197,29 @@ const SPRINTS: SprintData[] = [
 ];
 
 export default function Pricing() {
-  const [selectedSprint, setSelectedSprint] = useState<SprintData | null>(null);
+  const [activeSprint, setActiveSprint] = useState<SprintData>(SPRINTS[0]);
 
   return (
     <section id="pricing" className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12 md:py-24">
-      <Eyebrow index="05" label="Investment & Growth Sprints" />
+      <Eyebrow index="05" label="Investment & Growth Sprints" className="text-center md:text-left" />
 
-      {/* Header Copy */}
-      <div className="mt-6 max-w-4xl">
+      <div className="mt-6 mx-auto max-w-4xl text-center md:mx-0 md:text-left">
         <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-ink dark:text-white sm:text-3xl md:text-4xl leading-[1.1]">
           <TextReveal as="span" className="block" text="Growth Isn't Purchased." />
-          <TextReveal as="span" className="block text-accent dark:text-indigo-400" text="It's Built Through Commitment." delay={0.12} />
+          <TextReveal as="span" className="block text-accent dark:text-amber" text="It's Built Through Commitment." delay={0.12} />
         </h2>
         <p className="mt-4 text-sm sm:text-base leading-relaxed text-body dark:text-slate-300 font-medium">
-          Every Growth Sprint™ is a focused 90-day engagement where strategy, execution, and optimisation work together under one accountable team. Click any sprint to view its full Blueprint.
+          Every Growth Sprint™ is a focused engagement where strategy, execution, and optimisation work together under one accountable team. Configure add-ons below to see your estimate.
         </p>
       </div>
 
-      {/* Pricing Cards Grid */}
-      <div className="mt-12 grid gap-8 md:grid-cols-3">
-        {SPRINTS.map((s, i) => {
-          const isB2B = s.id === "b2b-sprint";
-          return (
-            <motion.div
-              key={s.id}
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.8, ease: EASE_OUT_EXPO, delay: i * 0.08 }}
-              className={`relative flex flex-col justify-between rounded-3xl p-6 sm:p-8 shadow-card transition-all duration-500 hover:-translate-y-2 ${
-                isB2B
-                  ? "border-2 border-accent dark:border-indigo-500 bg-surface dark:bg-[#181822] shadow-2xl shadow-accent/15"
-                  : "border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-[#141419]"
-              }`}
-            >
-              {isB2B && (
-                <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-accent px-4 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-white shadow-md">
-                  ★ Most Popular System
-                </span>
-              )}
-
-              <div>
-                <div className="flex items-center justify-between gap-2">
-                  <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent dark:text-indigo-400 bg-accent/10 dark:bg-accent/20 px-3 py-1 rounded-full">
-                    {s.duration}
-                  </span>
-                  <span className="font-mono text-xs font-bold text-amber">
-                    Starting From
-                  </span>
-                </div>
-
-                <h3 className="mt-4 font-display text-xl font-bold tracking-tight text-ink dark:text-white sm:text-2xl">
-                  {s.title}
-                </h3>
-                
-                <p className="mt-2 font-display text-2xl font-extrabold text-ink dark:text-white">
-                  {s.price}
-                </p>
-
-                <p className="mt-3 text-xs sm:text-sm text-body dark:text-slate-300 font-medium leading-relaxed">
-                  {s.subtitle}
-                </p>
-
-                {/* Key Deliverables Bullet Checklist */}
-                <div className="mt-6 border-t border-black/[0.06] dark:border-white/10 pt-5 space-y-2">
-                  <span className="font-mono text-[10px] uppercase tracking-wider text-ink/50 dark:text-slate-400 font-bold block mb-2">
-                    Key Infrastructure Included:
-                  </span>
-                  {s.deliverables.slice(0, 4).map((item) => (
-                    <div key={item} className="flex items-center gap-2 text-xs font-semibold text-ink dark:text-white">
-                      <span className="text-amber font-bold">✓</span>
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="mt-8 pt-4 border-t border-black/[0.06] dark:border-white/10 flex flex-col gap-3">
-                <button
-                  type="button"
-                  onClick={() => setSelectedSprint(s)}
-                  className="w-full rounded-full border border-accent/40 bg-accent/5 dark:bg-accent/15 px-5 py-3 font-mono text-xs font-bold text-accent dark:text-indigo-300 transition-all duration-300 hover:bg-accent hover:text-white dark:hover:bg-accent dark:hover:text-white shadow-sm"
-                >
-                  View Complete Growth Blueprint →
-                </button>
-
-                <a
-                  href="#diagnosis"
-                  className="w-full text-center rounded-full bg-ink dark:bg-white px-5 py-3 font-mono text-xs font-bold text-white dark:text-black transition-all duration-300 hover:bg-accent dark:hover:bg-amber shadow-sm"
-                >
-                  Book Diagnosis
-                </a>
-              </div>
-            </motion.div>
-          );
-        })}
+      <div className="mt-12">
+        <PricingCalculator
+          sprints={SPRINTS}
+          activeSprint={activeSprint}
+          onSelectSprint={setActiveSprint}
+        />
       </div>
-
-      {/* Sprint Modal Component */}
-      <SprintModal
-        sprint={selectedSprint}
-        onClose={() => setSelectedSprint(null)}
-      />
     </section>
   );
 }

@@ -1,20 +1,45 @@
 import localFont from "next/font/local";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 
-export const clashDisplay = localFont({
+/**
+ * Switzer (Fontshare / ITF Free Font License) — free Neue Haas Grotesk
+ * alternative. Self-hosted woff2 files from Fontshare; do not substitute
+ * pirated Neue Haas Grotesk files.
+ */
+export const switzer = localFont({
   src: [
-    { path: "../app/fonts/ClashDisplay-400.woff2", weight: "400", style: "normal" },
-    { path: "../app/fonts/ClashDisplay-500.woff2", weight: "500", style: "normal" },
-    { path: "../app/fonts/ClashDisplay-600.woff2", weight: "600", style: "normal" },
-    { path: "../app/fonts/ClashDisplay-700.woff2", weight: "700", style: "normal" },
+    {
+      path: "../public/fonts/switzer/Switzer-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/switzer/Switzer-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/switzer/Switzer-Semibold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/switzer/Switzer-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/switzer/Switzer-Extrabold.woff2",
+      weight: "800",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/switzer/Switzer-Black.woff2",
+      weight: "900",
+      style: "normal",
+    },
   ],
-  variable: "--font-clash",
-  display: "swap",
-});
-
-export const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-switzer",
   display: "swap",
 });
 

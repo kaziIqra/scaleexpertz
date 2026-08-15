@@ -8,29 +8,34 @@ import { EASE_OUT_EXPO } from "@/lib/animations";
 
 const STAGES = [
   {
-    week: "Week 0–1",
-    title: "Discovery & Kickoff",
-    text: "Deep-dive workshops on your goals, customers, numbers, and existing stack. Everything lands in one shared brief, so every discipline plans from the same source of truth.",
+    letter: "S",
+    week: "Phase 01",
+    title: "Strategy",
+    text: "Build the right direction before increasing speed. We diagnose the business, market, competitors, and KPIs — then lock a 90-day roadmap before anything launches.",
   },
   {
-    week: "Week 1–2",
-    title: "Strategy & Roadmap",
-    text: "Scope, milestones, and success metrics get locked into one roadmap. You see exactly what ships when, what it costs, and how we'll measure it — before any pixels move.",
+    letter: "C",
+    week: "Phase 02",
+    title: "Create",
+    text: "Build assets that create trust before they generate attention. Brand, creatives, websites, and content systems that communicate with clarity and consistency.",
   },
   {
-    week: "Week 2–5",
-    title: "Design & Prototype",
-    text: "Brand, UX flows, and a clickable prototype come together in tight feedback loops. You react to something real every week, not a big reveal at the end.",
+    letter: "A",
+    week: "Phase 03",
+    title: "Accelerate",
+    text: "Turn strategy into measurable business momentum — performance marketing, sales systems, AI automation, and acquisition engines aligned to one growth objective.",
   },
   {
-    week: "Week 5–9",
-    title: "Build & Iterate",
-    text: "Engineering ships in weekly increments with QA baked in. Every Friday you get a staging demo — progress you can click, not a status report.",
+    letter: "L",
+    week: "Phase 04",
+    title: "Lead",
+    text: "Build authority that compounds over time. Founder positioning, visibility, and strategic content that earn trust — because leadership creates demand.",
   },
   {
-    week: "Week 10+",
-    title: "Launch & Scale",
-    text: "Go-live checklist, analytics wired, hypercare on standby. Then growth loops and performance tuning keep the numbers compounding long after launch.",
+    letter: "E",
+    week: "Phase 05",
+    title: "Evolve",
+    text: "Growth is never finished. Every sprint ends with reviews, optimisation, documentation, and the next strategic move so momentum never stops.",
   },
 ];
 
@@ -77,222 +82,186 @@ function Flag({ at, label, tone }: { at: Pt; label: string; tone: string }) {
   );
 }
 
-/* ---------- illustrated map scenery ---------- */
+/* ---------- graph / growth backdrop (no nature scene) ---------- */
 
-function Pine({ x, y, s = 1 }: { x: number; y: number; s?: number }) {
+function ChartGrid({ w, h }: { w: number; h: number }) {
+  const xs = Array.from({ length: Math.floor(w / 48) + 1 }, (_, i) => i * 48);
+  const ys = Array.from({ length: Math.floor(h / 48) + 1 }, (_, i) => i * 48);
   return (
-    <g transform={`translate(${x} ${y}) scale(${s})`}>
-      <rect x={-2} y={-4} width={4} height={8} rx={1} fill="#8a6d4b" opacity={0.8} />
-      <path
-        d="M0 -34 L11 -12 L5 -12 L14 2 L-14 2 L-5 -12 L-11 -12 Z"
-        fill="#4e9455"
-        opacity={0.8}
-      />
-      <path d="M0 -34 L11 -12 L5 -12 L14 2 L0 2 Z" fill="#3d7a46" opacity={0.35} />
-    </g>
-  );
-}
-
-/** Snow-capped mountain: apex at (x, y-h), base width 2w at y. */
-function Peak({ x, y, w, h }: { x: number; y: number; w: number; h: number }) {
-  return (
-    <g>
-      <path d={`M${x - w} ${y} L${x} ${y - h} L${x + w} ${y} Z`} fill="#c2cfb8" opacity={0.8} />
-      <path d={`M${x} ${y - h} L${x + w} ${y} L${x} ${y} Z`} fill="#55624d" opacity={0.12} />
-      <path
-        d={`M${x - w * 0.22} ${y - h * 0.72} L${x} ${y - h} L${x + w * 0.22} ${y - h * 0.72} L${x + w * 0.1} ${y - h * 0.64} L${x - 0.02 * w} ${y - h * 0.72} L${x - w * 0.12} ${y - h * 0.62} Z`}
-        fill="#ffffff"
-        opacity={0.95}
-      />
-    </g>
-  );
-}
-
-function Cloud({ x, y, s = 1 }: { x: number; y: number; s?: number }) {
-  return (
-    <g transform={`translate(${x} ${y}) scale(${s})`} fill="#ffffff" opacity={0.9}>
-      <circle cx={-20} cy={4} r={12} />
-      <circle cx={0} cy={-2} r={16} />
-      <circle cx={22} cy={5} r={11} />
-      <rect x={-28} y={4} width={56} height={9} rx={4.5} />
-    </g>
-  );
-}
-
-function Sun({ x, y, r }: { x: number; y: number; r: number }) {
-  return (
-    <g transform={`translate(${x} ${y})`}>
-      <circle r={r * 3} fill="#f7c94b" opacity={0.14} />
-      <circle r={r * 1.9} fill="#f7c94b" opacity={0.14} />
-      <circle r={r} fill="#f7c94b" opacity={0.95} />
-      <g stroke="#f0b429" strokeWidth={2.5} strokeLinecap="round" opacity={0.8}>
-        {Array.from({ length: 8 }).map((_, i) => (
-          <line
-            key={i}
-            x1={0}
-            y1={-r - 7}
-            x2={0}
-            y2={-r - 15}
-            transform={`rotate(${i * 45})`}
-          />
-        ))}
-      </g>
-    </g>
-  );
-}
-
-function Birds({ x, y }: { x: number; y: number }) {
-  return (
-    <g
-      transform={`translate(${x} ${y})`}
-      stroke="#64748b"
-      strokeWidth={1.4}
-      strokeLinecap="round"
-      fill="none"
-      opacity={0.5}
-    >
-      <path d="M0 0 q4 -5 8 0 q4 -5 8 0" />
-      <path d="M22 -10 q3 -4 6 0 q3 -4 6 0" />
-      <path d="M10 -20 q3 -4 6 0 q3 -4 6 0" />
-    </g>
-  );
-}
-
-function Compass({ at }: { at: string }) {
-  return (
-    <g transform={at} className="text-ink/35">
-      <circle r={24} {...stroke} strokeWidth={1.2} />
-      <circle r={17} {...stroke} strokeWidth={0.8} opacity={0.6} />
-      <path
-        d="M0 -14 L2.6 -2.6 L14 0 L2.6 2.6 L0 14 L-2.6 2.6 L-14 0 L-2.6 -2.6 Z"
-        fill="currentColor"
-        opacity={0.75}
-      />
-      <path
-        d="M0 -14 L2.6 -2.6 L14 0 L2.6 2.6 L0 14 L-2.6 2.6 L-14 0 L-2.6 -2.6 Z"
-        fill="currentColor"
-        opacity={0.35}
-        transform="rotate(45) scale(0.62)"
-      />
-      {(
-        [
-          ["N", 0, -33],
-          ["E", 34, 3],
-          ["S", 0, 39],
-          ["W", -34, 3],
-        ] as const
-      ).map(([l, tx, ty]) => (
-        <text
-          key={l}
-          x={tx}
-          y={ty}
-          textAnchor="middle"
-          fontSize={9}
-          className="fill-current font-mono"
-        >
-          {l}
-        </text>
+    <g className="text-ink/8 dark:text-white/[0.06]" aria-hidden>
+      {xs.map((x) => (
+        <line key={`vx-${x}`} x1={x} y1={0} x2={x} y2={h} stroke="currentColor" strokeWidth={1} />
+      ))}
+      {ys.map((y) => (
+        <line key={`hy-${y}`} x1={0} y1={y} x2={w} y2={y} stroke="currentColor" strokeWidth={1} />
       ))}
     </g>
   );
 }
 
-/** Illustrated terrain — sun, clouds, peaks, river, green hills, pines. */
+function Sparkline({
+  x,
+  y,
+  points,
+  w = 140,
+  h = 36,
+}: {
+  x: number;
+  y: number;
+  points: number[];
+  w?: number;
+  h?: number;
+}) {
+  const max = Math.max(...points);
+  const min = Math.min(...points);
+  const range = max - min || 1;
+  const step = w / (points.length - 1);
+  const coords = points
+    .map((p, i) => {
+      const px = i * step;
+      const py = h - ((p - min) / range) * h;
+      return `${i === 0 ? "M" : "L"}${px.toFixed(1)} ${py.toFixed(1)}`;
+    })
+    .join(" ");
+  const area = `${coords} L${w} ${h} L0 ${h} Z`;
+  return (
+    <g transform={`translate(${x} ${y})`} aria-hidden>
+      <path d={area} className="fill-accent/10 dark:fill-accent/15" />
+      <path
+        d={coords}
+        fill="none"
+        className="stroke-accent/55 dark:stroke-accent/70"
+        strokeWidth={1.6}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+  );
+}
+
+function GrowthBars({ x, y, heights }: { x: number; y: number; heights: number[] }) {
+  const barW = 10;
+  const gap = 8;
+  return (
+    <g transform={`translate(${x} ${y})`} aria-hidden>
+      {heights.map((h, i) => (
+        <rect
+          key={i}
+          x={i * (barW + gap)}
+          y={-h}
+          width={barW}
+          height={h}
+          rx={2}
+          className={
+            i === heights.length - 1
+              ? "fill-accent/70 dark:fill-accent/80"
+              : "fill-ink/12 dark:fill-white/15"
+          }
+        />
+      ))}
+    </g>
+  );
+}
+
+function KpiChip({ x, y, label, value }: { x: number; y: number; label: string; value: string }) {
+  return (
+    <g transform={`translate(${x} ${y})`} aria-hidden>
+      <rect
+        width={88}
+        height={36}
+        rx={8}
+        className="fill-surface/70 dark:fill-white/[0.04] stroke-ink/10 dark:stroke-white/10"
+        strokeWidth={1}
+      />
+      <text x={10} y={14} fontSize={8} className="fill-ink/40 dark:fill-white/40 font-mono uppercase tracking-wider">
+        {label}
+      </text>
+      <text x={10} y={28} fontSize={12} className="fill-ink/70 dark:fill-white/75 font-display font-semibold">
+        {value}
+      </text>
+    </g>
+  );
+}
+
+/** Subtle dashboard / growth scenery behind the route. */
 function MapDoodles({ variant }: { variant: Variant }) {
   if (variant === "desktop") {
     return (
       <g aria-hidden>
-        <Sun x={955} y={82} r={24} />
-        <Cloud x={300} y={78} />
-        <Cloud x={706} y={116} s={0.75} />
-        <Birds x={400} y={148} />
-        <Birds x={862} y={102} />
+        <ChartGrid w={1200} h={640} />
 
-        {/* mountain ranges */}
-        <Peak x={360} y={505} w={55} h={95} />
-        <Peak x={430} y={505} w={95} h={190} />
-        <Peak x={520} y={505} w={70} h={130} />
-        <Peak x={1105} y={585} w={85} h={150} />
-        <Peak x={1170} y={585} w={60} h={100} />
-
-        {/* river running down from the right range */}
+        {/* baseline trend */}
         <path
-          d="M1135 430 C 1120 445 1095 465 1108 495 C 1130 545 1070 585 1085 640"
+          d="M40 560 C 220 540 320 500 480 470 C 680 430 820 380 980 300 C 1080 250 1140 200 1180 150"
           fill="none"
-          stroke="#86c5d8"
-          strokeWidth={7}
+          className="stroke-accent/20 dark:stroke-accent/25"
+          strokeWidth={1.5}
+          strokeDasharray="4 10"
           strokeLinecap="round"
-          opacity={0.5}
         />
 
-        {/* rolling hills along the bottom */}
-        <path
-          d="M0 640 L0 575 C 120 545 260 560 380 572 C 520 586 640 552 760 560 C 880 568 1000 540 1200 556 L1200 640 Z"
-          fill="#b5d3a4"
-          opacity={0.5}
+        <Sparkline
+          x={140}
+          y={70}
+          points={[12, 18, 15, 22, 28, 24, 35, 42, 38, 48, 55]}
+          w={160}
+          h={42}
         />
-        <path
-          d="M0 640 L0 606 C 150 580 300 600 450 608 C 620 617 760 592 900 600 C 1020 607 1120 596 1200 604 L1200 640 Z"
-          fill="#93c07e"
-          opacity={0.55}
+        <Sparkline
+          x={720}
+          y={480}
+          points={[40, 36, 44, 42, 50, 58, 55, 62, 70]}
+          w={150}
+          h={40}
         />
 
-        {/* trees */}
-        <Pine x={130} y={600} />
-        <Pine x={170} y={612} s={0.8} />
-        <Pine x={95} y={614} s={0.7} />
-        <Pine x={300} y={588} s={0.7} />
-        <Pine x={390} y={512} s={0.7} />
-        <Pine x={560} y={512} s={0.8} />
-        <Pine x={640} y={600} s={0.9} />
-        <Pine x={690} y={612} s={0.7} />
-        <Pine x={860} y={590} s={0.8} />
-        <Pine x={990} y={608} s={0.9} />
+        <GrowthBars x={980} y={560} heights={[18, 28, 24, 40, 36, 52, 64]} />
+        <GrowthBars x={60} y={280} heights={[22, 18, 32, 28, 44]} />
 
-        {/* signpost near the trailhead */}
-        <g transform="translate(168 442)">
-          <rect x={-1.5} y={-30} width={3} height={34} fill="#8a6d4b" opacity={0.75} />
-          <rect x={-16} y={-30} width={32} height={8} rx={2} fill="#a58c68" opacity={0.7} />
-          <rect x={-13} y={-19} width={26} height={7} rx={2} fill="#a58c68" opacity={0.5} />
+        <KpiChip x={430} y={80} label="Pipeline" value="+38%" />
+        <KpiChip x={980} y={40} label="ROAS" value="4.2x" />
+        <KpiChip x={200} y={340} label="Leads" value="↑ 2.1k" />
+
+        {/* faint donut / share ring */}
+        <g transform="translate(1100 280)" className="text-ink/12 dark:text-white/15">
+          <circle r={34} fill="none" stroke="currentColor" strokeWidth={8} />
+          <circle
+            r={34}
+            fill="none"
+            className="stroke-accent/50"
+            strokeWidth={8}
+            strokeDasharray="70 144"
+            strokeLinecap="round"
+            transform="rotate(-90)"
+          />
         </g>
-
-        <Compass at="translate(112 112)" />
       </g>
     );
   }
+
   return (
     <g aria-hidden>
-      <Sun x={325} y={75} r={18} />
-      <Cloud x={90} y={150} s={0.7} />
-      <Cloud x={310} y={1050} s={0.65} />
-      <Birds x={280} y={210} />
-      <Birds x={80} y={660} />
-
-      <Peak x={320} y={905} w={50} h={100} />
-      <Peak x={272} y={905} w={36} h={68} />
-      <Peak x={70} y={1420} w={50} h={100} />
-      <Peak x={130} y={1420} w={38} h={70} />
+      <ChartGrid w={390} h={1500} />
 
       <path
-        d="M0 1500 L0 1408 C 60 1390 130 1400 195 1408 C 270 1417 330 1398 390 1406 L390 1500 Z"
-        fill="#b5d3a4"
-        opacity={0.5}
-      />
-      <path
-        d="M0 1500 L0 1444 C 80 1424 160 1440 240 1446 C 310 1451 350 1440 390 1446 L390 1500 Z"
-        fill="#93c07e"
-        opacity={0.55}
+        d="M40 80 C 120 200 280 280 200 400 C 100 540 280 680 200 820 C 110 980 280 1120 200 1280 C 140 1380 180 1440 200 1480"
+        fill="none"
+        className="stroke-accent/18 dark:stroke-accent/22"
+        strokeWidth={1.4}
+        strokeDasharray="4 10"
+        strokeLinecap="round"
       />
 
-      <Pine x={40} y={470} s={0.8} />
-      <Pine x={350} y={380} s={0.7} />
-      <Pine x={45} y={760} s={0.7} />
-      <Pine x={345} y={1180} s={0.8} />
-      <Pine x={90} y={1448} s={0.8} />
-      <Pine x={300} y={1462} s={0.9} />
-      <Pine x={150} y={1470} s={0.6} />
+      <Sparkline x={40} y={180} points={[10, 16, 14, 22, 30, 28, 36]} w={120} h={34} />
+      <Sparkline x={220} y={720} points={[20, 18, 26, 32, 30, 40, 48]} w={120} h={34} />
+      <Sparkline x={40} y={1100} points={[30, 34, 32, 42, 50, 48, 58]} w={120} h={34} />
 
-      <Compass at="translate(58 250)" />
+      <GrowthBars x={280} y={420} heights={[16, 24, 20, 34, 42]} />
+      <GrowthBars x={40} y={900} heights={[20, 18, 28, 36, 48]} />
+
+      <KpiChip x={40} y={40} label="Pipeline" value="+38%" />
+      <KpiChip x={250} y={560} label="ROAS" value="4.2x" />
+      <KpiChip x={40} y={1320} label="Leads" value="↑ 2.1k" />
     </g>
   );
 }
@@ -318,8 +287,7 @@ function JourneyScene({ variant }: { variant: Variant }) {
   const activeRef = useRef(-1);
 
   // useEffect (not layout effect) so this trigger is created after the ones
-  // in sections above (Process pins); ScrollTrigger refreshes in creation
-  // order, and creating out of document order yields stale start positions.
+  // in sections above; ScrollTrigger refreshes in creation order.
   useEffect(() => {
     const path = pathRef.current;
     const progress = progressRef.current;
@@ -356,39 +324,43 @@ function JourneyScene({ variant }: { variant: Variant }) {
     const media = isDesktop ? "(min-width: 768px)" : "(max-width: 767.98px)";
 
     mm.add(`${media} and (prefers-reduced-motion: no-preference)`, () => {
-      const tween = gsap.to({ p: 0 }, {
-        p: 1,
-        ease: "none",
-        onUpdate() {
-          apply(this.targets()[0].p);
+      const tween = gsap.to(
+        { p: 0 },
+        {
+          p: 1,
+          ease: "none",
+          onUpdate() {
+            apply(this.targets()[0].p);
+          },
+          // Desktop: pin the viewport-tall scene and scrub through all 5
+          // stages. CSS sticky was used before, but sticky is broken by
+          // overflow-x-hidden on html/body/main — the page scrolled freely.
+          scrollTrigger: isDesktop
+            ? {
+                trigger: rootRef.current,
+                start: "top top",
+                end: () => "+=" + window.innerHeight * 3.2,
+                pin: true,
+                scrub: 1,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+              }
+            : {
+                trigger: mapRef.current,
+                start: "top 65%",
+                end: "bottom 85%",
+                scrub: 0.7,
+              },
         },
-        // No pin — the desktop scene sits inside a tall wrapper with a
-        // position:sticky viewport, so it can't collide with other pinned
-        // sections (Process). The trigger just maps wrapper scroll to 0..1.
-        scrollTrigger: isDesktop
-          ? {
-              trigger: rootRef.current,
-              start: "top top",
-              end: "bottom bottom",
-              scrub: 1,
-            }
-          : {
-              trigger: mapRef.current,
-              start: "top 65%",
-              end: "bottom 85%",
-              scrub: 0.7,
-            },
-      });
+      );
       return () => {
         tween.scrollTrigger?.kill();
         tween.kill();
       };
     });
-    // Reduced motion: show the completed journey, no scrubbing.
     mm.add(`${media} and (prefers-reduced-motion: reduce)`, () => {
       apply(1);
     });
-    // Guard against any remaining creation-order drift between sections.
     ScrollTrigger.sort();
     ScrollTrigger.refresh();
 
@@ -398,249 +370,251 @@ function JourneyScene({ variant }: { variant: Variant }) {
   const pct = (v: number, total: number) => (v / total) * 100;
 
   return (
-    <div ref={rootRef} className={isDesktop ? "relative h-[350vh]" : "px-6 pb-20 pt-24"}>
-      <div
-        className={
-          isDesktop ? "sticky top-0 flex h-svh flex-col overflow-hidden" : "contents"
-        }
-      >
-      {/* header */}
-      <div
-        className={
-          isDesktop
-            ? "mx-auto flex w-full max-w-[1440px] items-end justify-between px-12 pt-20"
-            : ""
-        }
-      >
-        <div>
-          <Eyebrow index="04" label="The journey" />
-          <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.03em] text-ink md:text-5xl">
-            From first call to shipped product.
-          </h2>
-        </div>
-        {isDesktop && (
-          <p className="hidden font-mono text-xs uppercase tracking-[0.25em] text-ink/40 md:block">
-            Scroll to travel ↓
-          </p>
-        )}
-      </div>
-
-      {/* map */}
-      <div
-        className={
-          isDesktop ? "flex flex-1 items-center justify-center px-8 pb-8" : "mt-10"
-        }
-      >
+    <div
+      ref={rootRef}
+      className={
+        isDesktop
+          ? "relative flex h-svh flex-col overflow-hidden"
+          : "px-6 pb-20 pt-24"
+      }
+    >
+        {/* header */}
         <div
-          ref={mapRef}
-          className="relative w-full"
-          style={{
-            aspectRatio: `${route.w} / ${route.h}`,
-            ...(isDesktop && {
-              width: `min(100%, calc((100svh - 240px) * ${route.w / route.h}))`,
-            }),
-          }}
+          className={
+            isDesktop
+              ? "mx-auto flex w-full max-w-[1440px] items-end justify-between px-12 pt-20"
+              : ""
+          }
         >
-          <svg
-            viewBox={`0 0 ${route.w} ${route.h}`}
-            className="h-full w-full"
-            aria-hidden
-          >
-            <defs>
-              <pattern
-                id={`journey-grid-${variant}`}
-                width={36}
-                height={36}
-                patternUnits="userSpaceOnUse"
-              >
-                <circle cx={1.2} cy={1.2} r={1.2} fill="#0a0a0a" opacity={0.06} />
-              </pattern>
-              <linearGradient id={`journey-sky-${variant}`} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#fdf9ec" />
-                <stop offset="70%" stopColor="#faf3e2" />
-                <stop offset="100%" stopColor="#f0eedd" />
-              </linearGradient>
-              <clipPath id={`journey-clip-${variant}`}>
-                <rect width={route.w} height={route.h} rx={28} />
-              </clipPath>
-            </defs>
-            <g clipPath={`url(#journey-clip-${variant})`}>
-            {/* warm paper base */}
-            <rect
-              width={route.w}
-              height={route.h}
-              rx={28}
-              fill={`url(#journey-sky-${variant})`}
-            />
-            <rect
-              width={route.w}
-              height={route.h}
-              rx={28}
-              fill={`url(#journey-grid-${variant})`}
-            />
-            <rect
-              x={0.75}
-              y={0.75}
-              width={route.w - 1.5}
-              height={route.h - 1.5}
-              rx={28}
-              fill="none"
-              stroke="#0a0a0a"
-              strokeOpacity={0.07}
-              strokeWidth={1.5}
-            />
-
-            <MapDoodles variant={variant} />
-
-            {/* dotted route + traveled portion */}
-            <path
-              ref={pathRef}
-              d={route.d}
-              className="text-ink/20"
-              stroke="currentColor"
-              fill="none"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeDasharray="0.5 9"
-            />
-            <path
-              ref={progressRef}
-              d={route.d}
-              className="text-accent"
-              stroke="currentColor"
-              fill="none"
-              strokeWidth={2.5}
-              strokeLinecap="round"
-            />
-
-            {points && (
-              <>
-                <Flag at={points.start} label="Start" tone="text-ink/45" />
-                <Flag at={points.end} label="Shipped" tone="text-accent" />
-                {points.nodes.map((n, i) => {
-                  const reached = i <= active;
-                  return (
-                    <g key={i} transform={`translate(${n.x} ${n.y})`}>
-                      <circle
-                        r={26}
-                        className={`fill-accent/15 origin-center transition-transform duration-500 [transform-box:fill-box] ${
-                          i === active ? "scale-100" : "scale-0"
-                        }`}
-                      />
-                      <circle
-                        r={14}
-                        className={`transition-colors duration-500 ${
-                          reached
-                            ? "fill-accent stroke-accent"
-                            : "fill-surface stroke-ink/20"
-                        }`}
-                        strokeWidth={1.5}
-                      />
-                      <text
-                        y={4}
-                        textAnchor="middle"
-                        fontSize={11}
-                        className={`font-mono transition-colors duration-500 ${
-                          reached ? "fill-white" : "fill-ink/50"
-                        }`}
-                      >
-                        {i + 1}
-                      </text>
-                    </g>
-                  );
-                })}
-              </>
-            )}
-
-            {/* traveler */}
-            <g ref={travelerRef} style={{ visibility: points ? "visible" : "hidden" }}>
-              <circle r={17} fill="#0a0a0a" />
-              <circle r={21} fill="none" stroke="#0a0a0a" strokeOpacity={0.15} />
-              <path d="M -6 5.5 L 9 0 L -6 -5.5 L -2.5 0 Z" fill="#ffffff" />
-            </g>
-            </g>
-          </svg>
-
-          {/* popup cards — one anchor per node so exits animate in place */}
-          {points && (
-            <div className="pointer-events-none absolute inset-0" aria-live="polite">
-              {points.nodes.map((n, i) => {
-                const x = pct(n.x, route.w);
-                const y = pct(n.y, route.h);
-                const side = isDesktop
-                  ? n.y < route.h / 2
-                    ? "below"
-                    : "above"
-                  : n.x < route.w / 2
-                    ? "right"
-                    : "left";
-                const anchor: React.CSSProperties =
-                  side === "above" || side === "below"
-                    ? {
-                        left: `clamp(170px, ${x}%, calc(100% - 170px))`,
-                        top: side === "above" ? `calc(${y}% - 26px)` : `calc(${y}% + 26px)`,
-                        transform:
-                          side === "above" ? "translate(-50%, -100%)" : "translate(-50%, 0)",
-                      }
-                    : {
-                        top: `${y}%`,
-                        transform: "translate(0, -50%)",
-                        ...(side === "right"
-                          ? { left: `calc(${x}% + 26px)` }
-                          : { right: `calc(${100 - x}% + 26px)` }),
-                      };
-                const origin = { above: "bottom center", below: "top center", left: "right center", right: "left center" }[side];
-                const caret = {
-                  above: "-bottom-[5px] left-1/2 -ml-[5px] border-b border-r",
-                  below: "-top-[5px] left-1/2 -ml-[5px] border-t border-l",
-                  right: "-left-[5px] top-1/2 -mt-[5px] border-b border-l",
-                  left: "-right-[5px] top-1/2 -mt-[5px] border-t border-r",
-                }[side];
-                return (
-                  <div key={i} className="absolute" style={anchor}>
-                    <AnimatePresence>
-                      {active === i && (
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.82, y: side === "above" ? 8 : -8 }}
-                          animate={{ opacity: 1, scale: 1, y: 0 }}
-                          exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-                          transition={{ duration: 0.5, ease: EASE_OUT_EXPO }}
-                          style={{ transformOrigin: origin }}
-                          className="relative w-[300px] max-w-[min(300px,52vw)] rounded-2xl border border-black/[0.08] bg-surface p-5 shadow-card max-md:w-[220px] max-md:max-w-[48vw] max-md:p-4"
-                        >
-                          <span
-                            aria-hidden
-                            className={`absolute h-[10px] w-[10px] rotate-45 border-black/[0.08] bg-surface ${caret}`}
-                          />
-                          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-                            {STAGES[i].week}
-                          </p>
-                          <h3 className="mt-1.5 font-display text-base font-semibold tracking-tight text-ink md:text-lg">
-                            {STAGES[i].title}
-                          </h3>
-                          <p className="mt-1.5 text-xs leading-relaxed text-body md:text-sm">
-                            {STAGES[i].text}
-                          </p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              })}
-            </div>
+          <div>
+            <Eyebrow index="02" label="The Proprietary SCALE Framework™" />
+            <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.03em] text-ink md:text-5xl">
+              From Strategy to Evolve.
+            </h2>
+          </div>
+          {isDesktop && (
+            <p className="hidden font-mono text-xs uppercase tracking-[0.25em] text-ink/40 md:block">
+              Scroll to travel ↓
+            </p>
           )}
         </div>
-      </div>
-      </div>
+
+        {/* map */}
+        <div
+          className={
+            isDesktop ? "flex flex-1 items-center justify-center px-8 pb-8" : "mt-10"
+          }
+        >
+          <div
+            ref={mapRef}
+            className="relative w-full"
+            style={{
+              aspectRatio: `${route.w} / ${route.h}`,
+              ...(isDesktop && {
+                width: `min(100%, calc((100svh - 240px) * ${route.w / route.h}))`,
+              }),
+            }}
+          >
+            <svg
+              viewBox={`0 0 ${route.w} ${route.h}`}
+              className="h-full w-full"
+              aria-hidden
+            >
+              <defs>
+                <clipPath id={`journey-clip-${variant}`}>
+                  <rect width={route.w} height={route.h} rx={28} />
+                </clipPath>
+              </defs>
+              <g clipPath={`url(#journey-clip-${variant})`}>
+                {/* premium paper / night panel */}
+                <rect
+                  width={route.w}
+                  height={route.h}
+                  rx={28}
+                  className="fill-paper dark:fill-[#101014]"
+                />
+                <rect
+                  width={route.w}
+                  height={route.h}
+                  rx={28}
+                  className="fill-accent/[0.04] dark:fill-accent/[0.06]"
+                />
+                <rect
+                  x={0.75}
+                  y={0.75}
+                  width={route.w - 1.5}
+                  height={route.h - 1.5}
+                  rx={28}
+                  fill="none"
+                  className="stroke-ink/10 dark:stroke-white/10"
+                  strokeWidth={1.5}
+                />
+
+                <MapDoodles variant={variant} />
+
+                {/* muted route + gold traveled portion */}
+                <path
+                  ref={pathRef}
+                  d={route.d}
+                  className="text-ink/20 dark:text-white/20"
+                  stroke="currentColor"
+                  fill="none"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeDasharray="0.5 9"
+                />
+                <path
+                  ref={progressRef}
+                  d={route.d}
+                  className="text-accent"
+                  stroke="currentColor"
+                  fill="none"
+                  strokeWidth={2.5}
+                  strokeLinecap="round"
+                />
+
+                {points && (
+                  <>
+                    <Flag at={points.start} label="Strategy" tone="text-ink/45 dark:text-white/45" />
+                    <Flag at={points.end} label="Evolve" tone="text-accent" />
+                    {points.nodes.map((n, i) => {
+                      const reached = i <= active;
+                      return (
+                        <g key={STAGES[i].letter} transform={`translate(${n.x} ${n.y})`}>
+                          <circle
+                            r={26}
+                            className={`fill-accent/15 origin-center transition-transform duration-500 [transform-box:fill-box] ${
+                              i === active ? "scale-100" : "scale-0"
+                            }`}
+                          />
+                          <circle
+                            r={14}
+                            className={`transition-colors duration-500 ${
+                              reached
+                                ? "fill-accent stroke-accent"
+                                : "fill-surface stroke-ink/20 dark:fill-[#141419] dark:stroke-white/20"
+                            }`}
+                            strokeWidth={1.5}
+                          />
+                          <text
+                            y={4}
+                            textAnchor="middle"
+                            fontSize={11}
+                            className={`font-mono font-bold transition-colors duration-500 ${
+                              reached ? "fill-ink dark:fill-[#0a0a0a]" : "fill-ink/50 dark:fill-white/50"
+                            }`}
+                          >
+                            {STAGES[i].letter}
+                          </text>
+                        </g>
+                      );
+                    })}
+                  </>
+                )}
+
+                {/* traveler */}
+                <g
+                  ref={travelerRef}
+                  style={{ visibility: points ? "visible" : "hidden" }}
+                >
+                  <circle r={17} className="fill-ink dark:fill-white" />
+                  <circle
+                    r={21}
+                    fill="none"
+                    className="stroke-ink/15 dark:stroke-white/20"
+                  />
+                  <path
+                    d="M -6 5.5 L 9 0 L -6 -5.5 L -2.5 0 Z"
+                    className="fill-surface dark:fill-[#0c0c0e]"
+                  />
+                </g>
+              </g>
+            </svg>
+
+            {/* popup cards — one anchor per node so exits animate in place */}
+            {points && (
+              <div className="pointer-events-none absolute inset-0" aria-live="polite">
+                {points.nodes.map((n, i) => {
+                  const x = pct(n.x, route.w);
+                  const y = pct(n.y, route.h);
+                  const side = isDesktop
+                    ? n.y < route.h / 2
+                      ? "below"
+                      : "above"
+                    : n.x < route.w / 2
+                      ? "right"
+                      : "left";
+                  const anchor: React.CSSProperties =
+                    side === "above" || side === "below"
+                      ? {
+                          left: `clamp(170px, ${x}%, calc(100% - 170px))`,
+                          top: side === "above" ? `calc(${y}% - 26px)` : `calc(${y}% + 26px)`,
+                          transform:
+                            side === "above" ? "translate(-50%, -100%)" : "translate(-50%, 0)",
+                        }
+                      : {
+                          top: `${y}%`,
+                          transform: "translate(0, -50%)",
+                          ...(side === "right"
+                            ? { left: `calc(${x}% + 26px)` }
+                            : { right: `calc(${100 - x}% + 26px)` }),
+                        };
+                  const origin = {
+                    above: "bottom center",
+                    below: "top center",
+                    left: "right center",
+                    right: "left center",
+                  }[side];
+                  const caret = {
+                    above: "-bottom-[5px] left-1/2 -ml-[5px] border-b border-r",
+                    below: "-top-[5px] left-1/2 -ml-[5px] border-t border-l",
+                    right: "-left-[5px] top-1/2 -mt-[5px] border-b border-l",
+                    left: "-right-[5px] top-1/2 -mt-[5px] border-t border-r",
+                  }[side];
+                  return (
+                    <div key={STAGES[i].letter} className="absolute" style={anchor}>
+                      <AnimatePresence>
+                        {active === i && (
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.82, y: side === "above" ? 8 : -8 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+                            transition={{ duration: 0.5, ease: EASE_OUT_EXPO }}
+                            style={{ transformOrigin: origin }}
+                            className="relative w-[300px] max-w-[min(300px,52vw)] rounded-2xl border border-black/[0.08] bg-surface p-5 shadow-card dark:border-white/10 dark:bg-[#141419] max-md:w-[220px] max-md:max-w-[48vw] max-md:p-4"
+                          >
+                            <span
+                              aria-hidden
+                              className={`absolute h-[10px] w-[10px] rotate-45 border-black/[0.08] bg-surface dark:border-white/10 dark:bg-[#141419] ${caret}`}
+                            />
+                            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+                              {STAGES[i].week} · {STAGES[i].letter}
+                            </p>
+                            <h3 className="mt-1.5 font-display text-base font-semibold tracking-tight text-ink md:text-lg dark:text-white">
+                              {STAGES[i].title}
+                            </h3>
+                            <p className="mt-1.5 text-xs leading-relaxed text-body md:text-sm dark:text-slate-300">
+                              {STAGES[i].text}
+                            </p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
     </div>
   );
 }
 
-/** Scroll-driven delivery-journey map: desktop gets a pinned landscape route,
- *  mobile gets a tall vertical one — same traveler / nodes / popup mechanics. */
+/** Scroll-driven SCALE journey map: desktop pinned scrub, mobile vertical path —
+ *  same traveler / nodes / popup mechanics. */
 export default function JourneyMap() {
   return (
-    <section id="journey" className="scroll-mt-24">
+    <section id="framework" className="scroll-mt-24">
       <div className="hidden md:block">
         <JourneyScene variant="desktop" />
       </div>

@@ -144,7 +144,7 @@ export default function Testimonials() {
                   draggable={false}
                   className="pointer-events-none relative aspect-[4/5] w-full rounded-[1.75rem] border border-black/[0.06] object-cover shadow-card"
                 />
-                <span className="absolute -bottom-4 -left-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent font-display text-2xl font-semibold text-white shadow-card">
+                <span className="absolute -bottom-4 -left-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent font-display text-2xl font-semibold text-ink shadow-card">
                   &ldquo;
                 </span>
               </div>

@@ -115,7 +115,7 @@ export default function ApplyForm({ initialRole }: { initialRole?: string }) {
 
       <button
         type="submit"
-        className="mt-2 inline-flex items-center justify-center self-start rounded-full bg-accent px-8 py-3.5 text-sm font-medium text-white transition-colors duration-300 hover:bg-accent-strong"
+        className="mt-2 inline-flex items-center justify-center self-start rounded-full bg-accent px-8 py-3.5 text-sm font-medium text-ink transition-colors duration-300 hover:bg-accent-strong"
       >
         Submit application
       </button>
