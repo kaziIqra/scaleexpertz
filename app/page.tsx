@@ -2,42 +2,57 @@ import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
 import TrustStrip from "@/components/sections/TrustStrip";
 import IntroStatement from "@/components/sections/IntroStatement";
+import ScaleFramework from "@/components/sections/ScaleFramework";
 import Services from "@/components/sections/Services";
 import WhatYouWontGet from "@/components/sections/WhatYouWontGet";
 import FeaturedWork from "@/components/sections/FeaturedWork";
+import Pricing from "@/components/sections/Pricing";
+import PlaybookBanner from "@/components/sections/PlaybookBanner";
 import FounderDiagnosis from "@/components/sections/FounderDiagnosis";
 import FAQ from "@/components/sections/FAQ";
 import FinalCTA from "@/components/sections/FinalCTA";
 import Footer from "@/components/sections/Footer";
 import BackgroundShift from "@/components/providers/BackgroundShift";
+import LogoBackdrop3D from "@/components/providers/LogoBackdrop3D";
 
 export default function Home() {
   return (
     <>
+      {/* ambient 3D logo watermark behind everything (fades in after the hero) */}
+      <LogoBackdrop3D />
       <Navbar />
-      <main className="overflow-x-hidden max-w-full">
+      <main className="relative z-[1] overflow-x-hidden max-w-full">
         {/* Section 1: Hero */}
         <Hero />
         
         {/* Trust Strip */}
         <TrustStrip />
         
-        {/* Section 2: Five Experts, Five Priorities, One Business */}
+        {/* Section 2: Five Experts, Five Priorities, One Business (Coordination Chaos™) */}
         <IntroStatement />
+
+        {/* Section 3: The Proprietary SCALE Framework™ */}
+        <ScaleFramework />
         
-        {/* Section 3: Everything You Need. One Team To Deliver It. */}
+        {/* Section 4: Everything You Need. One Team To Deliver It. */}
         <Services />
         
-        {/* Section 4: What You Won't Get From Us (Dark Glassmorphism) */}
+        {/* Section 5: What You Won't Get From Us (Dark Glassmorphism) */}
         <WhatYouWontGet />
         
-        {/* Section 5: Proof Over Promises */}
+        {/* Section 6: Proof Over Promises (Case Studies) */}
         <FeaturedWork />
+
+        {/* Section 7: Investment & 90-Day Growth Sprints™ (Interactive Pricing) */}
+        <Pricing />
+
+        {/* Section 8: The ScaleXpertz Growth Playbook™ (Lead Magnet) */}
+        <PlaybookBanner />
         
-        {/* Section 6: Founder Growth Diagnosis (Booking Experience) */}
+        {/* Section 9: Founder Growth Diagnosis (Booking Experience) */}
         <FounderDiagnosis />
         
-        {/* Section 7: Frequently Asked Questions */}
+        {/* Section 10: Frequently Asked Questions */}
         <FAQ />
         
         {/* Final CTA */}

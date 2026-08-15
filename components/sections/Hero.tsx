@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Logo3D from "@/components/ui/Logo3D";
 import Magnetic from "@/components/ui/Magnetic";
 import Marquee from "@/components/ui/Marquee";
 import TextReveal from "@/components/ui/TextReveal";
@@ -18,12 +20,12 @@ const SERVICES = [
 ];
 
 const DISCIPLINES = [
-  { name: "Website", x: -140, y: -90, icon: "🌐" },
-  { name: "Marketing", x: 120, y: -100, icon: "📈" },
+  { name: "Website", x: -175, y: -120, icon: "🌐" },
+  { name: "Marketing", x: 175, y: -125, icon: "📈" },
   { name: "Branding", x: -160, y: 10, icon: "🎨" },
   { name: "AI", x: 150, y: 10, icon: "🤖" },
-  { name: "Finance", x: -110, y: 110, icon: "💰" },
-  { name: "Technology", x: 110, y: 110, icon: "⚙️" },
+  { name: "Finance", x: -145, y: 140, icon: "💰" },
+  { name: "Technology", x: 145, y: 140, icon: "⚙️" },
 ];
 
 function FadeUp({
@@ -49,8 +51,21 @@ function FadeUp({
   );
 }
 
+/** Desktop breakpoint (lg) — decides which single hero visual gets mounted. */
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState<boolean | null>(null); // null = pre-hydration
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  return isDesktop;
+}
+
 /** Visual diagram showing floating disciplines merging into ScaleXpertz */
-function SystemMergeVisual() {
+function SystemMergeVisual({ play }: { play: boolean }) {
   return (
     <div className="relative flex h-[480px] w-full max-w-[540px] items-center justify-center">
       {/* Background ambient glow */}
@@ -64,7 +79,8 @@ function SystemMergeVisual() {
           cy="240"
           r="180"
           fill="none"
-          stroke="rgba(10,10,10,0.08)"
+          stroke="currentColor"
+          className="text-ink/[0.12]"
           strokeWidth="1.5"
           strokeDasharray="4 8"
         />
@@ -78,26 +94,27 @@ function SystemMergeVisual() {
             y2="240"
             stroke="rgba(79, 70, 229, 0.25)"
             strokeWidth="1.5"
-            strokeDasharray="3 6"
             initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
+            animate={play ? { pathLength: 1 } : {}}
             transition={{ duration: 1.2, delay: 0.8 + i * 0.1, ease: "easeOut" }}
           />
         ))}
       </svg>
 
-      {/* Central ScaleXpertz hub node */}
+      {/* Central 3D ScaleXpertz monogram hub */}
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
+        animate={play ? { scale: 1, opacity: 1 } : {}}
         transition={{ duration: 0.9, delay: 0.6, ease: EASE_OUT_EXPO }}
-        className="z-10 flex flex-col items-center justify-center rounded-3xl border border-accent/30 bg-white/90 px-7 py-5 shadow-2xl backdrop-blur-xl"
+        className="relative z-20 flex flex-col items-center"
       >
-        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-accent">
+        {/* ground shadow anchoring the mark in space */}
+        <div className="absolute left-1/2 top-[60%] h-14 w-60 -translate-x-1/2 rounded-[50%] bg-black/25 blur-2xl dark:bg-black/55" />
+        <div className="relative aspect-[912/700] w-[280px]">
+          <Logo3D className="h-full w-full" />
+        </div>
+        <span className="mt-5 rounded-full border border-accent/25 bg-white/85 dark:bg-[#141419]/85 px-4 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-accent dark:text-indigo-300 shadow-card backdrop-blur-md">
           One Connected System
-        </span>
-        <span className="mt-1 font-display text-2xl font-bold tracking-tight text-ink">
-          ScaleXpertz<span className="text-amber">.</span>
         </span>
       </motion.div>
 
@@ -106,11 +123,7 @@ function SystemMergeVisual() {
         <motion.div
           key={d.name}
           initial={{ opacity: 0, x: d.x * 1.3, y: d.y * 1.3 }}
-          animate={{
-            opacity: 1,
-            x: d.x,
-            y: d.y,
-          }}
+          animate={play ? { opacity: 1, x: d.x, y: d.y } : {}}
           transition={{
             duration: 1,
             delay: 0.3 + i * 0.1,
@@ -128,7 +141,7 @@ function SystemMergeVisual() {
               ease: "easeInOut",
               delay: i * 0.3,
             }}
-            className="flex items-center gap-2 rounded-2xl border border-black/[0.08] bg-white/80 px-4 py-2.5 shadow-card backdrop-blur-md transition-all hover:scale-105 hover:border-accent hover:shadow-card-hover"
+            className="flex items-center gap-2 rounded-2xl border border-black/[0.08] dark:border-white/15 bg-white/80 dark:bg-[#141419]/80 px-4 py-2.5 shadow-card backdrop-blur-md"
           >
             <span className="text-base">{d.icon}</span>
             <span className="font-display text-xs font-semibold tracking-tight text-ink">
@@ -143,22 +156,47 @@ function SystemMergeVisual() {
 
 export default function Hero() {
   const done = usePreloaderDone();
+  const isDesktop = useIsDesktop();
 
   return (
     <section id="top" className="relative isolate flex min-h-svh flex-col overflow-hidden">
+      {/* perspective grid floor: premium depth cue, masked away before the text zone */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div
+          className="absolute inset-x-[-15%] bottom-[-5%] h-[36%] origin-bottom opacity-[0.06] dark:opacity-[0.12] [transform:perspective(900px)_rotateX(62deg)]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(90deg, rgba(212,175,55,0.9) 0 1px, transparent 1px 56px), repeating-linear-gradient(0deg, rgba(212,175,55,0.9) 0 1px, transparent 1px 56px)",
+            maskImage: "linear-gradient(to top, black 15%, transparent 75%)",
+            WebkitMaskImage: "linear-gradient(to top, black 15%, transparent 75%)",
+          }}
+        />
+      </div>
+
       {/* background gradient graphics */}
-      <div className="absolute inset-y-0 right-0 w-full md:right-[-4%] md:w-[54%]" aria-hidden>
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-full md:right-[-4%] md:w-[54%]" aria-hidden>
         <div className="absolute right-[8%] top-[18%] h-[45vmin] w-[45vmin] rounded-full bg-accent/12 blur-3xl max-md:right-[-12%] max-md:top-[55%]" />
         <div className="absolute right-[28%] top-[48%] h-[28vmin] w-[28vmin] rounded-full bg-amber/12 blur-3xl max-md:left-[-8%] max-md:top-[72%]" />
+        <div className="absolute right-[18%] top-[30%] hidden h-[34vmin] w-[34vmin] rounded-full bg-gold/10 blur-3xl md:block" />
 
-        {/* Desktop System Merge Visual */}
-        <div className="absolute inset-0 hidden items-center justify-center md:flex">
-          <SystemMergeVisual />
+        {/* Desktop System Merge Visual — geometry is 1:1 with its viewBox only at lg+ */}
+        <div className="absolute inset-0 hidden items-center justify-center lg:flex">
+          {isDesktop !== false && <SystemMergeVisual play={done} />}
         </div>
       </div>
 
+      {/* below lg: faint 3D monogram behind the headline */}
+      <div aria-hidden className="pointer-events-none absolute right-[-14%] top-[8%] w-[250px] opacity-[0.15] dark:opacity-[0.2] lg:hidden">
+        <div className="aspect-[912/700] w-full">
+          {isDesktop !== true && <Logo3D className="h-full w-full" glow={false} />}
+        </div>
+      </div>
+
+      {/* readability scrim: text column stays high-contrast over the 3D visual */}
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 hidden w-[58%] bg-gradient-to-r from-paper via-paper/50 to-transparent lg:block" />
+
       {/* main hero content */}
-      <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col justify-center px-6 pb-28 pt-24 md:px-12 md:pb-40 md:pt-32">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col justify-center px-6 pb-16 pt-24 md:px-12 md:pb-24 md:pt-28">
         <FadeUp delay={0.15} play={done}>
           <p className="font-mono text-xs uppercase tracking-[0.25em] text-ink/60">
             <span className="mr-3 text-amber">✦</span>
@@ -167,19 +205,19 @@ export default function Hero() {
         </FadeUp>
 
         {/* Line by line animated headline */}
-        <h1 className="mt-5 font-display text-[clamp(2.5rem,7.5vw,5.5rem)] font-semibold leading-[0.98] tracking-[-0.03em] text-ink md:mt-8">
-          <TextReveal as="span" className="block" text="Your Next Hire" play={done} delay={0.2} />
-          <TextReveal as="span" className="block text-ink/80" text="Should Be" play={done} delay={0.5} />
-          <TextReveal as="span" className="block text-accent" text="Your Last Agency." play={done} delay={0.8} />
+        <h1 className="mt-4 font-display text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-ink md:mt-6">
+          <TextReveal as="span" className="block text-ink dark:text-white" text="Your Next Hire" play={done} delay={0.2} />
+          <TextReveal as="span" className="block text-ink/80 dark:text-white/85" text="Should Be" play={done} delay={0.5} />
+          <TextReveal as="span" className="block text-accent dark:text-indigo-400" text="Your Last Agency." play={done} delay={0.8} />
         </h1>
 
         {/* Subheadline appears after 1s pause following headline reveal */}
         <FadeUp delay={1.8} play={done}>
-          <div className="mt-6 max-w-xl md:mt-8">
-            <p className="font-display text-base font-semibold text-ink md:text-lg">
+          <div className="mt-5 max-w-xl md:mt-6">
+            <p className="font-display text-sm font-semibold text-ink dark:text-white sm:text-base">
               Every new agency solves one problem. And creates another to manage.
             </p>
-            <p className="mt-2 text-base leading-relaxed text-body md:text-lg">
+            <p className="mt-2 text-sm leading-relaxed text-body dark:text-slate-300 sm:text-base">
               ScaleXpertz brings strategy, branding, websites, marketing, AI and execution under one team—so you can focus on growing your business instead of coordinating it.
             </p>
           </div>
@@ -200,20 +238,20 @@ export default function Hero() {
                   </svg>
                 </a>
               </Magnetic>
-              <span className="pl-3 font-mono text-[11px] text-ink/50">
+              <span className="pl-3 font-mono text-[11px] text-ink/70 dark:text-slate-400">
                 Usually replies within one business day.
               </span>
             </div>
 
             <a
               href="#services"
-              className="group inline-flex items-center gap-3 font-medium text-ink self-start sm:self-center py-2"
+              className="group inline-flex items-center gap-3 font-medium text-ink dark:text-white self-start sm:self-center py-2"
             >
               <span className="relative text-base font-semibold">
                 See How We Work
-                <span className="absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-ink transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100" />
+                <span className="absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-ink dark:bg-white transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100" />
               </span>
-              <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-ink/15 transition-colors duration-300 group-hover:border-ink/40">
+              <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-ink/15 dark:border-white/20 transition-colors duration-300 group-hover:border-ink/40 dark:group-hover:border-white/50">
                 <svg
                   className="h-4 w-4 transition-transform duration-300 ease-out group-hover:translate-x-[3px]"
                   viewBox="0 0 16 16"
@@ -240,15 +278,15 @@ export default function Hero() {
         </FadeUp>
 
         {/* Mobile Visual */}
-        <FadeUp delay={1.2} play={done} className="mt-12 md:hidden">
-          <div aria-hidden className="relative mx-auto flex w-full max-w-sm flex-wrap items-center justify-center gap-2.5 rounded-2xl border border-black/[0.08] bg-surface/80 p-5 shadow-card backdrop-blur-md">
-            <p className="w-full text-center font-mono text-[10px] uppercase tracking-wider text-ink/50 mb-1">
+        <FadeUp delay={1.2} play={done} className="mt-12 lg:hidden">
+          <div className="relative mx-auto flex w-full max-w-sm flex-wrap items-center justify-center gap-2.5 rounded-2xl border border-black/[0.08] dark:border-white/15 bg-surface/90 dark:bg-[#141419]/90 p-5 shadow-card backdrop-blur-md">
+            <p className="w-full text-center font-mono text-[10px] uppercase tracking-wider text-ink/60 dark:text-slate-400 mb-1">
               Everything merges into ScaleXpertz:
             </p>
             {DISCIPLINES.map((d) => (
               <span
                 key={d.name}
-                className="flex items-center gap-1.5 rounded-full border border-black/[0.06] bg-white px-3 py-1.5 text-xs font-semibold text-ink shadow-sm"
+                className="flex items-center gap-1.5 rounded-full border border-black/[0.06] dark:border-white/15 bg-surface dark:bg-[#1c1c24] px-3 py-1.5 text-xs font-semibold text-ink dark:text-white shadow-sm"
               >
                 <span>{d.icon}</span>
                 <span>{d.name}</span>
@@ -266,17 +304,17 @@ export default function Hero() {
         transition={{ duration: 0.8, delay: 2.3 }}
         aria-hidden
       >
-        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-ink/50">
+        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-ink/70 dark:text-slate-400">
           Scroll
         </span>
-        <span className="relative h-12 w-px overflow-hidden bg-ink/10">
-          <span className="animate-scroll-line absolute inset-0 bg-ink" />
+        <span className="relative h-12 w-px overflow-hidden bg-ink/10 dark:bg-white/15">
+          <span className="animate-scroll-line absolute inset-0 bg-ink dark:bg-white" />
         </span>
       </motion.div>
 
       {/* services marquee */}
       <motion.div
-        className="absolute inset-x-0 bottom-0 z-10 border-t border-black/[0.05] bg-white/60 backdrop-blur-sm"
+        className="absolute inset-x-0 bottom-0 z-10 border-t border-black/[0.05] dark:border-white/10 bg-white/80 dark:bg-[#0c0c0e]/90 backdrop-blur-md"
         initial={{ opacity: 0 }}
         animate={done ? { opacity: 1 } : {}}
         transition={{ duration: 0.8, delay: 2.2 }}

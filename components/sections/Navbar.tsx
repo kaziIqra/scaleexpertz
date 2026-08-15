@@ -5,15 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, type MouseEvent } from "react";
 import Magnetic from "@/components/ui/Magnetic";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import { usePreloaderDone } from "@/lib/preloader";
 import { useLenis } from "@/components/providers/SmoothScroll";
 import { EASE_IN_OUT, EASE_OUT_EXPO } from "@/lib/animations";
 
 const LINKS = [
+  { label: "Framework", href: "#framework" },
   { label: "Services", href: "#services" },
   { label: "Guarantee", href: "#anti-agency" },
   { label: "Work", href: "#work" },
-  { label: "Diagnosis", href: "#diagnosis" },
+  { label: "Pricing", href: "#pricing" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -74,7 +76,7 @@ export default function Navbar() {
         <div
           className={`flex w-full items-center justify-between transition-all duration-500 ease-out ${
             scrolled
-              ? "mx-4 mt-3 max-w-[880px] rounded-full border border-black/[0.06] bg-white/70 px-5 py-2.5 shadow-card backdrop-blur-xl md:mx-6"
+              ? "mx-3 mt-3 max-w-[1080px] rounded-full border border-black/[0.08] dark:border-white/15 bg-white/90 dark:bg-[#141419]/90 px-5 py-2.5 shadow-card backdrop-blur-xl md:mx-6"
               : "max-w-[1440px] border border-transparent bg-transparent px-6 py-5 md:px-12"
           }`}
         >
@@ -85,7 +87,7 @@ export default function Navbar() {
               setOpen(false);
               lenis ? lenis.scrollTo(0, { duration: 1.4 }) : window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="flex items-center gap-2 font-display text-xl font-semibold tracking-tight text-ink"
+            className="flex shrink-0 items-center gap-2 font-display text-lg sm:text-xl font-semibold tracking-tight text-ink dark:text-white"
             aria-label="ScaleXpertz — back to top"
           >
             <Image
@@ -94,21 +96,21 @@ export default function Navbar() {
               width={441}
               height={344}
               priority
-              className="h-8 w-auto"
+              className="h-7 sm:h-8 w-auto"
             />
-            ScaleXpertz<span className="text-accent">.</span>
+            <span>ScaleXpertz<span className="text-accent dark:text-indigo-400">.</span></span>
           </a>
 
-          <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-4 lg:gap-6 md:flex" aria-label="Primary">
             {LINKS.slice(0, 3).map((l) => (
               <a
                 key={l.href}
                 href={l.href}
                 onClick={goTo(l.href)}
-                className="group relative text-sm font-medium text-ink/70 transition-colors duration-300 hover:text-ink"
+                className="group relative text-xs lg:text-sm font-medium text-ink/70 dark:text-slate-300 transition-colors duration-300 hover:text-ink dark:hover:text-white"
               >
                 {l.label}
-                <span className="absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-ink transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100" />
+                <span className="absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-ink dark:bg-white transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100" />
               </a>
             ))}
 
@@ -117,7 +119,7 @@ export default function Navbar() {
               <button
                 type="button"
                 aria-haspopup="menu"
-                className="flex items-center gap-1.5 text-sm font-medium text-ink/70 transition-colors duration-300 group-hover:text-ink"
+                className="flex items-center gap-1 text-xs lg:text-sm font-medium text-ink/70 dark:text-slate-300 transition-colors duration-300 group-hover:text-ink dark:group-hover:text-white"
               >
                 About Us
                 <svg
@@ -137,12 +139,12 @@ export default function Navbar() {
               </button>
               {/* pt-3 bridges the gap so hover doesn't drop between button and panel */}
               <div className="invisible absolute left-1/2 top-full -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-all duration-200 ease-out group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
-                <div className="w-44 rounded-2xl border border-black/[0.08] bg-white/90 p-2 shadow-card backdrop-blur-xl">
+                <div className="w-44 rounded-2xl border border-black/[0.08] dark:border-white/15 bg-white/95 dark:bg-[#141419]/95 p-2 shadow-card backdrop-blur-xl">
                   {ABOUT_LINKS.map((l) => (
                     <Link
                       key={l.href}
                       href={l.href}
-                      className="block rounded-xl px-4 py-2.5 text-sm font-medium text-ink/70 transition-colors duration-200 hover:bg-ink/[0.05] hover:text-ink"
+                      className="block rounded-xl px-4 py-2.5 text-xs lg:text-sm font-medium text-ink/70 dark:text-slate-300 transition-colors duration-200 hover:bg-ink/[0.05] dark:hover:bg-white/10 hover:text-ink dark:hover:text-white"
                     >
                       {l.label}
                     </Link>
@@ -156,20 +158,22 @@ export default function Navbar() {
                 key={l.href}
                 href={l.href}
                 onClick={goTo(l.href)}
-                className="group relative text-sm font-medium text-ink/70 transition-colors duration-300 hover:text-ink"
+                className="group relative text-xs lg:text-sm font-medium text-ink/70 dark:text-slate-300 transition-colors duration-300 hover:text-ink dark:hover:text-white"
               >
                 {l.label}
-                <span className="absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-ink transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100" />
+                <span className="absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-ink dark:bg-white transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100" />
               </a>
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-3">
+            <ThemeToggle />
+
             <Magnetic className="hidden md:inline-block">
               <a
                 href="#diagnosis"
                 onClick={goTo("#diagnosis")}
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-indigo-600 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/40 active:scale-95"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-indigo-600 px-5 py-2.5 text-xs lg:text-sm font-bold text-white shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/40 active:scale-95"
               >
                 Book a Call
               </a>

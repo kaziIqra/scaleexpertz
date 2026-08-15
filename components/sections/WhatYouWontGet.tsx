@@ -39,7 +39,7 @@ const POINTS = [
 
 export default function WhatYouWontGet() {
   return (
-    <section id="anti-agency" className="relative bg-[#0c0c0e] py-28 md:py-36 text-white overflow-hidden">
+    <section id="anti-agency" className="relative bg-[#0c0c0e] py-16 md:py-24 text-white overflow-hidden">
       {/* Background Soft Glow Gradients */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-[-10%] h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-[#d4af37]/[0.08] blur-[120px]" />
@@ -52,16 +52,16 @@ export default function WhatYouWontGet() {
           <span className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-[#d4af37]">
             ✕ Anti-Agency Guarantee
           </span>
-          <h2 className="mt-4 font-display text-4xl font-bold tracking-[-0.03em] md:text-6xl text-white">
+          <h2 className="mt-3 font-display text-2xl font-bold tracking-[-0.03em] sm:text-3xl md:text-4xl text-white">
             <TextReveal text="What You Won't Get From Us." as="span" className="block" />
           </h2>
-          <p className="mt-6 text-base md:text-lg text-white/70 leading-relaxed font-medium">
+          <p className="mt-4 text-sm sm:text-base text-white/70 leading-relaxed font-medium">
             Choosing a growth partner should make running your business easier—not give you another team to manage. Here&apos;s what you should never have to deal with when you work with ScaleXpertz.
           </p>
         </div>
 
         {/* Responsive 2x3 Grid */}
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {POINTS.map((p, i) => (
             <motion.div
               key={p.title}
@@ -69,12 +69,12 @@ export default function WhatYouWontGet() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.8, ease: EASE_OUT_EXPO, delay: i * 0.06 }}
-              className="group relative flex flex-col justify-between rounded-3xl border border-white/10 bg-[#141419]/90 p-8 shadow-2xl backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:border-[#d4af37]"
+              className="group relative flex flex-col justify-between rounded-3xl border border-white/10 bg-[#141419]/90 p-6 sm:p-7 shadow-2xl backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:border-[#d4af37]"
             >
               <div>
                 {/* Thin outlined red X icon in top-left corner */}
                 <div className="flex items-center justify-between">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-rose-500/40 text-rose-400 text-sm font-semibold transition-opacity duration-300 group-hover:opacity-0">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-rose-500/40 text-rose-400 text-xs font-semibold transition-opacity duration-300 group-hover:opacity-0">
                     ✕
                   </span>
                   <span className="font-mono text-xs text-[#d4af37]/60 font-semibold uppercase tracking-wider">
@@ -82,20 +82,20 @@ export default function WhatYouWontGet() {
                   </span>
                 </div>
 
-                <h3 className="mt-6 font-display text-2xl font-semibold tracking-tight text-white/90 group-hover:text-white transition-colors duration-300">
+                <h3 className="mt-5 font-display text-lg font-semibold tracking-tight sm:text-xl text-white/90 group-hover:text-white transition-colors duration-300">
                   {p.title}
                 </h3>
 
                 {p.isFingerPointing ? (
-                  <div className="mt-4 text-sm md:text-base leading-relaxed text-white/60 group-hover:text-white/90 transition-colors duration-300 space-y-2">
+                  <div className="mt-3 text-xs sm:text-sm leading-relaxed text-white/60 group-hover:text-white/90 transition-colors duration-300 space-y-1.5">
                     <p className="italic text-rose-300/80 font-medium">&ldquo;No, we&apos;re waiting on the designer.&rdquo;</p>
                     <p className="italic text-rose-300/80 font-medium">&ldquo;The developer hasn&apos;t finished.&rdquo;</p>
                     <p className="italic text-rose-300/80 font-medium">&ldquo;Marketing is still working on it.&rdquo;</p>
-                    <p className="pt-2 font-semibold text-white/80">Somehow, everyone has an update. Nobody has an answer.</p>
+                    <p className="pt-1.5 font-semibold text-white/80">Somehow, everyone has an update. Nobody has an answer.</p>
                     <p className="font-bold text-[#d4af37]">Not here. One team. One owner. One outcome.</p>
                   </div>
                 ) : (
-                  <div className="mt-4 space-y-2 text-sm md:text-base leading-relaxed text-white/60 group-hover:text-white/90 transition-colors duration-300">
+                  <div className="mt-3 space-y-1.5 text-xs sm:text-sm leading-relaxed text-white/60 group-hover:text-white/90 transition-colors duration-300">
                     <p className="font-medium text-white/80">{p.tagline}</p>
                     <p>{p.text}</p>
                   </div>
@@ -106,15 +106,15 @@ export default function WhatYouWontGet() {
         </div>
 
         {/* Closing Statement & CTA */}
-        <div className="mt-16 flex flex-col items-center justify-center text-center border-t border-white/10 pt-12">
-          <h3 className="font-display text-2xl font-semibold text-white md:text-3xl">
+        <div className="mt-12 flex flex-col items-center justify-center text-center border-t border-white/10 pt-10">
+          <h3 className="font-display text-xl font-semibold text-white sm:text-2xl">
             The right partner doesn&apos;t add complexity. They remove it.
           </h3>
-          <div className="mt-8">
+          <div className="mt-6">
             <Magnetic strength={12}>
               <a
                 href="#diagnosis"
-                className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#d4af37] via-amber-300 to-[#d4af37] bg-[length:200%_auto] px-9 py-4.5 text-base font-extrabold text-black shadow-xl shadow-[#d4af37]/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-2xl hover:shadow-[#d4af37]/50 active:scale-95 group"
+                className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#d4af37] via-amber-300 to-[#d4af37] bg-[length:200%_auto] px-8 py-4 text-sm sm:text-base font-extrabold text-black shadow-xl shadow-[#d4af37]/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-2xl hover:shadow-[#d4af37]/50 active:scale-95 group"
               >
                 Experience the Difference &rarr;
               </a>

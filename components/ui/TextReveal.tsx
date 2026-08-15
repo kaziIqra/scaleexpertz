@@ -70,8 +70,9 @@ export default function TextReveal({
       {...(controlled
         ? { animate: play ? "visible" : "hidden" }
         : { whileInView: "visible", viewport: { once: true, amount: 0.6 } })}
-      aria-label={text}
     >
+      {/* real accessible text (aria-label is prohibited on generic spans) */}
+      <span className="sr-only">{text}</span>
       {words.map((w, i) => (
         <span
           key={i}

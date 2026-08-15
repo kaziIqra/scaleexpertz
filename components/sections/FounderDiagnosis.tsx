@@ -63,7 +63,7 @@ export default function FounderDiagnosis() {
   };
 
   return (
-    <section id="diagnosis" className="relative scroll-mt-24 bg-night py-28 md:py-36 text-white overflow-hidden">
+    <section id="diagnosis" className="relative scroll-mt-24 bg-night py-16 md:py-24 text-white overflow-hidden">
       {/* Ambient background glows */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute left-[20%] top-[10%] h-[500px] w-[500px] rounded-full bg-accent/[0.12] blur-[120px]" />
@@ -71,20 +71,20 @@ export default function FounderDiagnosis() {
       </div>
 
       <div className="relative mx-auto max-w-[1440px] px-6 md:px-12">
-        <div className="grid gap-16 lg:grid-cols-12 lg:items-start">
+        <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
           
           {/* Left Side - Copy & Offer Breakdown */}
           <div className="lg:col-span-7">
             <Eyebrow index="06" label="Founder Growth Diagnosis" />
-            <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.03em] md:text-6xl leading-[1.05]">
+            <h2 className="mt-4 font-display text-2xl font-semibold tracking-[-0.03em] sm:text-3xl md:text-4xl leading-[1.1]">
               <TextReveal text="Every Business Has Blind Spots." as="span" className="block" />
               <TextReveal text="Let's Find Yours." as="span" className="block text-amber" delay={0.12} />
             </h2>
 
-            <p className="mt-6 text-lg text-white/80 leading-relaxed font-medium max-w-2xl">
+            <p className="mt-4 text-sm sm:text-base text-white/80 leading-relaxed font-medium max-w-2xl">
               Your next breakthrough might not require a bigger budget. It might require a clearer perspective. Every business has opportunities that are easy to miss from the inside.
             </p>
-            <p className="mt-3 text-base text-white/60 leading-relaxed max-w-2xl">
+            <p className="mt-2 text-xs sm:text-sm text-white/60 leading-relaxed max-w-2xl">
               Our Founder Growth Diagnosis helps uncover the bottlenecks, hidden opportunities, and strategic gaps that could be limiting your next stage of growth. Because the right decisions start with the right understanding.
             </p>
 
@@ -207,7 +207,7 @@ export default function FounderDiagnosis() {
                       placeholder="e.g. Rahul Sharma"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-accent"
+                      className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-base text-white outline-none focus:border-accent"
                     />
                   </div>
 
@@ -221,7 +221,7 @@ export default function FounderDiagnosis() {
                       placeholder="rahul@company.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-accent"
+                      className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-base text-white outline-none focus:border-accent"
                     />
                   </div>
 
@@ -234,7 +234,7 @@ export default function FounderDiagnosis() {
                       placeholder="https://company.com"
                       value={formData.website}
                       onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                      className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-accent"
+                      className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-base text-white outline-none focus:border-accent"
                     />
                   </div>
 
@@ -247,7 +247,7 @@ export default function FounderDiagnosis() {
                       placeholder="What is the biggest challenge holding back your growth right now?"
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-accent resize-none"
+                      className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-base text-white outline-none focus:border-accent resize-none"
                     />
                   </div>
 

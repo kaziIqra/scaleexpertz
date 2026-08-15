@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Magnetic from "@/components/ui/Magnetic";
 import TextReveal from "@/components/ui/TextReveal";
 import { EASE_OUT_EXPO } from "@/lib/animations";
@@ -18,8 +19,8 @@ export default function FinalCTA() {
         <span className="animate-drift absolute left-[30%] top-[74%] h-1 w-1 rounded-full bg-accent/60 [animation-delay:-6s]" />
       </div>
 
-      <div className="relative mx-auto flex max-w-[1440px] flex-col items-center px-6 py-32 text-center md:px-12 md:py-44">
-        <h2 className="font-display text-4xl font-semibold tracking-[-0.03em] text-white md:text-7xl">
+      <div className="relative mx-auto flex max-w-[1440px] flex-col items-center px-6 py-16 text-center md:px-12 md:py-24">
+        <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-white sm:text-3xl md:text-4xl leading-[1.1]">
           <TextReveal as="span" className="block" text="Ready to scale" />
           <TextReveal as="span" className="block" text="everything at once?" delay={0.12} />
         </h2>
@@ -27,7 +28,7 @@ export default function FinalCTA() {
         {/* shimmering accent underline */}
         <motion.span
           aria-hidden
-          className="animate-shimmer mt-6 block h-[3px] w-48 rounded-full md:w-72"
+          className="animate-shimmer mt-5 block h-[3px] w-36 rounded-full md:w-56"
           style={{
             backgroundImage:
               "linear-gradient(90deg, #4f46e5, #f59e0b, #4f46e5)",
@@ -40,7 +41,7 @@ export default function FinalCTA() {
         />
 
         <motion.div
-          className="mt-12"
+          className="mt-8"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -49,12 +50,12 @@ export default function FinalCTA() {
           <Magnetic strength={14}>
             <a
               href="mailto:scalexpertz@gmail.com"
-              className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-accent via-indigo-500 to-accent bg-[length:200%_auto] px-10 py-5 text-lg font-extrabold text-white shadow-2xl shadow-accent/40 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-[0_0_35px_rgba(79,70,229,0.6)] active:scale-95"
+              className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-accent via-indigo-500 to-accent bg-[length:200%_auto] px-8 py-4 text-base font-extrabold text-white shadow-2xl shadow-accent/40 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-[0_0_35px_rgba(79,70,229,0.6)] active:scale-95"
             >
               Book a Free Strategy Call
             </a>
           </Magnetic>
-          <p className="mt-6 font-mono text-xs uppercase tracking-[0.25em] text-white/40">
+          <p className="mt-4 font-mono text-xs uppercase tracking-[0.25em] text-white/40">
             Usually replies within 24 hours
           </p>
         </motion.div>

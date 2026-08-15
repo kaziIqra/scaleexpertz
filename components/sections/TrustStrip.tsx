@@ -25,7 +25,7 @@ const LOGOS = [
   },
   {
     name: "TikTok",
-    icon: <SiTiktok className="h-6 w-6 text-black" />,
+    icon: <SiTiktok className="h-6 w-6 text-black dark:text-white" />,
   },
   {
     name: "React JS",
@@ -38,14 +38,14 @@ const LOGOS = [
 
   {
     name: "Figma",
-    icon: <SiFigma className="h-6 w-6" />,
+    icon: <SiFigma className="h-6 w-6 text-ink dark:text-white" />,
   },
 ];
 
 export default function TrustStrip() {
   return (
-    <section className="border-y border-black/[0.05] py-10">
-      <p className="mb-8 text-center font-mono text-xs uppercase tracking-[0.25em] text-ink/40">
+    <section className="border-y border-black/[0.05] dark:border-white/10 py-8">
+      <p className="mb-6 text-center font-mono text-xs uppercase tracking-[0.25em] text-ink/50 dark:text-slate-400">
         Trusted by growing businesses
       </p>
       {/* opposite direction to the hero marquee */}
@@ -53,11 +53,11 @@ export default function TrustStrip() {
         {LOGOS.map((l) => (
           <div
             key={l.name}
-            className="mx-12 flex items-center gap-3 opacity-60 transition-all duration-300 hover:opacity-100"
+            className="mx-12 flex items-center gap-3 opacity-70 transition-all duration-300 hover:opacity-100"
           >
             {l.icon}
 
-            <span className="text-xl font-semibold text-ink">{l.name}</span>
+            <span className="text-lg font-semibold text-ink dark:text-white">{l.name}</span>
           </div>
         ))}
       </Marquee>

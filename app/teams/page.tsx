@@ -98,7 +98,7 @@ export default function TeamsPage() {
       <Navbar />
       <main className="overflow-x-hidden bg-[#0c0c0e] text-white">
         {/* 1. Hero Section */}
-        <section id="top" className="relative pt-36 pb-20 md:pt-48 md:pb-28">
+        <section id="top" className="relative pt-28 pb-14 md:pt-36 md:pb-20">
           {/* Ambient Gold Glow Background */}
           <div className="absolute right-[10%] top-[15%] h-[40vmin] w-[40vmin] rounded-full bg-[#d4af37]/[0.1] blur-[120px]" aria-hidden />
           <div className="absolute left-[10%] top-[35%] h-[30vmin] w-[30vmin] rounded-full bg-accent/[0.1] blur-[120px]" aria-hidden />
@@ -108,13 +108,13 @@ export default function TeamsPage() {
               <Eyebrow index="01" label="Meet the team" />
             </FadeUp>
             
-            <h1 className="mt-6 font-display text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[1.02] tracking-[-0.03em] text-white max-w-5xl">
+            <h1 className="mt-4 font-display text-[clamp(2rem,4.5vw,3.5rem)] font-bold leading-[1.05] tracking-[-0.03em] text-white max-w-4xl">
               <TextReveal text="Meet The Team" as="span" className="block" play={done} delay={0.2} />
               <TextReveal text="Behind Every Growth Decision." as="span" className="block text-[#d4af37]" play={done} delay={0.35} />
             </h1>
             
             <FadeUp delay={0.5} play={done}>
-              <p className="mt-8 max-w-3xl text-lg md:text-xl leading-relaxed text-white/80 font-medium">
+              <p className="mt-6 max-w-2xl text-sm sm:text-base leading-relaxed text-white/80 font-medium">
                 At ScaleXpertz, growth isn&apos;t handed from one department to another. Every strategy, campaign, website, automation, and system is built by people who take ownership from start to finish. We&apos;re intentionally small, so every client gets experienced minds—not layers of management.
               </p>
             </FadeUp>
@@ -122,9 +122,9 @@ export default function TeamsPage() {
         </section>
 
         {/* 2. Our Philosophy */}
-        <section className="mx-auto max-w-[1440px] px-6 py-12 md:px-12">
+        <section className="mx-auto max-w-[1440px] px-6 py-10 md:px-12">
           <motion.div 
-            className="rounded-3xl border border-white/10 bg-[#141419]/80 p-8 md:p-12 shadow-2xl backdrop-blur-md flex flex-col md:flex-row md:items-center justify-between gap-8"
+            className="rounded-3xl border border-white/10 bg-[#141419]/80 p-6 md:p-10 shadow-2xl backdrop-blur-md flex flex-col md:flex-row md:items-center justify-between gap-6"
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -132,15 +132,15 @@ export default function TeamsPage() {
           >
             <div className="max-w-md">
               <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#d4af37] font-semibold">Our Philosophy</span>
-              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white md:text-4xl">
+              <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-white md:text-3xl">
                 Small Team. Big Responsibility.
               </h2>
             </div>
-            <div className="max-w-xl space-y-3">
-              <p className="text-base md:text-lg leading-relaxed text-white/80 font-medium">
+            <div className="max-w-xl space-y-2">
+              <p className="text-sm sm:text-base leading-relaxed text-white/80 font-medium">
                 We don&apos;t believe great work comes from adding more people. It comes from putting the right people around the right business.
               </p>
-              <p className="font-display text-base md:text-lg font-bold text-[#d4af37] italic">
+              <p className="font-display text-sm sm:text-base font-bold text-[#d4af37] italic">
                 You&apos;re never handed from one department to another.
               </p>
             </div>

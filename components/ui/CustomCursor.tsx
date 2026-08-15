@@ -95,20 +95,20 @@ export default function CustomCursor() {
       }`}
     >
       <div ref={dotRef} className="absolute left-0 top-0 will-change-transform">
-        <div className="h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink" />
+        <div className="h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent" />
       </div>
       <div ref={ringRef} className="absolute left-0 top-0 will-change-transform">
         <div
           className={`flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border transition-all duration-300 ease-out ${
             label
-              ? "h-[90px] w-[90px] border-black/[0.06] bg-white/75 shadow-card backdrop-blur-sm"
+              ? "h-[90px] w-[90px] border-black/[0.06] dark:border-white/20 bg-surface/90 dark:bg-[#141419]/90 shadow-card backdrop-blur-sm"
               : active
-                ? "h-14 w-14 border-ink/30"
-                : "h-9 w-9 border-ink/25"
+                ? "h-14 w-14 border-accent/40"
+                : "h-9 w-9 border-accent/25"
           }`}
         >
           {label && (
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink dark:text-white font-bold">
               {label}
             </span>
           )}

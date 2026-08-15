@@ -44,26 +44,26 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-28 md:px-12 md:py-36">
-      <div className="grid gap-12 md:grid-cols-5 md:gap-8">
+    <section id="faq" className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12 md:py-24">
+      <div className="grid gap-10 md:grid-cols-5 md:gap-8">
         <div className="md:col-span-2">
           <Eyebrow index="07" label="Frequently Asked Questions" />
-          <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.03em] text-ink md:text-5xl">
+          <h2 className="mt-4 font-display text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl md:text-4xl">
             Questions Founders Usually Ask.
           </h2>
-          <p className="mt-4 max-w-sm text-body">
+          <p className="mt-3 max-w-sm text-sm sm:text-base text-body">
             If you&apos;re wondering the same thing, you&apos;re probably not the first.
           </p>
 
-          <div className="mt-12 hidden md:block rounded-2xl border border-black/[0.06] bg-surface p-6 shadow-card">
-            <h3 className="font-display text-lg font-bold text-ink">Still have questions?</h3>
-            <p className="mt-2 text-sm text-body leading-relaxed font-medium">
+          <div className="mt-8 hidden md:block rounded-2xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-6 shadow-card">
+            <h3 className="font-display text-base font-bold text-ink">Still have questions?</h3>
+            <p className="mt-2 text-xs sm:text-sm text-body leading-relaxed font-medium">
               Let&apos;s talk. Sometimes a 30-minute conversation brings more clarity than hours of research.
             </p>
-            <div className="mt-6">
+            <div className="mt-5">
               <a
                 href="#diagnosis"
-                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-indigo-600 px-5 py-3 text-xs font-bold text-white shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/40 active:scale-95"
+                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/40 active:scale-95"
               >
                 <span>Book Your Founder Growth Diagnosis</span>
                 <svg className="h-3.5 w-3.5 shrink-0 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">
@@ -80,15 +80,15 @@ export default function FAQ() {
             return (
               <div
                 key={item.q}
-                className="border-b border-black/[0.07] first:border-t transition-colors duration-300 hover:bg-black/[0.01]"
+                className="border-b border-black/[0.07] dark:border-white/10 first:border-t transition-colors duration-300 hover:bg-black/[0.01]"
               >
                 <button
                   type="button"
                   aria-expanded={isOpen}
                   onClick={() => setOpen(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between gap-6 py-6 text-left"
+                  className="flex w-full items-center justify-between gap-6 py-5 text-left"
                 >
-                  <span className="font-display text-lg font-medium tracking-tight text-ink md:text-xl">
+                  <span className="font-display text-base font-medium tracking-tight text-ink md:text-lg">
                     {item.q}
                   </span>
                   <span

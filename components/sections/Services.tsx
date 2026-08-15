@@ -85,14 +85,14 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-28 md:px-12 md:py-36"
+      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12 md:py-24"
     >
       <Eyebrow index="03" label="Services & Stack" />
 
       {/* Header & Intro Copy matching PDF exact specs */}
-      <div className="mt-6 grid gap-8 lg:grid-cols-12 lg:items-end">
+      <div className="mt-6 grid gap-6 lg:grid-cols-12 lg:items-end">
         <div className="lg:col-span-7">
-          <h2 className="font-display text-4xl font-semibold tracking-[-0.03em] text-ink md:text-6xl leading-[1.05]">
+          <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl md:text-4xl leading-[1.1]">
             <TextReveal as="span" className="block" text="Everything You Need." />
             <TextReveal
               as="span"
@@ -104,10 +104,10 @@ export default function Services() {
         </div>
 
         <div className="lg:col-span-5">
-          <p className="text-base md:text-lg leading-relaxed text-body font-medium">
+          <p className="text-sm sm:text-base leading-relaxed text-body font-medium">
             Growing a business shouldn&apos;t mean managing a different partner for every challenge. One agency for ads. One for branding. One for the website. <span className="text-ink font-semibold">At this point, your business needs an HR department.</span>
           </p>
-          <p className="mt-3 text-sm text-body/80">
+          <p className="mt-2 text-xs sm:text-sm text-body/80">
             From strategy and branding to marketing, websites, AI, finance, and technology—we bring every growth function together under one team that works towards one outcome: <strong className="text-ink">your business growth.</strong>
           </p>
         </div>
@@ -115,7 +115,7 @@ export default function Services() {
 
       {/* Cards Grid */}
       <motion.div
-        className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-6"
+        className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-6"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
@@ -127,7 +127,7 @@ export default function Services() {
             variants={cardVariants}
             className={`col-span-1 ${s.span}`}
           >
-            <TiltCard className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-black/[0.08] bg-surface p-8 shadow-card transition-all duration-500 hover:border-accent/40 hover:shadow-card-hover">
+            <TiltCard className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-6 sm:p-8 shadow-card transition-all duration-500 hover:border-accent/40 hover:shadow-card-hover">
               {/* Subtle top ambient glow on hover */}
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${s.accent} opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
@@ -139,21 +139,21 @@ export default function Services() {
                   <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent bg-accent/10 px-3 py-1 rounded-full">
                     {s.functionName}
                   </span>
-                  <span className="text-3xl transition-transform duration-500 group-hover:scale-125">
+                  <span className="text-2xl transition-transform duration-500 group-hover:scale-125">
                     {s.icon}
                   </span>
                 </div>
 
-                <h3 className="mt-6 font-display text-2xl font-semibold tracking-tight text-ink md:text-3xl group-hover:text-accent transition-colors duration-300">
+                <h3 className="mt-5 font-display text-xl font-semibold tracking-tight text-ink md:text-2xl group-hover:text-accent transition-colors duration-300">
                   {s.cardTitle}
                 </h3>
 
-                <p className="mt-4 text-base leading-relaxed text-body font-medium">
+                <p className="mt-3 text-sm leading-relaxed text-body font-medium">
                   {s.description}
                 </p>
               </div>
 
-              <div className="relative z-10 mt-8 pt-4 border-t border-black/[0.06] flex items-center justify-between text-xs font-mono text-ink/40 group-hover:text-accent font-semibold uppercase tracking-wider">
+              <div className="relative z-10 mt-6 pt-4 border-t border-black/[0.06] dark:border-white/10 flex items-center justify-between text-xs font-mono text-ink/40 group-hover:text-accent font-semibold uppercase tracking-wider">
                 <span>ScaleXpertz Discipline</span>
                 <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
               </div>

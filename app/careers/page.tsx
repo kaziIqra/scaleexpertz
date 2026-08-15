@@ -156,36 +156,36 @@ export default function CareersPage() {
   return (
     <>
       <Navbar />
-      <main className="mx-auto max-w-[1440px] px-6 pb-24 pt-36 md:px-12 md:pt-44">
+      <main className="mx-auto max-w-[1440px] px-6 pb-20 pt-28 md:px-12 md:pt-36">
         <Eyebrow index="02" label="Careers" />
-        <h1 className="mt-6 max-w-3xl font-display text-4xl font-semibold tracking-[-0.03em] text-ink md:text-6xl">
+        <h1 className="mt-4 max-w-3xl font-display text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl md:text-4xl">
           Do the best work of your career, weekly.
         </h1>
-        <p className="mt-6 max-w-xl leading-relaxed text-body">
+        <p className="mt-4 max-w-xl text-sm sm:text-base leading-relaxed text-body font-medium">
           We're a small senior team that replaces five vendors for our clients.
           That only works when every person here can own a problem end to end —
           which makes this a very good place to grow fast.
         </p>
 
         {/* perks */}
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {PERKS.map((p, i) => (
             <div
               key={p.title}
-              className="rounded-3xl border border-black/[0.06] bg-surface p-7 shadow-card"
+              className="rounded-3xl border border-black/[0.06] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-6 shadow-card"
             >
               <span className="font-mono text-xs text-ink/40">0{i + 1}</span>
-              <h2 className="mt-3 font-display text-lg font-semibold tracking-tight text-ink">
+              <h2 className="mt-2 font-display text-base font-semibold tracking-tight text-ink">
                 {p.title}
               </h2>
-              <p className="mt-2 text-sm leading-relaxed text-body">{p.text}</p>
+              <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-body">{p.text}</p>
             </div>
           ))}
         </div>
 
         {/* open roles */}
-        <div className="mt-24">
-          <h2 className="font-display text-3xl font-semibold tracking-[-0.03em] text-ink md:text-4xl">
+        <div className="mt-16">
+          <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-ink md:text-3xl">
             Open roles
           </h2>
           <div className="mt-8">

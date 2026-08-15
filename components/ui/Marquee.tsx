@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import { gsap } from "@/lib/gsap";
+import { usePausedMotion } from "@/components/providers/MotionPref";
 import { useLenis } from "@/components/providers/SmoothScroll";
 
 /**
@@ -22,8 +23,10 @@ export default function Marquee({
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
+  const { paused } = usePausedMotion();
 
   useEffect(() => {
+    if (paused) return; // user pause control (WCAG 2.2.2)
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const track = trackRef.current;
     if (!track) return;
@@ -51,7 +54,7 @@ export default function Marquee({
       gsap.ticker.remove(tick);
       tween.kill();
     };
-  }, [lenis, reverse, speed]);
+  }, [lenis, reverse, speed, paused]);
 
   return (
     <div className={`overflow-hidden ${className}`}>

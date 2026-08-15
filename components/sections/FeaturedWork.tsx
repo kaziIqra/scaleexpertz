@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Eyebrow from "@/components/ui/Eyebrow";
 import TextReveal from "@/components/ui/TextReveal";
 import Magnetic from "@/components/ui/Magnetic";
+import { useLenis } from "@/components/providers/SmoothScroll";
 import { EASE_OUT_EXPO } from "@/lib/animations";
 
 export interface Metric {
@@ -126,26 +127,41 @@ const CASE_STUDIES: CaseStudy[] = [
 
 export default function FeaturedWork() {
   const [selectedCase, setSelectedCase] = useState<CaseStudy | null>(null);
+  const lenis = useLenis();
+
+  useEffect(() => {
+    if (selectedCase) {
+      lenis?.stop();
+      document.body.style.overflow = "hidden";
+    } else {
+      lenis?.start();
+      document.body.style.overflow = "";
+    }
+    return () => {
+      lenis?.start();
+      document.body.style.overflow = "";
+    };
+  }, [selectedCase, lenis]);
 
   return (
     <section
       id="work"
-      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-28 md:px-12 md:py-36"
+      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12 md:py-24"
     >
       {/* Header section */}
       <div>
         <Eyebrow index="05" label="Proof Over Promises" />
-        <h2 className="mt-6 max-w-4xl font-display text-4xl font-semibold tracking-[-0.03em] text-ink md:text-6xl leading-[1.05]">
+        <h2 className="mt-4 max-w-4xl font-display text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl md:text-4xl leading-[1.1]">
           <TextReveal as="span" className="block" text="Proof Over Promises." />
           <TextReveal as="span" className="block text-accent" text="Results are easy to claim. Proof is harder to fake." delay={0.1} />
         </h2>
-        <p className="mt-6 max-w-2xl text-base md:text-lg leading-relaxed text-body font-medium">
+        <p className="mt-4 max-w-2xl text-sm sm:text-base leading-relaxed text-body font-medium">
           Every business comes with a different challenge. Different industries. Different customers. Different goals. That&apos;s why we don&apos;t believe in one-size-fits-all strategies. We understand the business first, build the right system second, and let the numbers speak for themselves.
         </p>
       </div>
 
       {/* 5 Visually Minimal Case Study Cards Grid */}
-      <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {CASE_STUDIES.map((p, i) => (
           <motion.div
             key={p.id}
@@ -153,7 +169,7 @@ export default function FeaturedWork() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.8, ease: EASE_OUT_EXPO, delay: i * 0.08 }}
-            className="group cursor-pointer flex flex-col justify-between rounded-3xl border border-black/[0.08] bg-surface p-6 shadow-card transition-all duration-500 hover:-translate-y-2 hover:border-accent hover:shadow-card-hover"
+            className="group cursor-pointer flex flex-col justify-between rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-5 sm:p-6 shadow-card transition-all duration-500 hover:-translate-y-2 hover:border-accent hover:shadow-card-hover"
             onClick={() => setSelectedCase(p)}
           >
             <div>
@@ -173,10 +189,10 @@ export default function FeaturedWork() {
               </div>
 
               {/* Bold headline & outcome */}
-              <h3 className="mt-6 font-display text-2xl font-bold tracking-tight text-ink group-hover:text-accent transition-colors duration-300">
+              <h3 className="mt-5 font-display text-xl font-bold tracking-tight text-ink group-hover:text-accent transition-colors duration-300">
                 {p.headline}
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-body font-medium">
+              <p className="mt-2 text-sm leading-relaxed text-body font-medium">
                 {p.outcome}
               </p>
             </div>
@@ -219,40 +235,41 @@ export default function FeaturedWork() {
       {/* Case Study Details Modal */}
       <AnimatePresence>
         {selectedCase && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
+          <div data-lenis-prevent className="fixed inset-0 z-50 overflow-y-auto p-4 sm:p-6 md:p-8">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedCase(null)}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             />
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.4, ease: EASE_OUT_EXPO }}
-              className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-3xl border border-black/10 bg-white p-6 shadow-2xl md:p-10"
-              role="dialog"
-              aria-modal="true"
-            >
+            <div className="relative flex min-h-full items-center justify-center py-6">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                transition={{ duration: 0.4, ease: EASE_OUT_EXPO }}
+                className="relative z-10 my-auto w-full max-w-3xl rounded-3xl border border-black/10 dark:border-white/15 bg-surface dark:bg-[#16161d] p-6 shadow-2xl md:p-10 text-ink dark:text-white"
+                role="dialog"
+                aria-modal="true"
+              >
               <button
                 onClick={() => setSelectedCase(null)}
                 aria-label="Close modal"
-                className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-surface text-ink transition-colors duration-300 hover:bg-black hover:text-white"
+                className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full border border-black/10 dark:border-white/15 bg-surface dark:bg-[#1f1f28] text-ink dark:text-white transition-colors duration-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
               >
                 ✕
               </button>
 
-              <span className="rounded-full bg-accent/10 px-3 py-1 font-mono text-xs font-semibold text-accent">
+              <span className="rounded-full bg-accent/10 dark:bg-accent/20 px-3 py-1 font-mono text-xs font-semibold text-accent dark:text-indigo-400">
                 {selectedCase.category} • {selectedCase.client}
               </span>
 
-              <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-ink md:text-4xl">
+              <h2 className="mt-4 font-display text-2xl font-bold tracking-tight text-ink dark:text-white sm:text-3xl">
                 {selectedCase.headline}
               </h2>
-              <p className="mt-3 text-base text-body font-medium">
+              <p className="mt-3 text-sm sm:text-base text-body dark:text-slate-300 font-medium">
                 {selectedCase.outcome}
               </p>
 
@@ -261,12 +278,12 @@ export default function FeaturedWork() {
                 {selectedCase.metrics.map((m) => (
                   <div
                     key={m.label}
-                    className="rounded-2xl border border-black/[0.08] bg-surface p-4 text-center"
+                    className="rounded-2xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-[#1f1f28] p-4 text-center"
                   >
-                    <p className="font-display text-xl font-bold tracking-tight text-ink md:text-2xl">
+                    <p className="font-display text-xl font-bold tracking-tight text-ink dark:text-white md:text-2xl">
                       {m.value}
                     </p>
-                    <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-ink/60">
+                    <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-ink/60 dark:text-slate-400">
                       {m.label}
                     </p>
                   </div>
@@ -275,46 +292,47 @@ export default function FeaturedWork() {
 
               {/* Problem & Solution */}
               <div className="mt-8 space-y-4">
-                <div className="rounded-2xl border border-amber/30 bg-amber/5 p-5">
+                <div className="rounded-2xl border border-amber/30 bg-amber/5 dark:bg-amber/10 p-5">
                   <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-amber">
                     The Challenge
                   </h4>
-                  <p className="mt-2 text-sm leading-relaxed text-ink/90">
+                  <p className="mt-2 text-sm leading-relaxed text-ink/90 dark:text-slate-200">
                     {selectedCase.problem}
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-accent/30 bg-accent/5 p-5">
-                  <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-accent">
+                <div className="rounded-2xl border border-accent/30 bg-accent/5 dark:bg-accent/10 p-5">
+                  <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-accent dark:text-indigo-400">
                     The System We Built
                   </h4>
-                  <p className="mt-2 text-sm leading-relaxed text-ink/90">
+                  <p className="mt-2 text-sm leading-relaxed text-ink/90 dark:text-slate-200">
                     {selectedCase.solution}
                   </p>
                 </div>
               </div>
 
-              <div className="mt-8 flex items-center justify-between border-t border-black/[0.08] pt-6">
+              <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-black/[0.08] dark:border-white/10 pt-6">
                 <a
                   href="/ScaleXpertz_Case_Studies_Report.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white shadow-card transition-colors duration-300 hover:bg-accent"
+                  className="inline-flex items-center gap-2 rounded-full bg-ink dark:bg-accent px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white shadow-card transition-colors duration-300 hover:bg-accent dark:hover:bg-indigo-600"
                 >
                   Download Report PDF →
                 </a>
 
                 <button
                   onClick={() => setSelectedCase(null)}
-                  className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/60 hover:text-ink"
+                  className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/60 dark:text-slate-400 hover:text-ink dark:hover:text-white"
                 >
                   Close Window
                 </button>
               </div>
             </motion.div>
           </div>
-        )}
-      </AnimatePresence>
-    </section>
+        </div>
+      )}
+    </AnimatePresence>
+  </section>
   );
 }

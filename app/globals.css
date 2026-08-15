@@ -1,12 +1,31 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --color-paper-val: #fafaf7;
+  --color-surface-val: #ffffff;
+  --color-ink-val: #0a0a0a;
+  --color-body-val: #52525b;
+  /* 3D logo front-face artwork: black+gold on light, platinum+gold on dark */
+  --logo3d-front: url("/logo-mark-3d.webp");
+}
+
+html.dark {
+  --color-paper-val: #0c0c0e;
+  --color-surface-val: #141419;
+  --color-ink-val: #ffffff;
+  --color-body-val: #cbd5e1;
+  color-scheme: dark;
+  --logo3d-front: url("/logo-mark-3d-dark.webp");
+}
+
 @theme inline {
   /* ── ScaleXpertz design tokens ── */
-  /* "paper", not "base" — a color named base would collide with the text-base font-size utility */
-  --color-paper: #fafaf7;
-  --color-surface: #ffffff;
-  --color-ink: #0a0a0a;
-  --color-body: #52525b;
+  --color-paper: var(--color-paper-val);
+  --color-surface: var(--color-surface-val);
+  --color-ink: var(--color-ink-val);
+  --color-body: var(--color-body-val);
   --color-accent: #4f46e5;
   --color-accent-strong: #4338ca;
   --color-amber: #f59e0b;
@@ -58,8 +77,10 @@
 
 html {
   background: var(--color-paper);
+  color: var(--color-body);
   overflow-x: hidden;
   max-width: 100vw;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
@@ -68,6 +89,29 @@ body {
   font-family: var(--font-sans);
   overflow-x: hidden;
   max-width: 100vw;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark body {
+  background-color: #0c0c0e !important;
+  color: #cbd5e1;
+}
+
+/* Dark mode global contrast enhancement */
+html.dark .bg-surface {
+  background-color: #141419;
+}
+
+html.dark .bg-paper {
+  background-color: #0c0c0e;
+}
+
+html.dark .shadow-card {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+html.dark .shadow-card-hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.15);
 }
 
 ::selection {
@@ -102,6 +146,37 @@ body {
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24'%3E%3Cpath d='M4 2.5 20 12l-7 1.3L9.5 20 4 2.5Z' fill='%230a0a0a' stroke='%23ffffff' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E")
       4 2,
     auto;
+}
+
+/* ── 3D logo (layered-plane extrusion) ── */
+.logo3d-img {
+  position: absolute;
+  inset: 0;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.logo3d-front {
+  background-image: var(--logo3d-front);
+}
+.logo3d-side {
+  background-image: url("/logo-mark-3d-gold.webp");
+}
+
+/* user-facing pause control (WCAG 2.2.2): freezes decorative CSS keyframes */
+html.motion-paused .animate-scroll-line,
+html.motion-paused .animate-shimmer,
+html.motion-paused .animate-drift {
+  animation-play-state: paused;
+}
+
+/* honor OS reduce-motion for decorative CSS keyframes */
+@media (prefers-reduced-motion: reduce) {
+  .animate-scroll-line,
+  .animate-shimmer,
+  .animate-drift {
+    animation: none;
+  }
 }
 
 /* Lenis smooth-scroll plumbing */
