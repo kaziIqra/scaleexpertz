@@ -113,7 +113,7 @@ export default function WhatYouWontGet() {
           <div className="mt-6">
             <Magnetic strength={12}>
               <a
-                href="#diagnosis"
+                href="/diagnosis"
                 className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#d4af37] via-amber-300 to-[#d4af37] bg-[length:200%_auto] px-8 py-4 text-sm sm:text-base font-extrabold text-black shadow-xl shadow-[#d4af37]/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-2xl hover:shadow-[#d4af37]/50 active:scale-95 group"
               >
                 Experience the Difference &rarr;

@@ -29,6 +29,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!mounted) return;
     const root = document.documentElement;
+    // Route-level ForceLight wins; still persist preference for when we leave.
+    if (root.dataset.forceLight === "1") {
+      root.classList.remove("dark");
+      localStorage.setItem("theme", theme);
+      return;
+    }
     if (theme === "dark") {
       root.classList.add("dark");
     } else {

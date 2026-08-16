@@ -170,13 +170,12 @@ export default function Navbar() {
             <ThemeToggle />
 
             <Magnetic className="hidden md:inline-block">
-              <a
-                href="#diagnosis"
-                onClick={goTo("#diagnosis")}
+              <Link
+                href="/diagnosis"
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent-strong px-5 py-2.5 text-xs lg:text-sm font-bold text-ink shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/40 active:scale-95"
               >
                 Book a Call
-              </a>
+              </Link>
             </Magnetic>
 
             <button
@@ -287,13 +286,13 @@ export default function Navbar() {
               exit={{ opacity: 0, transition: { duration: 0.2 } }}
               className="flex flex-col gap-4"
             >
-              <a
-                href="#contact"
-                onClick={goTo("#contact")}
+              <Link
+                href="/diagnosis"
+                onClick={() => setOpen(false)}
                 className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-4 text-base font-medium text-ink"
               >
                 Book a Call
-              </a>
+              </Link>
               <p className="text-center font-mono text-xs uppercase tracking-[0.2em] text-ink/40">
                 scalexpertz@gmail.com
               </p>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 export interface PricingAddon {
@@ -69,10 +70,6 @@ export default function PricingCalculator({
     setSelectedAddons((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
-  };
-
-  const goToDiagnosis = () => {
-    document.querySelector("#diagnosis")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -220,9 +217,8 @@ export default function PricingCalculator({
               </svg>
               Send a Message
             </a>
-            <button
-              type="button"
-              onClick={goToDiagnosis}
+            <Link
+              href="/diagnosis"
               className="inline-flex w-full items-center justify-center gap-2.5 rounded-full border border-black/[0.12] bg-white px-6 py-3.5 text-sm font-bold text-ink transition-all duration-300 hover:border-accent hover:text-accent dark:border-white/20 dark:bg-transparent dark:text-white dark:hover:border-accent dark:hover:text-amber"
             >
               <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" aria-hidden>
@@ -230,7 +226,7 @@ export default function PricingCalculator({
                 <circle cx="8" cy="8" r="1.8" stroke="currentColor" strokeWidth="1.4" />
               </svg>
               Book a Call
-            </button>
+            </Link>
           </div>
 
           <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-wider text-ink/40 dark:text-slate-500">

@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import Link from "next/link";
 import {
+  LuCalendar,
   LuClipboardCheck,
   LuClock,
   LuLayoutGrid,
@@ -66,19 +67,6 @@ const WHAT_YOU_WONT_GET = [
 ];
 
 export default function FounderDiagnosis() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    website: "",
-    message: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
-
   return (
     <section id="diagnosis" className="relative scroll-mt-24 bg-night py-16 md:py-24 text-white overflow-hidden">
       {/* Ambient background glows */}
@@ -88,93 +76,48 @@ export default function FounderDiagnosis() {
       </div>
 
       <div className="relative mx-auto max-w-[1440px] px-6 md:px-12">
-        <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
-          
-          {/* Left Side - Copy & Offer Breakdown */}
+        {/* Full-width intro */}
+        <div className="max-w-3xl text-center lg:text-left">
+          <Eyebrow index="06" label="Founder Growth Diagnosis" />
+          <h2 className="mt-4 font-display text-2xl font-semibold tracking-[-0.03em] sm:text-3xl md:text-4xl leading-[1.1]">
+            <TextReveal text="Every Business Has Blind Spots." as="span" className="block" />
+            <TextReveal text="Let's Find Yours." as="span" className="block text-amber" delay={0.12} />
+          </h2>
+
+          <p className="mt-4 mx-auto text-sm sm:text-base text-white/80 leading-relaxed font-medium max-w-2xl lg:mx-0">
+            Your next breakthrough might not require a bigger budget. It might require a clearer perspective. Every business has opportunities that are easy to miss from the inside.
+          </p>
+          <p className="mt-2 mx-auto text-xs sm:text-sm text-white/60 leading-relaxed max-w-2xl lg:mx-0">
+            Our Founder Growth Diagnosis helps uncover the bottlenecks, hidden opportunities, and strategic gaps that could be limiting your next stage of growth. Because the right decisions start with the right understanding.
+          </p>
+        </div>
+
+        {/* Included grid + booking card — top-aligned */}
+        <div className="mt-12 grid gap-8 lg:grid-cols-12 lg:items-start lg:gap-10">
           <div className="lg:col-span-7">
-            <div className="text-center lg:text-left">
-              <Eyebrow index="06" label="Founder Growth Diagnosis" />
-              <h2 className="mt-4 font-display text-2xl font-semibold tracking-[-0.03em] sm:text-3xl md:text-4xl leading-[1.1]">
-                <TextReveal text="Every Business Has Blind Spots." as="span" className="block" />
-                <TextReveal text="Let's Find Yours." as="span" className="block text-amber" delay={0.12} />
-              </h2>
-
-              <p className="mt-4 mx-auto text-sm sm:text-base text-white/80 leading-relaxed font-medium max-w-2xl lg:mx-0">
-                Your next breakthrough might not require a bigger budget. It might require a clearer perspective. Every business has opportunities that are easy to miss from the inside.
-              </p>
-              <p className="mt-2 mx-auto text-xs sm:text-sm text-white/60 leading-relaxed max-w-2xl lg:mx-0">
-                Our Founder Growth Diagnosis helps uncover the bottlenecks, hidden opportunities, and strategic gaps that could be limiting your next stage of growth. Because the right decisions start with the right understanding.
-              </p>
-            </div>
-
-            {/* What's Included */}
-            <div className="mt-12">
-              <h3 className="font-mono text-xs uppercase tracking-widest text-amber font-semibold text-center lg:text-left">
-                What&apos;s Included in Your 45-Min Session:
-              </h3>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                {INCLUDED_ITEMS.map((item) => (
-                  <div
-                    key={item.title}
-                    className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm"
-                  >
-                    <div className="flex items-center gap-3">
-                      <IconBadge icon={item.icon} size={20} />
-                      <h4 className="font-display text-base font-semibold text-white">
-                        {item.title}
-                      </h4>
-                    </div>
-                    <p className="mt-2 text-xs leading-relaxed text-white/70 font-medium">
-                      {item.description}
-                    </p>
+            <h3 className="font-mono text-xs uppercase tracking-widest text-amber font-semibold text-center lg:text-left">
+              What&apos;s Included in Your 45-Min Session:
+            </h3>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              {INCLUDED_ITEMS.map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm"
+                >
+                  <div className="flex items-center gap-3">
+                    <IconBadge icon={item.icon} size={20} />
+                    <h4 className="font-display text-base font-semibold text-white">
+                      {item.title}
+                    </h4>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Who It's For & What You Won't Get */}
-            <div className="mt-12 grid gap-8 sm:grid-cols-2">
-              <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-6">
-                <h4 className="font-mono text-xs uppercase tracking-widest text-emerald-400 font-bold mb-4">
-                  This diagnosis is designed for founders who:
-                </h4>
-                <ul className="space-y-2.5 text-xs text-white/80">
-                  {WHO_ITS_FOR.map((text) => (
-                    <li key={text} className="flex items-start gap-2">
-                      <span className="text-emerald-400 font-bold">✓</span>
-                      <span>{text}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6">
-                <h4 className="font-mono text-xs uppercase tracking-widest text-rose-400 font-bold mb-4">
-                  What You Won&apos;t Get:
-                </h4>
-                <ul className="space-y-2.5 text-xs text-white/80">
-                  {WHAT_YOU_WONT_GET.map((text) => (
-                    <li key={text} className="flex items-start gap-2">
-                      <span className="text-rose-400 font-bold">✕</span>
-                      <span>{text}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Closing statement */}
-            <div className="mt-10 border-t border-white/10 pt-8">
-              <p className="font-display text-xl font-semibold text-white">
-                We don&apos;t start with solutions. We start with understanding.
-              </p>
-              <p className="mt-1 text-xs text-white/50 font-mono">
-                No &ldquo;Only 2 spots left!&rdquo; countdown timer. We dislike those too.
-              </p>
+                  <p className="mt-2 text-xs leading-relaxed text-white/70 font-medium">
+                    {item.description}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Right Side - Embedded Booking Experience */}
           <div className="lg:col-span-5 lg:sticky lg:top-28">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
@@ -192,12 +135,11 @@ export default function FounderDiagnosis() {
                     Book Founder Diagnosis
                   </h3>
                 </div>
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/20 text-accent font-bold">
-                  📅
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/20 text-accent">
+                  <LuCalendar size={20} strokeWidth={1.75} aria-hidden />
                 </span>
               </div>
 
-              {/* Session Meta badges */}
               <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-xs font-mono text-white/80">
                 <span className="inline-flex items-center gap-1.5">
                   <span className="inline-flex h-6 w-6 items-center justify-center rounded-md border border-accent/20 bg-accent/10 text-accent">
@@ -219,94 +161,71 @@ export default function FounderDiagnosis() {
                 </span>
               </div>
 
-              {submitted ? (
-                <div className="mt-8 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-8 text-center">
-                  <span className="text-4xl">🎉</span>
-                  <h4 className="mt-4 font-display text-xl font-bold text-white">
-                    Diagnosis Requested!
-                  </h4>
-                  <p className="mt-2 text-sm text-white/80">
-                    We&apos;ve received your booking details. Our strategy team will contact you within 24 hours to confirm your 45-minute calendar slot.
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-                  <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-white/70 mb-1.5">
-                      Your Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Rahul Sharma"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-base text-white outline-none focus:border-accent"
-                    />
-                  </div>
+              <p className="mt-8 text-sm leading-relaxed text-white/70 font-medium">
+                Tell us about your business and primary growth bottleneck. We&apos;ll
+                confirm a 45-minute slot within 24 hours.
+              </p>
 
-                  <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-white/70 mb-1.5">
-                      Work Email *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="rahul@company.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-base text-white outline-none focus:border-accent"
-                    />
-                  </div>
+              <div className="mt-8">
+                <Magnetic strength={10}>
+                  <Link
+                    href="/diagnosis"
+                    className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-6 py-4 text-sm sm:text-base font-bold text-ink shadow-xl shadow-accent/30 transition-all duration-500 hover:bg-[position:right_center] hover:scale-[1.02] hover:shadow-2xl hover:shadow-accent/50 active:scale-98"
+                  >
+                    <span className="tracking-tight">Book Your Founder Growth Diagnosis</span>
+                    <svg className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">
+                      <path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
+                </Magnetic>
+              </div>
 
-                  <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-white/70 mb-1.5">
-                      Company / Website
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="https://company.com"
-                      value={formData.website}
-                      onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                      className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-base text-white outline-none focus:border-accent"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-white/70 mb-1.5">
-                      Primary Growth Bottleneck
-                    </label>
-                    <textarea
-                      rows={3}
-                      placeholder="What is the biggest challenge holding back your growth right now?"
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-base text-white outline-none focus:border-accent resize-none"
-                    />
-                  </div>
-
-                  <div className="pt-2">
-                    <Magnetic strength={10}>
-                      <button
-                        type="submit"
-                        className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-6 py-4 text-sm sm:text-base font-bold text-ink shadow-xl shadow-accent/30 transition-all duration-500 hover:bg-[position:right_center] hover:scale-[1.02] hover:shadow-2xl hover:shadow-accent/50 active:scale-98"
-                      >
-                        <span className="tracking-tight">Book Your Founder Growth Diagnosis</span>
-                        <svg className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">
-                          <path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </button>
-                    </Magnetic>
-                  </div>
-
-                  <p className="text-center font-mono text-[10px] text-white/40 pt-2">
-                    No sales pitch guaranteed. 100% confidential.
-                  </p>
-                </form>
-              )}
+              <p className="text-center font-mono text-[10px] text-white/40 pt-4">
+                No sales pitch guaranteed. 100% confidential.
+              </p>
             </motion.div>
           </div>
+        </div>
 
+        {/* Who It's For & What You Won't Get */}
+        <div className="mt-12 grid gap-8 sm:grid-cols-2">
+          <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-6">
+            <h4 className="font-mono text-xs uppercase tracking-widest text-emerald-400 font-bold mb-4">
+              This diagnosis is designed for founders who:
+            </h4>
+            <ul className="space-y-2.5 text-xs text-white/80">
+              {WHO_ITS_FOR.map((text) => (
+                <li key={text} className="flex items-start gap-2">
+                  <span className="text-emerald-400 font-bold">✓</span>
+                  <span>{text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6">
+            <h4 className="font-mono text-xs uppercase tracking-widest text-rose-400 font-bold mb-4">
+              What You Won&apos;t Get:
+            </h4>
+            <ul className="space-y-2.5 text-xs text-white/80">
+              {WHAT_YOU_WONT_GET.map((text) => (
+                <li key={text} className="flex items-start gap-2">
+                  <span className="text-rose-400 font-bold">✕</span>
+                  <span>{text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Closing statement */}
+        <div className="mt-10 border-t border-white/10 pt-8">
+          <p className="font-display text-xl font-semibold text-white">
+            We don&apos;t start with solutions. We start with understanding.
+          </p>
+          <p className="mt-1 text-xs text-white/50 font-mono">
+            No &ldquo;Only 2 spots left!&rdquo; countdown timer. We dislike those too.
+          </p>
         </div>
       </div>
     </section>

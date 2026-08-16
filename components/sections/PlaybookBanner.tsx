@@ -115,7 +115,8 @@ export default function PlaybookBanner() {
                     Click below to open or download your official copy of The ScaleXpertz Growth Playbook™.
                   </p>
                   <a
-                    href="/ScaleXpertz_Case_Studies_Report.pdf"
+                    href="/ScaleXpertz_Growth_Playbook.pdf"
+                    download
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block w-full rounded-full bg-amber py-3.5 font-display text-sm font-bold text-black shadow-lg hover:scale-105 transition-transform"

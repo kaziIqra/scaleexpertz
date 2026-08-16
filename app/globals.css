@@ -20,6 +20,16 @@ html.dark {
   --logo3d-front: url("/logo-mark-3d-dark.webp");
 }
 
+/* Booking / diagnosis: keep light tokens even if `.dark` briefly reappears */
+html[data-force-light="1"] {
+  --color-paper-val: #faf8f0;
+  --color-surface-val: #ffffff;
+  --color-ink-val: #0a0a0a;
+  --color-body-val: #52525b;
+  color-scheme: light;
+  --logo3d-front: url("/logo-mark-3d.webp");
+}
+
 @theme inline {
   /* ── ScaleXpertz design tokens ── */
   --color-paper: var(--color-paper-val);
@@ -104,6 +114,14 @@ html.dark body {
   color: #cbd5e1;
 }
 
+html[data-force-light="1"] body {
+  background:
+    radial-gradient(ellipse 80% 50% at 100% 0%, rgba(212, 175, 55, 0.12), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 0% 100%, rgba(212, 175, 55, 0.08), transparent 50%),
+    var(--color-paper-val) !important;
+  color: var(--color-body-val);
+}
+
 /* Dark mode global contrast enhancement */
 html.dark .bg-surface {
   background-color: #141419;
@@ -113,12 +131,24 @@ html.dark .bg-paper {
   background-color: #0c0c0e;
 }
 
+html[data-force-light="1"] .bg-surface {
+  background-color: #ffffff;
+}
+
+html[data-force-light="1"] .bg-paper {
+  background-color: #faf8f0;
+}
+
 html.dark .shadow-card {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 html.dark .shadow-card-hover {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+html[data-force-light="1"] .shadow-card {
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px rgb(0 0 0 / 0.06);
 }
 
 ::selection {

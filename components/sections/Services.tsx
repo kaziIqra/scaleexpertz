@@ -1,16 +1,33 @@
 "use client";
 
 import { motion } from "framer-motion";
+import {
+  LuBot,
+  LuGlobe,
+  LuPalette,
+  LuSettings,
+  LuTrendingUp,
+  LuWallet,
+} from "react-icons/lu";
+import type { IconType } from "react-icons";
 import Eyebrow from "@/components/ui/Eyebrow";
 import TiltCard from "@/components/ui/TiltCard";
 import TextReveal from "@/components/ui/TextReveal";
 import { EASE_OUT_EXPO } from "@/lib/animations";
 
+function IconBadge({ icon: Icon, size = 20 }: { icon: IconType; size?: number }) {
+  return (
+    <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-accent/20 bg-accent/10 text-accent transition-transform duration-500 group-hover:scale-110">
+      <Icon size={size} strokeWidth={1.75} aria-hidden />
+    </span>
+  );
+}
+
 type ServiceCard = {
   functionName: string;
   cardTitle: string;
   description: string;
-  icon: string;
+  icon: IconType;
   span: string;
   accent: string;
 };
@@ -21,7 +38,7 @@ const SERVICES: ServiceCard[] = [
     cardTitle: "Meet Your 24/7 Salesperson",
     description:
       "Your website should build trust, answer questions, and convert visitors—even while you sleep.",
-    icon: "🌐",
+    icon: LuGlobe,
     span: "md:col-span-2 lg:col-span-4",
     accent: "from-amber/15 to-gold/10",
   },
@@ -30,7 +47,7 @@ const SERVICES: ServiceCard[] = [
     cardTitle: "Meet Your Revenue Engine",
     description:
       "We create predictable demand through strategic marketing that turns attention into customers.",
-    icon: "📈",
+    icon: LuTrendingUp,
     span: "md:col-span-2 lg:col-span-2",
     accent: "from-gold/15 to-amber/10",
   },
@@ -39,7 +56,7 @@ const SERVICES: ServiceCard[] = [
     cardTitle: "Meet The Reason They Remember You",
     description:
       "Great brands aren't just recognized—they're remembered, trusted, and chosen.",
-    icon: "🎨",
+    icon: LuPalette,
     span: "md:col-span-2 lg:col-span-2",
     accent: "from-pink-500/10 to-rose-500/5",
   },
@@ -48,7 +65,7 @@ const SERVICES: ServiceCard[] = [
     cardTitle: "Meet Your Silent Employee",
     description:
       "Automate repetitive work, streamline operations, and let your business run smarter 24×7.",
-    icon: "🤖",
+    icon: LuBot,
     span: "md:col-span-2 lg:col-span-4",
     accent: "from-emerald-500/10 to-teal-500/5",
   },
@@ -57,7 +74,7 @@ const SERVICES: ServiceCard[] = [
     cardTitle: "Meet Your Profit Partner",
     description:
       "Better financial systems help you make confident decisions, improve cash flow, and grow sustainably.",
-    icon: "💰",
+    icon: LuWallet,
     span: "md:col-span-2 lg:col-span-3",
     accent: "from-amber-500/10 to-yellow-500/5",
   },
@@ -66,7 +83,7 @@ const SERVICES: ServiceCard[] = [
     cardTitle: "Meet Your Business Operating System",
     description:
       "We build the digital infrastructure that keeps every part of your business connected and ready to scale.",
-    icon: "⚙️",
+    icon: LuSettings,
     span: "md:col-span-2 lg:col-span-3",
     accent: "from-cyan-500/10 to-sky-500/5",
   },
@@ -139,9 +156,7 @@ export default function Services() {
                   <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent bg-accent/10 px-3 py-1 rounded-full">
                     {s.functionName}
                   </span>
-                  <span className="text-2xl transition-transform duration-500 group-hover:scale-125">
-                    {s.icon}
-                  </span>
+                  <IconBadge icon={s.icon} size={20} />
                 </div>
 
                 <h3 className="mt-5 font-display text-xl font-semibold tracking-tight text-ink md:text-2xl group-hover:text-accent transition-colors duration-300">

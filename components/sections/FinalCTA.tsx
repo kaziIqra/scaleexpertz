@@ -49,7 +49,7 @@ export default function FinalCTA() {
         >
           <Magnetic strength={14}>
             <a
-              href="mailto:scalexpertz@gmail.com"
+              href="/diagnosis"
               className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-8 py-4 text-base font-extrabold text-ink shadow-2xl shadow-accent/40 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-[0_0_35px_rgba(212,175,55,0.6)] active:scale-95"
             >
               Book a Free Strategy Call

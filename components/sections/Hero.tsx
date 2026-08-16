@@ -186,7 +186,7 @@ export default function Hero() {
         <h1 className="mt-4 font-display text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-ink md:mt-6">
           <TextReveal as="span" className="block text-ink dark:text-white" text="Your Next Hire" play={done} delay={0.2} />
           <TextReveal as="span" className="block text-ink/80 dark:text-white/85" text="Should Be" play={done} delay={0.5} />
-          <TextReveal as="span" className="block text-accent dark:text-amber" text="Your Last Agency." play={done} delay={0.8} />
+          <TextReveal as="span" className="mt-2 block text-accent dark:text-amber" text="Your Last Agency." play={done} delay={0.8} />
         </h1>
 
         {/* Subheadline appears after 1s pause following headline reveal */}
@@ -207,7 +207,7 @@ export default function Hero() {
             <div className="flex flex-col items-center gap-1 lg:items-start">
               <Magnetic>
                 <a
-                  href="#diagnosis"
+                  href="/diagnosis"
                   className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-8 py-4 text-base font-bold text-ink shadow-xl shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-2xl hover:shadow-accent/40 active:scale-95 group"
                 >
                   Book a Strategy Call

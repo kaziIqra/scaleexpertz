@@ -62,7 +62,7 @@ export default function FAQ() {
             </p>
             <div className="mt-5">
               <a
-                href="#diagnosis"
+                href="/diagnosis"
                 className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent-strong px-5 py-2.5 text-xs font-bold text-ink shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/40 active:scale-95"
               >
                 <span>Book Your Founder Growth Diagnosis</span>
@@ -128,7 +128,7 @@ export default function FAQ() {
             </p>
             <div className="mt-4 flex justify-center">
               <a
-                href="#diagnosis"
+                href="/diagnosis"
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent-strong px-6 py-3.5 text-xs font-bold text-ink shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/40 active:scale-95"
               >
                 <span>Book Your Founder Growth Diagnosis</span>

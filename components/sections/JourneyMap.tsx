@@ -1,8 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { gsap } from "@/lib/gsap";
 import Eyebrow from "@/components/ui/Eyebrow";
 import { EASE_OUT_EXPO } from "@/lib/animations";
 
@@ -266,28 +266,167 @@ function MapDoodles({ variant }: { variant: Variant }) {
   );
 }
 
+/** Inline stage popover — anchored to a graph node, not a fullscreen modal. */
+function StagePopover({
+  stage,
+  side,
+  left,
+  top,
+  onClose,
+}: {
+  stage: (typeof STAGES)[number];
+  side: "above" | "below";
+  left: string;
+  top: string;
+  onClose: () => void;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    const onPointer = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node | null;
+      if (!target) return;
+      if (cardRef.current?.contains(target)) return;
+      if (target instanceof Element && target.closest("[data-stage-hit]")) return;
+      onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    // Delay so the opening click does not immediately close.
+    const t = window.setTimeout(() => {
+      document.addEventListener("mousedown", onPointer);
+      document.addEventListener("touchstart", onPointer);
+    }, 0);
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("touchstart", onPointer);
+    };
+  }, [onClose]);
+
+  const caret =
+    side === "below"
+      ? "-top-[5px] left-1/2 -ml-[5px] border-t border-l"
+      : "-bottom-[5px] left-1/2 -ml-[5px] border-b border-r";
+
+  // Position via motion x/y so Framer does not overwrite CSS transform.
+  const yRest = side === "above" ? "-100%" : 0;
+
+  return (
+    <motion.div
+      ref={cardRef}
+      role="dialog"
+      aria-labelledby="scale-stage-title"
+      initial={{ opacity: 0, scale: 0.92, x: "-50%", y: side === "above" ? "calc(-100% + 8px)" : -8 }}
+      animate={{ opacity: 1, scale: 1, x: "-50%", y: yRest }}
+      exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.2 } }}
+      transition={{ duration: 0.35, ease: EASE_OUT_EXPO }}
+      style={{ left, top, transformOrigin: side === "below" ? "top center" : "bottom center" }}
+      className="pointer-events-auto absolute z-30 w-[300px] max-w-[min(300px,72vw)] rounded-xl border border-white/12 bg-[#16161a] p-5 shadow-[0_12px_40px_rgba(0,0,0,0.45)] max-md:w-[240px] max-md:p-4"
+    >
+      <span
+        aria-hidden
+        className={`absolute h-[10px] w-[10px] rotate-45 border-white/12 bg-[#16161a] ${caret}`}
+      />
+      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+        {stage.week} · {stage.letter}
+      </p>
+      <h3
+        id="scale-stage-title"
+        className="mt-2 font-display text-xl font-semibold tracking-tight text-white md:text-2xl"
+      >
+        {stage.title}
+      </h3>
+      <p className="mt-2.5 text-sm leading-relaxed text-white/65">{stage.text}</p>
+    </motion.div>
+  );
+}
+
 /**
  * One journey scene (header + map). The route is a single SVG path; node
  * positions are sampled from it at runtime so markers always sit exactly on
- * the road. Scroll progress drives a traveler along the path, draws the
- * traveled portion in accent, and pops a detail card at the last node passed.
+ * the road. Clicking a SCALE letter moves the traveler to that node and opens
+ * an inline popover anchored to the stage.
  */
 function JourneyScene({ variant }: { variant: Variant }) {
   const route = ROUTES[variant];
   const isDesktop = variant === "desktop";
 
-  const rootRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const progressRef = useRef<SVGPathElement>(null);
   const travelerRef = useRef<SVGGElement>(null);
+  const pathLenRef = useRef(0);
+  const progressPRef = useRef(0);
+  const travelTweenRef = useRef<gsap.core.Tween | null>(null);
 
   const [points, setPoints] = useState<{ nodes: Pt[]; start: Pt; end: Pt } | null>(null);
   const [active, setActive] = useState(-1);
-  const activeRef = useRef(-1);
+  const [selectedStage, setSelectedStage] = useState<number | null>(null);
+  const closePopover = useCallback(() => setSelectedStage(null), []);
 
-  // useEffect (not layout effect) so this trigger is created after the ones
-  // in sections above; ScrollTrigger refreshes in creation order.
+  const applyProgress = useCallback((p: number) => {
+    const path = pathRef.current;
+    const progress = progressRef.current;
+    const traveler = travelerRef.current;
+    const L = pathLenRef.current;
+    if (!path || !progress || !traveler || !L) return;
+
+    const clamped = Math.max(0, Math.min(1, p));
+    progressPRef.current = clamped;
+    const len = clamped * L;
+    gsap.set(progress, { strokeDashoffset: L - len });
+    const pt = path.getPointAtLength(len);
+    const ahead = path.getPointAtLength(Math.min(len + 2, L));
+    const angle = (Math.atan2(ahead.y - pt.y, ahead.x - pt.x) * 180) / Math.PI;
+    gsap.set(traveler, { x: pt.x, y: pt.y, rotation: angle, transformOrigin: "center" });
+  }, []);
+
+  const travelToStage = useCallback(
+    (i: number) => {
+      const target = NODE_T[i];
+      const from = progressPRef.current;
+      travelTweenRef.current?.kill();
+
+      const reduced =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (reduced || Math.abs(target - from) < 0.001) {
+        applyProgress(target);
+        setActive(i);
+        return;
+      }
+
+      const proxy = { p: from };
+      travelTweenRef.current = gsap.to(proxy, {
+        p: target,
+        duration: Math.min(1.1, 0.35 + Math.abs(target - from) * 0.9),
+        ease: "power2.inOut",
+        onUpdate() {
+          applyProgress(proxy.p);
+        },
+        onComplete() {
+          setActive(i);
+        },
+      });
+      // Highlight destination immediately so nodes light up during travel.
+      setActive(i);
+    },
+    [applyProgress],
+  );
+
+  const onStageClick = useCallback(
+    (i: number) => {
+      travelToStage(i);
+      setSelectedStage((prev) => (prev === i ? null : i));
+    },
+    [travelToStage],
+  );
+
+  // Sample path geometry once; traveler only moves via travelToStage on click.
   useEffect(() => {
     const path = pathRef.current;
     const progress = progressRef.current;
@@ -295,323 +434,221 @@ function JourneyScene({ variant }: { variant: Variant }) {
     if (!path || !progress || !traveler) return;
 
     const L = path.getTotalLength();
+    pathLenRef.current = L;
     const at = (f: number) => {
       const p = path.getPointAtLength(f * L);
       return { x: p.x, y: p.y };
     };
     setPoints({ nodes: NODE_T.map(at), start: at(0), end: at(1) });
     gsap.set(progress, { strokeDasharray: L, strokeDashoffset: L });
+    applyProgress(0);
 
-    const apply = (p: number) => {
-      const len = p * L;
-      gsap.set(progress, { strokeDashoffset: L - len });
-      const pt = path.getPointAtLength(len);
-      const ahead = path.getPointAtLength(Math.min(len + 2, L));
-      const angle = (Math.atan2(ahead.y - pt.y, ahead.x - pt.x) * 180) / Math.PI;
-      gsap.set(traveler, { x: pt.x, y: pt.y, rotation: angle, transformOrigin: "center" });
-      let idx = -1;
-      NODE_T.forEach((t, i) => {
-        if (p >= t - 0.01) idx = i;
-      });
-      if (idx !== activeRef.current) {
-        activeRef.current = idx;
-        setActive(idx);
-      }
+    return () => {
+      travelTweenRef.current?.kill();
     };
-    apply(0);
-
-    const mm = gsap.matchMedia();
-    const media = isDesktop ? "(min-width: 768px)" : "(max-width: 767.98px)";
-
-    mm.add(`${media} and (prefers-reduced-motion: no-preference)`, () => {
-      const tween = gsap.to(
-        { p: 0 },
-        {
-          p: 1,
-          ease: "none",
-          onUpdate() {
-            apply(this.targets()[0].p);
-          },
-          // Desktop: pin the viewport-tall scene and scrub through all 5
-          // stages. CSS sticky was used before, but sticky is broken by
-          // overflow-x-hidden on html/body/main — the page scrolled freely.
-          scrollTrigger: isDesktop
-            ? {
-                trigger: rootRef.current,
-                start: "top top",
-                end: () => "+=" + window.innerHeight * 3.2,
-                pin: true,
-                scrub: 1,
-                anticipatePin: 1,
-                invalidateOnRefresh: true,
-              }
-            : {
-                trigger: mapRef.current,
-                start: "top 65%",
-                end: "bottom 85%",
-                scrub: 0.7,
-              },
-        },
-      );
-      return () => {
-        tween.scrollTrigger?.kill();
-        tween.kill();
-      };
-    });
-    mm.add(`${media} and (prefers-reduced-motion: reduce)`, () => {
-      apply(1);
-    });
-    ScrollTrigger.sort();
-    ScrollTrigger.refresh();
-
-    return () => mm.revert();
-  }, [isDesktop]);
+  }, [applyProgress, isDesktop]);
 
   const pct = (v: number, total: number) => (v / total) * 100;
 
   return (
     <div
-      ref={rootRef}
       className={
         isDesktop
-          ? "relative flex h-svh flex-col overflow-hidden"
+          ? "relative mx-auto w-full max-w-[1440px] px-12 pb-24 pt-24"
           : "px-6 pb-20 pt-24"
       }
     >
-        {/* header */}
+      {/* header */}
+      <div>
+        <Eyebrow index="02" label="The Proprietary SCALE Framework™" />
+        <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.03em] text-ink md:text-5xl">
+          From Strategy to Evolve.
+        </h2>
+      </div>
+
+      {/* map */}
+      <div className={isDesktop ? "mt-12 flex items-center justify-center" : "mt-10"}>
         <div
-          className={
-            isDesktop
-              ? "mx-auto flex w-full max-w-[1440px] items-end justify-between px-12 pt-20"
-              : ""
-          }
+          className="relative w-full"
+          style={{
+            aspectRatio: `${route.w} / ${route.h}`,
+            ...(isDesktop && {
+              width: `min(100%, calc((100svh - 280px) * ${route.w / route.h}))`,
+            }),
+          }}
         >
-          <div>
-            <Eyebrow index="02" label="The Proprietary SCALE Framework™" />
-            <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.03em] text-ink md:text-5xl">
-              From Strategy to Evolve.
-            </h2>
-          </div>
-          {isDesktop && (
-            <p className="hidden font-mono text-xs uppercase tracking-[0.25em] text-ink/40 md:block">
-              Scroll to travel ↓
-            </p>
+          <svg
+            viewBox={`0 0 ${route.w} ${route.h}`}
+            className="h-full w-full"
+            aria-hidden
+          >
+            <defs>
+              <clipPath id={`journey-clip-${variant}`}>
+                <rect width={route.w} height={route.h} rx={28} />
+              </clipPath>
+            </defs>
+            <g clipPath={`url(#journey-clip-${variant})`}>
+              {/* premium paper / night panel */}
+              <rect
+                width={route.w}
+                height={route.h}
+                rx={28}
+                className="fill-paper dark:fill-[#101014]"
+              />
+              <rect
+                width={route.w}
+                height={route.h}
+                rx={28}
+                className="fill-accent/[0.04] dark:fill-accent/[0.06]"
+              />
+              <rect
+                x={0.75}
+                y={0.75}
+                width={route.w - 1.5}
+                height={route.h - 1.5}
+                rx={28}
+                fill="none"
+                className="stroke-ink/10 dark:stroke-white/10"
+                strokeWidth={1.5}
+              />
+
+              <MapDoodles variant={variant} />
+
+              {/* muted route + gold traveled portion */}
+              <path
+                ref={pathRef}
+                d={route.d}
+                className="text-ink/20 dark:text-white/20"
+                stroke="currentColor"
+                fill="none"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeDasharray="0.5 9"
+              />
+              <path
+                ref={progressRef}
+                d={route.d}
+                className="text-accent"
+                stroke="currentColor"
+                fill="none"
+                strokeWidth={2.5}
+                strokeLinecap="round"
+              />
+
+              {points && (
+                <>
+                  <Flag at={points.start} label="Strategy" tone="text-ink/45 dark:text-white/45" />
+                  <Flag at={points.end} label="Evolve" tone="text-accent" />
+                  {points.nodes.map((n, i) => {
+                    const reached = i <= active;
+                    return (
+                      <g key={STAGES[i].letter} transform={`translate(${n.x} ${n.y})`}>
+                        <circle
+                          r={26}
+                          className={`fill-accent/15 origin-center transition-transform duration-500 [transform-box:fill-box] ${
+                            i === active ? "scale-100" : "scale-0"
+                          }`}
+                        />
+                        <circle
+                          r={14}
+                          className={`transition-colors duration-500 ${
+                            reached
+                              ? "fill-accent stroke-accent"
+                              : "fill-surface stroke-ink/20 dark:fill-[#141419] dark:stroke-white/20"
+                          }`}
+                          strokeWidth={1.5}
+                        />
+                        <text
+                          y={4}
+                          textAnchor="middle"
+                          fontSize={11}
+                          className={`font-mono font-bold transition-colors duration-500 ${
+                            reached ? "fill-ink dark:fill-[#0a0a0a]" : "fill-ink/50 dark:fill-white/50"
+                          }`}
+                        >
+                          {STAGES[i].letter}
+                        </text>
+                      </g>
+                    );
+                  })}
+                </>
+              )}
+
+              {/* traveler */}
+              <g
+                ref={travelerRef}
+                style={{ visibility: points ? "visible" : "hidden" }}
+              >
+                <circle r={17} className="fill-ink dark:fill-white" />
+                <circle
+                  r={21}
+                  fill="none"
+                  className="stroke-ink/15 dark:stroke-white/20"
+                />
+                <path
+                  d="M -6 5.5 L 9 0 L -6 -5.5 L -2.5 0 Z"
+                  className="fill-surface dark:fill-[#0c0c0e]"
+                />
+              </g>
+            </g>
+          </svg>
+
+          {/* Node hit targets + click popover */}
+          {points && (
+            <div className="absolute inset-0">
+              {points.nodes.map((n, i) => (
+                <button
+                  key={`hit-${STAGES[i].letter}`}
+                  type="button"
+                  data-stage-hit
+                  aria-label={`${selectedStage === i ? "Close" : "Open"} ${STAGES[i].title} details`}
+                  aria-expanded={selectedStage === i}
+                  onClick={() => onStageClick(i)}
+                  className="absolute z-20 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                  style={{
+                    left: `${pct(n.x, route.w)}%`,
+                    top: `${pct(n.y, route.h)}%`,
+                    width: isDesktop ? 44 : 48,
+                    height: isDesktop ? 44 : 48,
+                  }}
+                />
+              ))}
+
+              {/* Click-selected contextual popover — below node (flip above if near bottom) */}
+              <div className="pointer-events-none absolute inset-0 z-30">
+                <AnimatePresence mode="wait">
+                  {selectedStage !== null && (() => {
+                    const n = points.nodes[selectedStage];
+                    const x = pct(n.x, route.w);
+                    const y = pct(n.y, route.h);
+                    const side: "above" | "below" =
+                      n.y > route.h * 0.62 ? "above" : "below";
+                    return (
+                      <StagePopover
+                        key={STAGES[selectedStage].letter}
+                        stage={STAGES[selectedStage]}
+                        side={side}
+                        left={`clamp(150px, ${x}%, calc(100% - 150px))`}
+                        top={
+                          side === "above"
+                            ? `calc(${y}% - 28px)`
+                            : `calc(${y}% + 28px)`
+                        }
+                        onClose={closePopover}
+                      />
+                    );
+                  })()}
+                </AnimatePresence>
+              </div>
+            </div>
           )}
         </div>
-
-        {/* map */}
-        <div
-          className={
-            isDesktop ? "flex flex-1 items-center justify-center px-8 pb-8" : "mt-10"
-          }
-        >
-          <div
-            ref={mapRef}
-            className="relative w-full"
-            style={{
-              aspectRatio: `${route.w} / ${route.h}`,
-              ...(isDesktop && {
-                width: `min(100%, calc((100svh - 240px) * ${route.w / route.h}))`,
-              }),
-            }}
-          >
-            <svg
-              viewBox={`0 0 ${route.w} ${route.h}`}
-              className="h-full w-full"
-              aria-hidden
-            >
-              <defs>
-                <clipPath id={`journey-clip-${variant}`}>
-                  <rect width={route.w} height={route.h} rx={28} />
-                </clipPath>
-              </defs>
-              <g clipPath={`url(#journey-clip-${variant})`}>
-                {/* premium paper / night panel */}
-                <rect
-                  width={route.w}
-                  height={route.h}
-                  rx={28}
-                  className="fill-paper dark:fill-[#101014]"
-                />
-                <rect
-                  width={route.w}
-                  height={route.h}
-                  rx={28}
-                  className="fill-accent/[0.04] dark:fill-accent/[0.06]"
-                />
-                <rect
-                  x={0.75}
-                  y={0.75}
-                  width={route.w - 1.5}
-                  height={route.h - 1.5}
-                  rx={28}
-                  fill="none"
-                  className="stroke-ink/10 dark:stroke-white/10"
-                  strokeWidth={1.5}
-                />
-
-                <MapDoodles variant={variant} />
-
-                {/* muted route + gold traveled portion */}
-                <path
-                  ref={pathRef}
-                  d={route.d}
-                  className="text-ink/20 dark:text-white/20"
-                  stroke="currentColor"
-                  fill="none"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeDasharray="0.5 9"
-                />
-                <path
-                  ref={progressRef}
-                  d={route.d}
-                  className="text-accent"
-                  stroke="currentColor"
-                  fill="none"
-                  strokeWidth={2.5}
-                  strokeLinecap="round"
-                />
-
-                {points && (
-                  <>
-                    <Flag at={points.start} label="Strategy" tone="text-ink/45 dark:text-white/45" />
-                    <Flag at={points.end} label="Evolve" tone="text-accent" />
-                    {points.nodes.map((n, i) => {
-                      const reached = i <= active;
-                      return (
-                        <g key={STAGES[i].letter} transform={`translate(${n.x} ${n.y})`}>
-                          <circle
-                            r={26}
-                            className={`fill-accent/15 origin-center transition-transform duration-500 [transform-box:fill-box] ${
-                              i === active ? "scale-100" : "scale-0"
-                            }`}
-                          />
-                          <circle
-                            r={14}
-                            className={`transition-colors duration-500 ${
-                              reached
-                                ? "fill-accent stroke-accent"
-                                : "fill-surface stroke-ink/20 dark:fill-[#141419] dark:stroke-white/20"
-                            }`}
-                            strokeWidth={1.5}
-                          />
-                          <text
-                            y={4}
-                            textAnchor="middle"
-                            fontSize={11}
-                            className={`font-mono font-bold transition-colors duration-500 ${
-                              reached ? "fill-ink dark:fill-[#0a0a0a]" : "fill-ink/50 dark:fill-white/50"
-                            }`}
-                          >
-                            {STAGES[i].letter}
-                          </text>
-                        </g>
-                      );
-                    })}
-                  </>
-                )}
-
-                {/* traveler */}
-                <g
-                  ref={travelerRef}
-                  style={{ visibility: points ? "visible" : "hidden" }}
-                >
-                  <circle r={17} className="fill-ink dark:fill-white" />
-                  <circle
-                    r={21}
-                    fill="none"
-                    className="stroke-ink/15 dark:stroke-white/20"
-                  />
-                  <path
-                    d="M -6 5.5 L 9 0 L -6 -5.5 L -2.5 0 Z"
-                    className="fill-surface dark:fill-[#0c0c0e]"
-                  />
-                </g>
-              </g>
-            </svg>
-
-            {/* popup cards — one anchor per node so exits animate in place */}
-            {points && (
-              <div className="pointer-events-none absolute inset-0" aria-live="polite">
-                {points.nodes.map((n, i) => {
-                  const x = pct(n.x, route.w);
-                  const y = pct(n.y, route.h);
-                  const side = isDesktop
-                    ? n.y < route.h / 2
-                      ? "below"
-                      : "above"
-                    : n.x < route.w / 2
-                      ? "right"
-                      : "left";
-                  const anchor: React.CSSProperties =
-                    side === "above" || side === "below"
-                      ? {
-                          left: `clamp(170px, ${x}%, calc(100% - 170px))`,
-                          top: side === "above" ? `calc(${y}% - 26px)` : `calc(${y}% + 26px)`,
-                          transform:
-                            side === "above" ? "translate(-50%, -100%)" : "translate(-50%, 0)",
-                        }
-                      : {
-                          top: `${y}%`,
-                          transform: "translate(0, -50%)",
-                          ...(side === "right"
-                            ? { left: `calc(${x}% + 26px)` }
-                            : { right: `calc(${100 - x}% + 26px)` }),
-                        };
-                  const origin = {
-                    above: "bottom center",
-                    below: "top center",
-                    left: "right center",
-                    right: "left center",
-                  }[side];
-                  const caret = {
-                    above: "-bottom-[5px] left-1/2 -ml-[5px] border-b border-r",
-                    below: "-top-[5px] left-1/2 -ml-[5px] border-t border-l",
-                    right: "-left-[5px] top-1/2 -mt-[5px] border-b border-l",
-                    left: "-right-[5px] top-1/2 -mt-[5px] border-t border-r",
-                  }[side];
-                  return (
-                    <div key={STAGES[i].letter} className="absolute" style={anchor}>
-                      <AnimatePresence>
-                        {active === i && (
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.82, y: side === "above" ? 8 : -8 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-                            transition={{ duration: 0.5, ease: EASE_OUT_EXPO }}
-                            style={{ transformOrigin: origin }}
-                            className="relative w-[300px] max-w-[min(300px,52vw)] rounded-2xl border border-black/[0.08] bg-surface p-5 shadow-card dark:border-white/10 dark:bg-[#141419] max-md:w-[220px] max-md:max-w-[48vw] max-md:p-4"
-                          >
-                            <span
-                              aria-hidden
-                              className={`absolute h-[10px] w-[10px] rotate-45 border-black/[0.08] bg-surface dark:border-white/10 dark:bg-[#141419] ${caret}`}
-                            />
-                            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-                              {STAGES[i].week} · {STAGES[i].letter}
-                            </p>
-                            <h3 className="mt-1.5 font-display text-base font-semibold tracking-tight text-ink md:text-lg dark:text-white">
-                              {STAGES[i].title}
-                            </h3>
-                            <p className="mt-1.5 text-xs leading-relaxed text-body md:text-sm dark:text-slate-300">
-                              {STAGES[i].text}
-                            </p>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </div>
+      </div>
     </div>
   );
 }
 
-/** Scroll-driven SCALE journey map: desktop pinned scrub, mobile vertical path —
- *  same traveler / nodes / popup mechanics. */
+/** SCALE journey map: click S–C–A–L–E nodes to move the traveler and open a stage popover. */
 export default function JourneyMap() {
   return (
     <section id="framework" className="scroll-mt-24">

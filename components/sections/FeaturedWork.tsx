@@ -180,7 +180,7 @@ export default function FeaturedWork() {
                   alt={p.client}
                   fill
                   sizes="(min-width: 768px) 30vw, 90vw"
-                  className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                  className="object-contain object-center"
                   priority={i < 2}
                 />
                 <span className="absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 font-mono text-[10px] uppercase font-semibold text-white backdrop-blur-md">
@@ -221,7 +221,8 @@ export default function FeaturedWork() {
         <div className="shrink-0 flex justify-center md:justify-start">
           <Magnetic strength={12}>
             <a
-              href="/ScaleXpertz_Case_Studies_Report.pdf"
+              href="/ScaleXpertz_Growth_Playbook.pdf"
+              download
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-8 py-4 text-base font-bold text-ink shadow-xl shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-2xl hover:shadow-accent/40 active:scale-95 group"
@@ -312,14 +313,25 @@ export default function FeaturedWork() {
               </div>
 
               <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-black/[0.08] dark:border-white/10 pt-6">
-                <a
-                  href="/ScaleXpertz_Case_Studies_Report.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-ink dark:bg-accent px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white dark:text-ink shadow-card transition-colors duration-300 hover:bg-accent hover:text-ink dark:hover:bg-accent-strong"
-                >
-                  Download Report PDF →
-                </a>
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                  <a
+                    href="/ScaleXpertz_Case_Studies_Report.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-ink dark:bg-accent px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white dark:text-ink shadow-card transition-colors duration-300 hover:bg-accent hover:text-ink dark:hover:bg-accent-strong"
+                  >
+                    Download Report PDF →
+                  </a>
+
+                  <a
+                    href="/ScaleXpertz_Case_Studies_Report.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-ink/20 dark:border-accent/50 bg-transparent px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-ink dark:text-accent transition-colors duration-300 hover:border-accent hover:bg-accent/10 dark:hover:border-accent dark:hover:bg-accent/15"
+                  >
+                    Read More →
+                  </a>
+                </div>
 
                 <button
                   onClick={() => setSelectedCase(null)}
