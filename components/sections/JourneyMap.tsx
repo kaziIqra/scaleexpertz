@@ -11,31 +11,106 @@ const STAGES = [
     letter: "S",
     week: "Phase 01",
     title: "Strategy",
-    text: "Build the right direction before increasing speed. We diagnose the business, market, competitors, and KPIs — then lock a 90-day roadmap before anything launches.",
+    tagline: "Clarity Before Commitment.",
+    paragraphs: [
+      "Every successful Growth Sprint™ starts with understanding your business—not assumptions.",
+      "We identify growth bottlenecks, define your market position, and create a roadmap tailored to your goals.",
+    ],
+    includes: [
+      "Founder Growth Diagnosis™",
+      "Business & Market Audit",
+      "Competitor Analysis",
+      "Brand Positioning Strategy",
+      "Customer Research",
+      "Growth Roadmap",
+      "Sprint Planning",
+      "Success Metrics & KPIs",
+    ],
+    outcome: "A clear strategic direction before execution begins.",
   },
   {
     letter: "C",
     week: "Phase 02",
     title: "Create",
-    text: "Build assets that create trust before they generate attention. Brand, creatives, websites, and content systems that communicate with clarity and consistency.",
+    tagline: "Build What Growth Demands.",
+    paragraphs: [
+      "Strategy means nothing without execution.",
+      "This phase builds the assets, systems, and digital infrastructure your business needs to grow with confidence.",
+    ],
+    includes: [
+      "Brand Identity & Messaging",
+      "Website / Landing Pages",
+      "Content Strategy",
+      "Creative Design System",
+      "Social Media Assets",
+      "Sales Funnels",
+      "CRM & Digital Infrastructure",
+      "Automation Foundations",
+    ],
+    outcome: "A business equipped with everything required to execute at scale.",
   },
   {
     letter: "A",
     week: "Phase 03",
     title: "Accelerate",
-    text: "Turn strategy into measurable business momentum — performance marketing, sales systems, AI automation, and acquisition engines aligned to one growth objective.",
+    tagline: "Execution With Momentum.",
+    paragraphs: [
+      "This is where your growth systems go live.",
+      "Campaigns launch, automation begins, and every initiative is monitored, tested, and improved.",
+    ],
+    includes: [
+      "Performance Marketing",
+      "Meta & Google Advertising",
+      "Lead Generation Systems",
+      "Sales Optimisation",
+      "AI Workflow Automation",
+      "Conversion Optimisation",
+      "Performance Tracking",
+      "Weekly Growth Reviews",
+    ],
+    outcome: "Predictable momentum driven by measurable execution.",
   },
   {
     letter: "L",
     week: "Phase 04",
     title: "Lead",
-    text: "Build authority that compounds over time. Founder positioning, visibility, and strategic content that earn trust — because leadership creates demand.",
+    tagline: "Earn Trust. Own Your Category.",
+    paragraphs: [
+      "Growth is no longer about visibility alone.",
+      "It's about becoming the business customers remember, trust, and choose.",
+    ],
+    includes: [
+      "Founder Personal Branding",
+      "Authority Building",
+      "Community Growth",
+      "Reputation Management",
+      "Customer Experience Optimisation",
+      "Strategic Partnerships",
+      "Trust & Credibility Systems",
+      "Brand Leadership Initiatives",
+    ],
+    outcome: "A stronger market position built on trust and authority.",
   },
   {
     letter: "E",
     week: "Phase 05",
     title: "Evolve",
-    text: "Growth is never finished. Every sprint ends with reviews, optimisation, documentation, and the next strategic move so momentum never stops.",
+    tagline: "Because Growth Never Stands Still.",
+    paragraphs: [
+      "The sprint doesn't end at launch.",
+      "We analyse performance, optimise every system, and prepare your business for the next stage of growth.",
+    ],
+    includes: [
+      "Performance Analysis",
+      "Growth Optimisation",
+      "AI Enhancements",
+      "Process Improvements",
+      "Documentation",
+      "Future Growth Strategy",
+      "Scale Recommendations",
+      "Continuous Support & Refinement",
+    ],
+    outcome: "A business designed to improve, adapt, and scale continuously.",
   },
 ];
 
@@ -325,22 +400,46 @@ function StagePopover({
       exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.2 } }}
       transition={{ duration: 0.35, ease: EASE_OUT_EXPO }}
       style={{ left, top, transformOrigin: side === "below" ? "top center" : "bottom center" }}
-      className="pointer-events-auto absolute z-30 w-[300px] max-w-[min(300px,72vw)] rounded-xl border border-white/12 bg-[#16161a] p-5 shadow-[0_12px_40px_rgba(0,0,0,0.45)] max-md:w-[240px] max-md:p-4"
+      className="pointer-events-auto absolute z-30 w-[min(520px,92vw)] overflow-hidden rounded-xl border border-white/12 bg-[#16161a] shadow-[0_16px_48px_rgba(0,0,0,0.5)] max-md:w-[min(360px,92vw)]"
     >
       <span
         aria-hidden
         className={`absolute h-[10px] w-[10px] rotate-45 border-white/12 bg-[#16161a] ${caret}`}
       />
-      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-        {stage.week} · {stage.letter}
-      </p>
-      <h3
-        id="scale-stage-title"
-        className="mt-2 font-display text-xl font-semibold tracking-tight text-white md:text-2xl"
-      >
-        {stage.title}
-      </h3>
-      <p className="mt-2.5 text-sm leading-relaxed text-white/65">{stage.text}</p>
+      <div className="max-h-[min(560px,78vh)] overflow-y-auto p-6 max-md:max-h-[min(480px,68vh)] max-md:p-5">
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+          {stage.week} · {stage.letter}
+        </p>
+        <h3
+          id="scale-stage-title"
+          className="mt-2 font-display text-2xl font-semibold tracking-tight text-white md:text-[1.75rem]"
+        >
+          {stage.title}
+        </h3>
+        <p className="mt-2 text-[15px] font-medium text-white/90">{stage.tagline}</p>
+        <div className="mt-3 space-y-2.5">
+          {stage.paragraphs.map((p) => (
+            <p key={p} className="text-[15px] leading-relaxed text-white/65">
+              {p}
+            </p>
+          ))}
+        </div>
+        <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.16em] text-accent">
+          What&apos;s Included
+        </p>
+        <ul className="mt-3 grid grid-cols-1 gap-x-5 gap-y-2 sm:grid-cols-2">
+          {stage.includes.map((item) => (
+            <li key={item} className="flex gap-2 text-sm leading-snug text-white/70">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-5 border-t border-white/10 pt-4 text-[15px] leading-relaxed text-white/80">
+          <span className="font-medium text-accent">Outcome: </span>
+          {stage.outcome}
+        </p>
+      </div>
     </motion.div>
   );
 }
@@ -628,7 +727,7 @@ function JourneyScene({ variant }: { variant: Variant }) {
                         key={STAGES[selectedStage].letter}
                         stage={STAGES[selectedStage]}
                         side={side}
-                        left={`clamp(150px, ${x}%, calc(100% - 150px))`}
+                        left={`clamp(min(260px, 46vw), ${x}%, calc(100% - min(260px, 46vw)))`}
                         top={
                           side === "above"
                             ? `calc(${y}% - 28px)`
