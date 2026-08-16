@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Logo3D from "@/components/ui/Logo3D";
+import LogoEntrance from "@/components/ui/LogoEntrance";
 import Magnetic from "@/components/ui/Magnetic";
 import Marquee from "@/components/ui/Marquee";
 import TextReveal from "@/components/ui/TextReveal";
@@ -65,6 +66,8 @@ function useIsDesktop() {
 
 /** Visual diagram — Logo3D hub with black indexed service tags */
 function SystemMergeVisual({ play }: { play: boolean }) {
+  const [logoSettled, setLogoSettled] = useState(false);
+
   return (
     <div className="relative flex h-[480px] w-full max-w-[540px] items-center justify-center">
       {/* Background ambient glow */}
@@ -89,21 +92,26 @@ function SystemMergeVisual({ play }: { play: boolean }) {
         ))}
       </svg>
 
-      {/* Central 3D ScaleXpertz monogram hub */}
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={play ? { scale: 1, opacity: 1 } : {}}
-        transition={{ duration: 0.9, delay: 0.6, ease: EASE_OUT_EXPO }}
-        className="relative z-20 flex flex-col items-center"
-      >
+      {/* Central 3D ScaleXpertz monogram hub — depth → flip → settle */}
+      <div className="relative z-20 flex flex-col items-center">
         <div className="absolute left-1/2 top-[60%] h-14 w-60 -translate-x-1/2 rounded-[50%] bg-black/25 blur-2xl dark:bg-black/55" />
-        <div className="relative aspect-[912/700] w-[280px]">
-          <Logo3D className="h-full w-full" />
-        </div>
-        <p className="mt-5 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-accent">
+        <LogoEntrance
+          play={play}
+          variant="hero"
+          className="relative aspect-[912/700] w-[280px]"
+          onComplete={() => setLogoSettled(true)}
+        >
+          <Logo3D className="h-full w-full" float={logoSettled} />
+        </LogoEntrance>
+        <motion.p
+          className="mt-5 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-accent"
+          initial={{ opacity: 0, y: 8 }}
+          animate={play ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 2.4, ease: EASE_OUT_EXPO }}
+        >
           One Connected System
-        </p>
-      </motion.div>
+        </motion.p>
+      </div>
 
       {/* Indexed black plates — no emoji, no glass pills */}
       {DISCIPLINES.map((d, i) => (
@@ -165,9 +173,11 @@ export default function Hero() {
 
       {/* below lg: faint 3D monogram behind the headline */}
       <div aria-hidden className="pointer-events-none absolute right-[-14%] top-[8%] w-[250px] opacity-[0.15] dark:opacity-[0.2] lg:hidden">
-        <div className="aspect-[912/700] w-full">
-          {isDesktop !== true && <Logo3D className="h-full w-full" glow={false} />}
-        </div>
+        {isDesktop !== true && (
+          <LogoEntrance play={done} variant="hero" className="aspect-[912/700] w-full">
+            <Logo3D className="h-full w-full" glow={false} />
+          </LogoEntrance>
+        )}
       </div>
 
       {/* readability scrim: text column stays high-contrast over the 3D visual */}

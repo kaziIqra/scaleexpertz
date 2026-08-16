@@ -3,7 +3,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState, type MouseEvent } from "react";
+import LogoEntrance from "@/components/ui/LogoEntrance";
 import Magnetic from "@/components/ui/Magnetic";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { usePreloaderDone } from "@/lib/preloader";
@@ -29,7 +31,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const done = usePreloaderDone();
+  const pathname = usePathname();
   const lenis = useLenis();
+  const animateHomeLogo = pathname === "/" && done;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 32);
@@ -90,14 +94,27 @@ export default function Navbar() {
             className="flex shrink-0 items-center gap-2 font-display text-lg sm:text-xl font-semibold tracking-tight text-ink dark:text-white"
             aria-label="ScaleXpertz — back to top"
           >
-            <Image
-              src="/logo-mark.png"
-              alt=""
-              width={441}
-              height={344}
-              priority
-              className="h-7 sm:h-8 w-auto"
-            />
+            {pathname === "/" ? (
+              <LogoEntrance play={animateHomeLogo} variant="nav" className="inline-flex shrink-0">
+                <Image
+                  src="/logo-mark.png"
+                  alt=""
+                  width={441}
+                  height={344}
+                  priority
+                  className="h-7 sm:h-8 w-auto"
+                />
+              </LogoEntrance>
+            ) : (
+              <Image
+                src="/logo-mark.png"
+                alt=""
+                width={441}
+                height={344}
+                priority
+                className="h-7 sm:h-8 w-auto"
+              />
+            )}
             <span>ScaleXpertz<span className="text-accent dark:text-amber">.</span></span>
           </a>
 
