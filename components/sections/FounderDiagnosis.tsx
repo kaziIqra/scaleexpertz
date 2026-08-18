@@ -68,7 +68,7 @@ const WHAT_YOU_WONT_GET = [
 
 export default function FounderDiagnosis() {
   return (
-    <section id="diagnosis" className="relative scroll-mt-24 bg-night py-16 md:py-24 text-white overflow-hidden">
+    <section id="diagnosis" className="relative scroll-mt-24 bg-night py-10 md:py-14 text-white overflow-hidden">
       {/* Ambient background glows */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute left-[20%] top-[10%] h-[500px] w-[500px] rounded-full bg-accent/[0.12] blur-[120px]" />
@@ -77,17 +77,18 @@ export default function FounderDiagnosis() {
 
       <div className="relative mx-auto max-w-[1440px] px-6 md:px-12">
         {/* Full-width intro */}
-        <div className="max-w-3xl text-center lg:text-left">
-          <Eyebrow index="06" label="Founder Growth Diagnosis" />
-          <h2 className="mt-4 font-display text-2xl font-semibold tracking-[-0.03em] sm:text-3xl md:text-4xl leading-[1.1]">
-            <TextReveal text="Every Business Has Blind Spots." as="span" className="block" />
-            <TextReveal text="Let's Find Yours." as="span" className="block text-amber" delay={0.12} />
+        <div className="mx-auto max-w-3xl text-center flex flex-col items-center justify-center">
+          <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-white sm:text-4xl md:text-5xl">
+            06 — Founder Growth Diagnosis
           </h2>
+          <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-amber sm:text-2xl md:text-3xl leading-snug">
+            Every Business Has Blind Spots. Let&apos;s Find Yours.
+          </h3>
 
-          <p className="mt-4 mx-auto text-sm sm:text-base text-white/80 leading-relaxed font-medium max-w-2xl lg:mx-0">
+          <p className="mt-4 mx-auto text-sm sm:text-base text-white/80 leading-relaxed font-medium max-w-2xl">
             Your next breakthrough might not require a bigger budget. It might require a clearer perspective. Every business has opportunities that are easy to miss from the inside.
           </p>
-          <p className="mt-2 mx-auto text-xs sm:text-sm text-white/60 leading-relaxed max-w-2xl lg:mx-0">
+          <p className="mt-2 mx-auto text-xs sm:text-sm text-white/60 leading-relaxed max-w-2xl">
             Our Founder Growth Diagnosis helps uncover the bottlenecks, hidden opportunities, and strategic gaps that could be limiting your next stage of growth. Because the right decisions start with the right understanding.
           </p>
         </div>
@@ -102,15 +103,19 @@ export default function FounderDiagnosis() {
               {INCLUDED_ITEMS.map((item) => (
                 <div
                   key={item.title}
-                  className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm"
+                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-accent/50 hover:bg-white/[0.06] hover:shadow-xl"
                 >
-                  <div className="flex items-center gap-3">
+                  <div
+                    className="absolute inset-0 bg-gradient-to-br from-accent/10 via-amber/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none"
+                    aria-hidden
+                  />
+                  <div className="relative z-10 flex items-center gap-3">
                     <IconBadge icon={item.icon} size={20} />
-                    <h4 className="font-display text-base font-semibold text-white">
+                    <h4 className="font-display text-base font-bold text-white group-hover:text-amber transition-colors duration-300">
                       {item.title}
                     </h4>
                   </div>
-                  <p className="mt-2 text-xs leading-relaxed text-white/70 font-medium">
+                  <p className="relative z-10 mt-2 text-xs leading-relaxed text-white/70 font-medium">
                     {item.description}
                   </p>
                 </div>
@@ -124,7 +129,7 @@ export default function FounderDiagnosis() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: EASE_OUT_EXPO }}
-              className="rounded-3xl border border-white/15 bg-white/[0.05] p-8 shadow-2xl backdrop-blur-xl"
+              className="rounded-3xl border border-white/15 bg-white/[0.05] p-8 shadow-2xl backdrop-blur-xl hover:border-accent/40 transition-colors duration-500"
             >
               <div className="flex items-center justify-between border-b border-white/10 pb-6">
                 <div>
@@ -170,9 +175,9 @@ export default function FounderDiagnosis() {
                 <Magnetic strength={10}>
                   <Link
                     href="/diagnosis"
-                    className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-6 py-4 text-sm sm:text-base font-bold text-ink shadow-xl shadow-accent/30 transition-all duration-500 hover:bg-[position:right_center] hover:scale-[1.02] hover:shadow-2xl hover:shadow-accent/50 active:scale-98"
+                    className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-6 py-4 text-sm sm:text-base font-extrabold text-ink shadow-xl shadow-accent/30 transition-all duration-500 hover:bg-[position:right_center] hover:scale-[1.02] hover:shadow-2xl hover:shadow-accent/50 active:scale-98"
                   >
-                    <span className="tracking-tight">Book Your Founder Growth Diagnosis</span>
+                    <span className="tracking-tight text-center">Book Your Founder Growth Diagnosis</span>
                     <svg className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">
                       <path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
@@ -189,7 +194,7 @@ export default function FounderDiagnosis() {
 
         {/* Who It's For & What You Won't Get */}
         <div className="mt-12 grid gap-8 sm:grid-cols-2">
-          <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-6">
+          <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-6 hover:border-emerald-500/40 transition-colors duration-300">
             <h4 className="font-mono text-xs uppercase tracking-widest text-emerald-400 font-bold mb-4">
               This diagnosis is designed for founders who:
             </h4>
@@ -203,7 +208,7 @@ export default function FounderDiagnosis() {
             </ul>
           </div>
 
-          <div className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6">
+          <div className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-6 hover:border-rose-500/40 transition-colors duration-300">
             <h4 className="font-mono text-xs uppercase tracking-widest text-rose-400 font-bold mb-4">
               What You Won&apos;t Get:
             </h4>
@@ -223,8 +228,8 @@ export default function FounderDiagnosis() {
           <p className="font-display text-xl font-semibold text-white">
             We don&apos;t start with solutions. We start with understanding.
           </p>
-          <p className="mt-1 text-xs text-white/50 font-mono">
-            No &ldquo;Only 2 spots left!&rdquo; countdown timer. We dislike those too.
+          <p className="mt-1 text-xs text-white/70 font-mono font-bold italic">
+            (No “Only 2 spots left!” countdown timer. We dislike those too.)
           </p>
         </div>
       </div>

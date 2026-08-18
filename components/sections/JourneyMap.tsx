@@ -163,7 +163,7 @@ function ChartGrid({ w, h }: { w: number; h: number }) {
   const xs = Array.from({ length: Math.floor(w / 48) + 1 }, (_, i) => i * 48);
   const ys = Array.from({ length: Math.floor(h / 48) + 1 }, (_, i) => i * 48);
   return (
-    <g className="text-ink/8 dark:text-white/[0.06]" aria-hidden>
+    <g className="text-ink/20 dark:text-white/15" aria-hidden>
       {xs.map((x) => (
         <line key={`vx-${x}`} x1={x} y1={0} x2={x} y2={h} stroke="currentColor" strokeWidth={1} />
       ))}
@@ -525,7 +525,9 @@ function JourneyScene({ variant }: { variant: Variant }) {
     [travelToStage],
   );
 
-  // Sample path geometry once; traveler only moves via travelToStage on click.
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Sample path geometry once and sync scroll progress on graph section scroll
   useEffect(() => {
     const path = pathRef.current;
     const progress = progressRef.current;
@@ -542,7 +544,33 @@ function JourneyScene({ variant }: { variant: Variant }) {
     gsap.set(progress, { strokeDasharray: L, strokeDashoffset: L });
     applyProgress(0);
 
+    const onWheel = (e: WheelEvent) => {
+      const el = containerRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const isOverGraph =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+
+      if (!isOverGraph) return;
+
+      const step = e.deltaY > 0 ? 0.05 : -0.05;
+      const nextP = Math.max(0, Math.min(1, progressPRef.current + step));
+      applyProgress(nextP);
+
+      let currentActive = 0;
+      for (let i = 0; i < NODE_T.length; i++) {
+        if (nextP >= NODE_T[i] - 0.08) currentActive = i;
+      }
+      setActive(currentActive);
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: true });
+
     return () => {
+      window.removeEventListener("wheel", onWheel);
       travelTweenRef.current?.kill();
     };
   }, [applyProgress, isDesktop]);
@@ -551,18 +579,21 @@ function JourneyScene({ variant }: { variant: Variant }) {
 
   return (
     <div
+      ref={containerRef}
       className={
         isDesktop
-          ? "relative mx-auto w-full max-w-[1440px] px-12 pb-24 pt-24"
-          : "px-6 pb-20 pt-24"
+          ? "relative mx-auto w-full max-w-[1440px] px-12 py-10 md:py-14"
+          : "px-6 py-10"
       }
     >
       {/* header */}
-      <div>
-        <Eyebrow index="02" label="The Proprietary SCALE Framework™" />
-        <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.03em] text-ink md:text-5xl">
-          From Strategy to Evolve.
+      <div className="mx-auto max-w-4xl text-center flex flex-col items-center justify-center">
+        <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-ink dark:text-white sm:text-4xl md:text-5xl">
+          02 — The Proprietary SCALE Framework™
         </h2>
+        <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-accent dark:text-amber sm:text-2xl md:text-3xl">
+          From Strategy to Evolve.
+        </h3>
       </div>
 
       {/* map */}

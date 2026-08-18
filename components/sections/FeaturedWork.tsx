@@ -146,21 +146,22 @@ export default function FeaturedWork() {
   return (
     <section
       id="work"
-      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12 md:py-24"
+      className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-10 md:px-12 md:py-14"
     >
       {/* Header section */}
-      <div className="text-center md:text-left">
-        <Eyebrow index="05" label="Proof Over Promises" />
-        <h2 className="mt-4 mx-auto max-w-4xl font-display text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl md:text-4xl leading-[1.1] md:mx-0">
-          <TextReveal as="span" className="block" text="Proof Over Promises." />
-          <TextReveal as="span" className="block text-accent" text="Results are easy to claim. Proof is harder to fake." delay={0.1} />
+      <div className="mx-auto max-w-4xl text-center flex flex-col items-center justify-center">
+        <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-ink dark:text-white sm:text-4xl md:text-5xl">
+          05 — Proof Over Promises
         </h2>
-        <p className="mt-4 mx-auto max-w-2xl text-sm sm:text-base leading-relaxed text-body font-medium md:mx-0">
+        <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-accent dark:text-amber sm:text-2xl md:text-3xl">
+          Results are easy to claim. Proof is harder to fake.
+        </h3>
+        <p className="mt-4 mx-auto max-w-2xl text-sm sm:text-base leading-relaxed text-body dark:text-slate-300 font-medium">
           Every business comes with a different challenge. Different industries. Different customers. Different goals. That&apos;s why we don&apos;t believe in one-size-fits-all strategies. We understand the business first, build the right system second, and let the numbers speak for themselves.
         </p>
       </div>
 
-      {/* 5 Visually Minimal Case Study Cards Grid */}
+      {/* 5 Visually Engaging Case Study Cards Grid */}
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {CASE_STUDIES.map((p, i) => (
           <motion.div
@@ -169,12 +170,18 @@ export default function FeaturedWork() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.8, ease: EASE_OUT_EXPO, delay: i * 0.08 }}
-            className="group cursor-pointer flex flex-col justify-between rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-5 sm:p-6 shadow-card transition-all duration-500 hover:-translate-y-2 hover:border-accent hover:shadow-card-hover"
+            className="group cursor-pointer relative flex flex-col justify-between overflow-hidden rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-[#141419] p-6 shadow-card transition-all duration-500 hover:-translate-y-2 hover:border-accent/60 hover:shadow-2xl"
             onClick={() => setSelectedCase(p)}
           >
-            <div>
+            {/* Dynamic Card Hover Gradient Effect */}
+            <div
+              className="absolute inset-0 bg-gradient-to-br from-accent/15 via-amber-500/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none"
+              aria-hidden
+            />
+
+            <div className="relative z-10">
               {/* Image thumbnail */}
-              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-ink/5 ring-1 ring-black/[0.06] dark:bg-white/5 dark:ring-white/10">
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-ink/5 ring-1 ring-black/[0.06] dark:bg-white/5 dark:ring-white/10 group-hover:scale-[1.02] transition-transform duration-500">
                 <Image
                   src={p.image}
                   alt={p.client}
@@ -183,24 +190,27 @@ export default function FeaturedWork() {
                   className="object-contain object-center"
                   priority={i < 2}
                 />
-                <span className="absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 font-mono text-[10px] uppercase font-semibold text-white backdrop-blur-md">
+                <span className="absolute left-3.5 top-3.5 rounded-full bg-black/80 px-3 py-1 font-mono text-[10px] uppercase font-bold text-amber border border-amber/30 backdrop-blur-md">
                   {p.client}
+                </span>
+                <span className="absolute right-3.5 top-3.5 rounded-full bg-accent px-3 py-1 font-mono text-[10px] uppercase font-extrabold text-ink shadow-md">
+                  {p.category}
                 </span>
               </div>
 
               {/* Bold headline & outcome */}
-              <h3 className="mt-5 font-display text-xl font-bold tracking-tight text-ink group-hover:text-accent transition-colors duration-300">
+              <h3 className="mt-5 font-display text-xl font-bold tracking-tight text-ink dark:text-white group-hover:text-accent dark:group-hover:text-amber transition-colors duration-300">
                 {p.headline}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-body font-medium">
+              <p className="mt-2 text-sm leading-relaxed text-body dark:text-slate-300 font-medium">
                 {p.outcome}
               </p>
             </div>
 
             {/* Action CTA */}
-            <div className="mt-6 border-t border-black/[0.06] pt-4 flex items-center justify-between text-xs font-mono font-semibold uppercase tracking-wider text-accent">
-              <span>See How We Did It</span>
-              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            <div className="relative z-10 mt-6 border-t border-black/[0.06] dark:border-white/10 pt-4 flex items-center justify-between text-xs font-mono font-bold uppercase tracking-wider text-accent dark:text-amber">
+              <span>See Full Case Study</span>
+              <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
             </div>
           </motion.div>
         ))}

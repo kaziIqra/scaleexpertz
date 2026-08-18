@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
@@ -43,9 +44,8 @@ function formatINR(amount: number) {
   }).format(amount);
 }
 
-function formatAddonPrice(addon: PricingAddon) {
-  const prefix = `+${formatINR(addon.price)}`;
-  return addon.unit ? `${prefix}${addon.unit}` : prefix;
+function formatAddonPrice(_addon: PricingAddon) {
+  return "Included (₹0)";
 }
 
 export default function PricingCalculator({
@@ -86,8 +86,8 @@ export default function PricingCalculator({
                 onClick={() => onSelectSprint(s)}
                 className={`shrink-0 rounded-full px-4 py-2.5 font-mono text-[11px] font-bold uppercase tracking-wider transition-all duration-300 sm:px-5 sm:text-xs ${
                   active
-                    ? "bg-white text-ink shadow-card dark:bg-[#23232e] dark:text-white"
-                    : "text-ink/50 hover:text-ink dark:text-slate-400 dark:hover:text-white"
+                    ? "bg-accent text-ink font-extrabold shadow-md dark:bg-amber dark:text-black"
+                    : "text-ink/60 hover:text-ink dark:text-slate-400 dark:hover:text-white"
                 }`}
               >
                 {s.title.replace("™", "")}
@@ -98,106 +98,33 @@ export default function PricingCalculator({
       </div>
 
       <div className="grid gap-8 p-5 sm:p-8 lg:grid-cols-12 lg:gap-10 lg:p-10">
-        {/* Left: options */}
-        <div className="lg:col-span-7">
-          <div className="flex flex-wrap items-center gap-3">
-            <h3
-              id="pricing-calculator-title"
-              className="font-display text-xl font-bold uppercase tracking-tight text-ink dark:text-white sm:text-2xl"
-            >
-              {activeSprint.title.replace("™", "")}
-            </h3>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-ink/[0.04] px-3 py-1 font-mono text-[11px] font-semibold text-ink/70 dark:bg-white/10 dark:text-slate-300">
-              <svg className="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" aria-hidden>
-                <circle cx="8" cy="8" r="6.25" stroke="currentColor" strokeWidth="1.4" />
-                <path d="M8 4.5V8l2.5 1.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-              </svg>
-              {activeSprint.duration}
-            </span>
-          </div>
-
-          <p className="mt-2 max-w-xl text-sm text-body dark:text-slate-300">
-            {activeSprint.subtitle}
-          </p>
-
-          <p className="mt-6 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-ink/45 dark:text-slate-500">
-            Optional add-ons
-          </p>
-          <div className="mt-3 rounded-3xl border border-white/10 bg-ink p-3 dark:bg-black sm:p-4">
-            <div className="grid gap-3 sm:grid-cols-2">
-              {activeSprint.addons.map((addon) => {
-                const selected = selectedAddons.includes(addon.id);
-                return (
-                  <button
-                    key={addon.id}
-                    type="button"
-                    onClick={() => toggleAddon(addon.id)}
-                    className={`flex min-h-[3.5rem] items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-300 ${
-                      selected
-                        ? "border-accent bg-accent/15 shadow-sm"
-                        : "border-accent/30 bg-white/[0.06] hover:border-accent/50 hover:bg-white/[0.1]"
-                    }`}
-                  >
-                    <span className="min-w-0 font-display text-sm font-semibold leading-snug text-white">
-                      {addon.label}
-                    </span>
-                    <span
-                      className={`shrink-0 font-mono text-[11px] font-bold ${
-                        selected ? "text-amber" : "text-accent"
-                      }`}
-                    >
-                      {formatAddonPrice(addon)}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <ul className="mt-8 space-y-2.5">
-            {activeSprint.features.map((feature) => (
-              <li
-                key={feature}
-                className="flex items-start gap-2.5 text-sm font-medium text-ink dark:text-slate-200"
-              >
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent dark:bg-accent/20 dark:text-amber">
-                  <svg className="h-3 w-3" viewBox="0 0 12 12" fill="none" aria-hidden>
-                    <path
-                      d="M2.5 6.2 4.8 8.5 9.5 3.5"
-                      stroke="currentColor"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
-                {feature}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Right: live total + CTAs */}
-        <div className="lg:col-span-5">
+        {/* Right on desktop, TOP on mobile: live total + CTAs */}
+        <div className="order-1 lg:order-2 lg:col-span-5">
           <div className="rounded-[24px] border border-accent/35 bg-gradient-to-br from-accent/25 via-amber/10 to-accent/5 p-6 shadow-[0_0_0_1px_rgba(212,175,55,0.08)] dark:border-accent/40 dark:from-[#1c1810] dark:via-[#16140f] dark:to-[#12110e] dark:shadow-[0_12px_40px_rgba(212,175,55,0.12)] sm:p-7">
-            <div className="flex items-start justify-between gap-3">
+            <div className="flex items-center justify-between gap-3">
               <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-accent/80 dark:text-amber/75">
                 ScaleXpertz
               </p>
-              <span className="font-display text-lg font-black text-accent dark:text-amber">
-                SX
-              </span>
+              {/* Logo icon instead of SX text */}
+              <Image
+                src="/logo-mark.png"
+                alt="ScaleXpertz Logo"
+                width={36}
+                height={28}
+                priority
+                className="h-7 w-auto object-contain"
+              />
             </div>
-            <p className="mt-6 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-accent/70 dark:text-amber/60">
-              Design + Development
+            <p className="mt-5 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-accent/70 dark:text-amber/60">
+              Total Growth Investment
             </p>
             <p className="mt-2 font-display text-4xl font-black tracking-tight text-ink dark:text-amber sm:text-5xl sm:leading-none">
               {formatINR(total)}
             </p>
-            <p className="mt-2 text-xs text-ink/55 dark:text-amber/45">
+            <p className="mt-2 text-xs text-ink/65 dark:text-amber/60 font-medium">
               Base {formatINR(activeSprint.basePrice)}
               {selectedAddons.length > 0
-                ? ` + ${selectedAddons.length} add-on${selectedAddons.length > 1 ? "s" : ""}`
+                ? ` + ${selectedAddons.length} included add-on${selectedAddons.length > 1 ? "s" : ""}`
                 : " · starting estimate"}
             </p>
           </div>
@@ -229,9 +156,88 @@ export default function PricingCalculator({
             </Link>
           </div>
 
-          <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-wider text-ink/40 dark:text-slate-500">
-            Final scope confirmed after diagnosis
+          {/* Described & readable Diagnosis Scope callout box */}
+          <div className="mt-4 rounded-2xl border border-accent/30 bg-accent/5 p-4 text-center dark:border-amber/30 dark:bg-amber/5">
+            <p className="font-mono text-xs font-bold uppercase tracking-wider text-accent dark:text-amber">
+              ✦ Final Scope Confirmed After Diagnosis
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-body dark:text-slate-300 font-medium">
+              Your exact sprint roadmap, team allocation, and deliverables are custom confirmed during your 45-minute Founder Growth Diagnosis session based on your business objectives.
+            </p>
+          </div>
+        </div>
+
+        {/* Left on desktop, BOTTOM on mobile: sprint details & add-ons */}
+        <div className="order-2 lg:order-1 lg:col-span-7">
+          <div className="flex flex-wrap items-center gap-3">
+            <h3
+              id="pricing-calculator-title"
+              className="font-display text-xl font-bold uppercase tracking-tight text-ink dark:text-white sm:text-2xl"
+            >
+              {activeSprint.title.replace("™", "")}
+            </h3>
+            
+            {/* Highlighted 90 Days badge */}
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-accent/25 to-amber/25 border border-accent/40 px-3.5 py-1 font-mono text-xs font-extrabold text-accent dark:text-amber shadow-sm">
+              <svg className="h-3.5 w-3.5 text-amber" viewBox="0 0 16 16" fill="none" aria-hidden>
+                <circle cx="8" cy="8" r="6.25" stroke="currentColor" strokeWidth="1.6" />
+                <path d="M8 4.5V8l2.5 1.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+              </svg>
+              {activeSprint.duration}
+            </span>
+          </div>
+
+          <p className="mt-2 max-w-xl text-sm text-body dark:text-slate-300 font-medium">
+            {activeSprint.subtitle}
           </p>
+
+          <p className="mt-6 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-ink/50 dark:text-slate-400">
+            Optional add-ons (All Included at ₹0)
+          </p>
+          <div className="mt-3 rounded-3xl border border-black/10 dark:border-white/10 bg-ink p-3 dark:bg-black sm:p-4">
+            <div className="grid gap-3 sm:grid-cols-2">
+              {activeSprint.addons.map((addon) => {
+                const selected = selectedAddons.includes(addon.id);
+                return (
+                  <button
+                    key={addon.id}
+                    type="button"
+                    onClick={() => toggleAddon(addon.id)}
+                    className={`flex min-h-[3.5rem] items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-300 ${
+                      selected
+                        ? "border-accent bg-accent/20 shadow-sm"
+                        : "border-accent/30 bg-white/[0.06] hover:border-accent/50 hover:bg-white/[0.1]"
+                    }`}
+                  >
+                    <span className="min-w-0 font-display text-sm font-semibold leading-snug text-white">
+                      {addon.label}
+                    </span>
+                    <span
+                      className={`shrink-0 font-mono text-[11px] font-extrabold ${
+                        selected ? "text-amber" : "text-accent"
+                      }`}
+                    >
+                      {formatAddonPrice(addon)}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <ul className="mt-8 space-y-2.5">
+            {activeSprint.features.map((feature) => (
+              <li
+                key={feature}
+                className="flex items-start gap-2.5 text-sm font-medium text-ink dark:text-slate-200"
+              >
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent dark:bg-accent/20 dark:text-amber font-bold">
+                  ✓
+                </span>
+                {feature}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

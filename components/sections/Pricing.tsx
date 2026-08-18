@@ -61,10 +61,10 @@ const SPRINTS: SprintData[] = [
       "Scalable foundation for long-term growth",
     ],
     addons: [
-      { id: "b2c-landing", label: "Extra Landing Pages", price: 80000 },
-      { id: "b2c-creator", label: "Creator Network Boost", price: 50000 },
-      { id: "b2c-shoot", label: "Extra Content Shoot", price: 75000 },
-      { id: "b2c-ai", label: "AI Automation Pack", price: 60000 },
+      { id: "b2c-landing", label: "Extra Landing Pages", price: 0 },
+      { id: "b2c-creator", label: "Creator Network Boost", price: 0 },
+      { id: "b2c-shoot", label: "Extra Content Shoot", price: 0 },
+      { id: "b2c-ai", label: "AI Automation Pack", price: 0 },
     ],
     milestones: [
       { percent: "50%", stage: "Project Kickoff & Strategy", desc: "Business positioning & 90-day roadmap" },
@@ -128,10 +128,10 @@ const SPRINTS: SprintData[] = [
       "Scalable foundation for sustainable growth",
     ],
     addons: [
-      { id: "b2b-linkedin", label: "LinkedIn Authority Pack", price: 70000 },
-      { id: "b2b-funnel", label: "Extra Sales Funnel", price: 90000 },
-      { id: "b2b-crm", label: "CRM Deep Integration", price: 55000 },
-      { id: "b2b-exec", label: "Executive Content Academy", price: 45000 },
+      { id: "b2b-linkedin", label: "LinkedIn Authority Pack", price: 0 },
+      { id: "b2b-funnel", label: "Extra Sales Funnel", price: 0 },
+      { id: "b2b-crm", label: "CRM Deep Integration", price: 0 },
+      { id: "b2b-exec", label: "Executive Content Academy", price: 0 },
     ],
     milestones: [
       { percent: "50%", stage: "Project Kickoff, Strategy & Foundation", desc: "Positioning, messaging & system design" },
@@ -201,11 +201,11 @@ const SPRINTS: SprintData[] = [
       "Scalable foundation for your next stage",
     ],
     addons: [
-      { id: "custom-brand", label: "Brand Identity", price: 35000 },
-      { id: "custom-web", label: "Website Build", price: 80000 },
-      { id: "custom-ads", label: "Performance Ads Setup", price: 50000 },
-      { id: "custom-ai", label: "AI Automation", price: 45000 },
-      { id: "custom-screen", label: "Extra Screen / Page", price: 8000, unit: "/pg" },
+      { id: "custom-brand", label: "Brand Identity", price: 0 },
+      { id: "custom-web", label: "Website Build", price: 0 },
+      { id: "custom-ads", label: "Performance Ads Setup", price: 0 },
+      { id: "custom-ai", label: "AI Automation", price: 0 },
+      { id: "custom-screen", label: "Extra Screen / Page", price: 0, unit: "/pg" },
     ],
     milestones: [
       { percent: "50%", stage: "Project Kickoff & Discovery", desc: "Scope alignment & strategic foundation" },
@@ -221,14 +221,14 @@ export default function Pricing() {
   const [activeSprint, setActiveSprint] = useState<SprintData>(SPRINTS[0]);
 
   return (
-    <section id="pricing" className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12 md:py-24">
-      <Eyebrow index="05" label="Investment & Growth Sprints" className="text-center md:text-left" />
-
-      <div className="mt-6 mx-auto max-w-4xl text-center md:mx-0 md:text-left">
-        <h2 className="font-display text-2xl font-semibold tracking-[-0.03em] text-ink dark:text-white sm:text-3xl md:text-4xl leading-[1.1]">
-          <TextReveal as="span" className="block" text="Growth Isn't Purchased." />
-          <TextReveal as="span" className="block text-accent dark:text-amber" text="It's Built Through Commitment." delay={0.12} />
+    <section id="pricing" className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-10 md:px-12 md:py-14">
+      <div className="mx-auto max-w-4xl text-center flex flex-col items-center justify-center">
+        <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-ink dark:text-white sm:text-4xl md:text-5xl">
+          05 — Investment & Growth Sprints
         </h2>
+        <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-accent dark:text-amber sm:text-2xl md:text-3xl leading-snug">
+          Growth Isn&apos;t Purchased. It&apos;s Built Through Commitment.
+        </h3>
         <p className="mt-4 text-sm sm:text-base leading-relaxed text-body dark:text-slate-300 font-medium">
           Every Growth Sprint™ is a focused engagement where strategy, execution, and optimisation work together under one accountable team. Configure add-ons below to see your estimate.
         </p>

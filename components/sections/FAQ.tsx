@@ -41,17 +41,19 @@ const ITEMS = [
 ];
 
 export default function FAQ() {
-  const [open, setOpen] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-16 md:px-12 md:py-24">
+    <section id="faq" className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-10 md:px-12 md:py-14">
       <div className="grid gap-10 md:grid-cols-5 md:gap-8">
-        <div className="md:col-span-2 text-center md:text-left">
-          <Eyebrow index="07" label="Frequently Asked Questions" />
-          <h2 className="mt-4 font-display text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl md:text-4xl">
-            Questions Founders Usually Ask.
+        <div className="md:col-span-2 text-center md:text-left flex flex-col items-center md:items-start">
+          <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-ink dark:text-white sm:text-4xl md:text-5xl">
+            07 — Frequently Asked Questions
           </h2>
-          <p className="mt-3 mx-auto max-w-sm text-sm sm:text-base text-body md:mx-0">
+          <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-accent dark:text-amber sm:text-2xl md:text-3xl">
+            Questions Founders Usually Ask.
+          </h3>
+          <p className="mt-3 mx-auto max-w-sm text-sm sm:text-base text-body md:mx-0 font-medium">
             If you&apos;re wondering the same thing, you&apos;re probably not the first.
           </p>
 

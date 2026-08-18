@@ -44,7 +44,7 @@ export default function Logo3D({
   className = "",
   baseRotateY = -16,
   baseRotateX = 9,
-  maxTilt = 8,
+  maxTilt = 20,
   float = true,
   glow = true,
 }: Logo3DProps) {
@@ -55,8 +55,8 @@ export default function Logo3D({
 
   const mx = useMotionValue(0); // normalized cursor -0.5..0.5
   const my = useMotionValue(0);
-  const sx = useSpring(mx, { stiffness: 60, damping: 18 });
-  const sy = useSpring(my, { stiffness: 60, damping: 18 });
+  const sx = useSpring(mx, { stiffness: 120, damping: 14 });
+  const sy = useSpring(my, { stiffness: 120, damping: 14 });
   const rotateY = useTransform(sx, [-0.5, 0.5], [baseRotateY - maxTilt, baseRotateY + maxTilt]);
   const rotateX = useTransform(sy, [-0.5, 0.5], [baseRotateX + maxTilt * 0.7, baseRotateX - maxTilt * 0.7]);
 

@@ -17,29 +17,31 @@ export default function PlaybookBanner() {
         <div className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-amber/20 blur-3xl" />
 
         <div className="relative z-10 grid gap-8 lg:grid-cols-12 lg:items-center">
-          <div className="lg:col-span-8 text-center lg:text-left">
-            <Eyebrow index="06" label="The ScaleXpertz Growth Playbook™" />
-            <h2 className="mt-4 font-display text-2xl font-bold tracking-tight text-ink dark:text-white sm:text-3xl md:text-4xl leading-tight">
-              The Operating System Behind <span className="text-amber">Sustainable Growth.</span>
+          <div className="lg:col-span-8 text-center flex flex-col items-center justify-center">
+            <h2 className="font-display text-2xl font-extrabold tracking-[-0.03em] text-ink dark:text-white sm:text-3xl md:text-4xl">
+              06 — The ScaleXpertz Growth Playbook™
             </h2>
-            <p className="mt-3 mx-auto text-sm sm:text-base leading-relaxed text-body dark:text-slate-300 font-medium max-w-2xl lg:mx-0">
+            <h3 className="mt-2.5 font-display text-lg font-bold tracking-tight text-accent dark:text-amber sm:text-xl md:text-2xl leading-tight">
+              The Operating System Behind <span className="text-amber">Sustainable Growth.</span>
+            </h3>
+            <p className="mt-3 mx-auto text-sm sm:text-base leading-relaxed text-body dark:text-slate-300 font-medium max-w-2xl">
               Want to see our full methodology, 90-Day Growth Sprint™ breakdown, and execution framework before making a decision? Download the 15-page ScaleXpertz Growth Playbook™.
             </p>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-ink dark:text-white lg:justify-start">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-ink dark:text-white">
               <span className="flex items-center gap-1.5"><span className="text-amber">✓</span> 15-Page Strategy Guide</span>
               <span className="flex items-center gap-1.5"><span className="text-amber">✓</span> Coordination Chaos™ Fix</span>
               <span className="flex items-center gap-1.5"><span className="text-amber">✓</span> 90-Day Sprint Roadmap</span>
             </div>
           </div>
 
-          <div className="lg:col-span-4 flex flex-col items-center justify-center text-center lg:items-end lg:text-right">
+          <div className="lg:col-span-4 flex flex-col items-center justify-center text-center lg:items-center lg:text-center">
             <button
               onClick={() => setModalOpen(true)}
-              className="inline-flex items-center gap-3 rounded-full bg-accent px-8 py-4 font-display text-sm font-bold text-ink shadow-xl shadow-accent/25 transition-all duration-300 hover:scale-105 hover:bg-accent-strong"
+              className="inline-flex items-center justify-center gap-3 rounded-full bg-accent px-8 py-4 font-display text-sm font-extrabold text-ink shadow-xl shadow-accent/25 transition-all duration-300 hover:scale-105 hover:bg-accent-strong active:scale-95"
             >
               📖 Download Growth Playbook™
             </button>
-            <span className="mt-2 text-xs text-ink/50 dark:text-slate-400 font-mono">
+            <span className="mt-2.5 text-xs text-ink/60 dark:text-slate-400 font-mono font-medium">
               Free PDF download • Instant access
             </span>
           </div>

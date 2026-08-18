@@ -143,9 +143,27 @@ function SystemMergeVisual({ play }: { play: boolean }) {
 export default function Hero() {
   const done = usePreloaderDone();
   const isDesktop = useIsDesktop();
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handlePointerMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handlePointerMove, { passive: true });
+    return () => window.removeEventListener("mousemove", handlePointerMove);
+  }, []);
 
   return (
     <section id="top" className="relative isolate flex min-h-svh flex-col overflow-hidden">
+      {/* Mouse-following spotlight aura (Scalisite style effect) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[1] transition-opacity duration-700 opacity-60 dark:opacity-75"
+        style={{
+          background: `radial-gradient(650px circle at ${mousePos.x}px ${mousePos.y}px, rgba(212,175,55,0.075), transparent 80%)`,
+        }}
+      />
+
       {/* perspective grid floor: premium depth cue, masked away before the text zone */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
@@ -186,50 +204,43 @@ export default function Hero() {
       {/* main hero content — centered on mobile, left-aligned from lg for desktop split */}
       <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col items-center justify-center px-6 pb-16 pt-24 text-center md:px-12 md:pb-24 md:pt-28 lg:items-start lg:text-left">
         <FadeUp delay={0.15} play={done}>
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-ink/60">
-            <span className="mr-3 text-amber">✦</span>
+          <p className="font-mono text-sm sm:text-base md:text-lg font-extrabold uppercase tracking-[0.22em] text-accent dark:text-amber">
+            <span className="mr-3 text-amber font-bold">✦</span>
             The all-in-one growth partner
           </p>
         </FadeUp>
 
         {/* Line by line animated headline */}
-        <h1 className="mt-4 font-display text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-ink md:mt-6">
+        <h1 className="mt-4 font-display text-[clamp(2.25rem,5vw,4.25rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-ink md:mt-6">
           <TextReveal as="span" className="block text-ink dark:text-white" text="Your Next Hire" play={done} delay={0.2} />
-          <TextReveal as="span" className="block text-ink/80 dark:text-white/85" text="Should Be" play={done} delay={0.5} />
-          <TextReveal as="span" className="mt-2 block text-accent dark:text-amber" text="Your Last Agency." play={done} delay={0.8} />
+          <TextReveal as="span" className="block text-ink/85 dark:text-white/90" text="Should Be" play={done} delay={0.5} />
+          <TextReveal as="span" className="mt-1 block text-accent dark:text-amber" text="Your Last Agency." play={done} delay={0.8} />
         </h1>
 
-        {/* Subheadline appears after 1s pause following headline reveal */}
+        {/* Subheadline appears after headline reveal */}
         <FadeUp delay={1.8} play={done}>
-          <div className="mt-5 max-w-xl md:mt-6">
-            <p className="font-display text-sm font-semibold text-ink dark:text-white sm:text-base">
+          <div className="mt-5 max-w-2xl md:mt-6 lg:max-w-3xl">
+            <p className="font-display text-base font-bold text-ink dark:text-white sm:text-lg">
               Every new agency solves one problem. And creates another to manage.
             </p>
-            <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-body dark:text-slate-300 sm:text-base lg:line-clamp-none">
+            <p className="mt-2.5 text-base leading-relaxed text-body dark:text-slate-300 sm:text-lg font-medium">
               ScaleXpertz brings strategy, branding, websites, marketing, AI and execution under one team—so you can focus on growing your business instead of coordinating it.
             </p>
           </div>
         </FadeUp>
 
         {/* Primary and Secondary CTAs */}
-        <FadeUp delay={2.1} play={done} className="mt-8 md:mt-10">
+        <FadeUp delay={2.1} play={done} className="mt-8 md:mt-10 max-w-full">
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:gap-6 lg:items-start">
-            <div className="flex flex-col items-center gap-1 lg:items-start">
-              <Magnetic>
-                <a
-                  href="/diagnosis"
-                  className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-8 py-4 text-base font-bold text-ink shadow-xl shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-2xl hover:shadow-accent/40 active:scale-95 group"
-                >
-                  Book a Strategy Call
-                  <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">
-                    <path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </a>
-              </Magnetic>
-              <span className="font-mono text-[11px] text-ink/70 dark:text-slate-400 lg:pl-3">
-                Usually replies within one business day.
-              </span>
-            </div>
+            <a
+              href="/diagnosis"
+              className="inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-8 py-4 text-base font-extrabold text-ink shadow-xl shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-[1.03] hover:shadow-2xl hover:shadow-accent/40 active:scale-95 group"
+            >
+              <span>Book a Strategy Call</span>
+              <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">
+                <path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
 
             <a
               href="#services"
@@ -290,21 +301,7 @@ export default function Hero() {
         </FadeUp>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="pointer-events-none absolute bottom-24 left-6 z-10 hidden flex-col items-center gap-3 md:left-12 md:flex"
-        initial={{ opacity: 0 }}
-        animate={done ? { opacity: 1 } : {}}
-        transition={{ duration: 0.8, delay: 2.3 }}
-        aria-hidden
-      >
-        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-ink/70 dark:text-slate-400">
-          Scroll
-        </span>
-        <span className="relative h-12 w-px overflow-hidden bg-ink/10 dark:bg-white/15">
-          <span className="animate-scroll-line absolute inset-0 bg-ink dark:bg-white" />
-        </span>
-      </motion.div>
+
 
       {/* services marquee */}
       <motion.div

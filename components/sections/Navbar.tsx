@@ -15,7 +15,6 @@ import { EASE_IN_OUT, EASE_OUT_EXPO } from "@/lib/animations";
 const LINKS = [
   { label: "Framework", href: "#framework" },
   { label: "Services", href: "#services" },
-  { label: "Guarantee", href: "#anti-agency" },
   { label: "Work", href: "#work" },
   { label: "Pricing", href: "#pricing" },
   { label: "FAQ", href: "#faq" },
@@ -94,32 +93,31 @@ export default function Navbar() {
             className="flex shrink-0 items-center gap-2 font-display text-lg sm:text-xl font-semibold tracking-tight text-ink dark:text-white"
             aria-label="ScaleXpertz — back to top"
           >
-            {pathname === "/" ? (
-              <LogoEntrance play={animateHomeLogo} variant="nav" className="inline-flex shrink-0">
-                <Image
-                  src="/logo-mark.png"
-                  alt=""
-                  width={441}
-                  height={344}
-                  priority
-                  className="h-7 sm:h-8 w-auto"
-                />
-              </LogoEntrance>
-            ) : (
+            <div className="relative inline-flex shrink-0 items-center">
+              {/* Dark Theme Logo */}
               <Image
-                src="/logo-mark.png"
-                alt=""
+                src="/logo-mark-3d-dark.png"
+                alt="ScaleXpertz Logo"
                 width={441}
                 height={344}
                 priority
-                className="h-7 sm:h-8 w-auto"
+                className="h-7 sm:h-8 w-auto hidden dark:block object-contain"
               />
-            )}
+              {/* Light Theme Logo */}
+              <Image
+                src="/logo-mark-3d-gold.png"
+                alt="ScaleXpertz Logo"
+                width={441}
+                height={344}
+                priority
+                className="h-7 sm:h-8 w-auto block dark:hidden object-contain"
+              />
+            </div>
             <span>ScaleXpertz<span className="text-accent dark:text-amber">.</span></span>
           </a>
 
           <nav className="hidden items-center gap-4 lg:gap-6 md:flex" aria-label="Primary">
-            {LINKS.slice(0, 3).map((l) => (
+            {LINKS.slice(0, 2).map((l) => (
               <a
                 key={l.href}
                 href={l.href}
@@ -170,7 +168,7 @@ export default function Navbar() {
               </div>
             </div>
 
-            {LINKS.slice(3).map((l) => (
+            {LINKS.slice(2).map((l) => (
               <a
                 key={l.href}
                 href={l.href}

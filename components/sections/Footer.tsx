@@ -24,6 +24,7 @@ const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] =
         { label: "Our Process", href: "#process" },
         { label: "Featured Work", href: "#work" },
         { label: "FAQ", href: "#faq" },
+        { label: "Founder Growth Diagnosis", href: "/diagnosis" },
       ],
     },
     {
