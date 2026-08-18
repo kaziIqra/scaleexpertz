@@ -204,8 +204,8 @@ export default function Hero() {
       {/* main hero content — centered on mobile, left-aligned from lg for desktop split */}
       <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col items-center justify-center px-6 pb-16 pt-24 text-center md:px-12 md:pb-24 md:pt-28 lg:items-start lg:text-left">
         <FadeUp delay={0.15} play={done}>
-          <p className="font-mono text-sm sm:text-base md:text-lg font-extrabold uppercase tracking-[0.22em] text-accent dark:text-amber">
-            <span className="mr-3 text-amber font-bold">✦</span>
+          <p className="font-[family-name:var(--font-playfair)] italic font-semibold text-lg sm:text-xl md:text-2xl tracking-wide text-accent dark:text-amber">
+            <span className="mr-3 not-italic text-amber font-bold">✦</span>
             The all-in-one growth partner
           </p>
         </FadeUp>
@@ -270,9 +270,11 @@ export default function Hero() {
           </div>
 
           {/* Trust line below CTA */}
-          <div className="mt-6 flex items-center justify-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-amber lg:justify-start">
-            <span className="h-2 w-2 rounded-full bg-amber" />
-            One Team. Every Growth Solution.
+          <div className="mt-6 flex items-center justify-center lg:justify-start">
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-accent/30 dark:border-amber/35 bg-accent/10 dark:bg-amber/10 px-4 py-1.5 font-[family-name:var(--font-jakarta)] text-xs sm:text-sm font-extrabold uppercase tracking-[0.25em] text-accent dark:text-amber shadow-sm backdrop-blur-sm">
+              <span className="h-2 w-2 rounded-full bg-amber animate-pulse" />
+              One Team. Every Growth Solution.
+            </span>
           </div>
         </FadeUp>
 

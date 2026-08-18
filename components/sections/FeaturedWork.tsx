@@ -216,30 +216,50 @@ export default function FeaturedWork() {
         ))}
       </div>
 
-      {/* Closing Statement & Primary CTA */}
-      <div className="mt-20 rounded-3xl border border-black/[0.06] bg-surface p-8 md:p-12 shadow-card flex flex-col items-center text-center md:flex-row md:items-center md:text-left justify-between gap-8">
-        <div className="max-w-2xl">
-          <span className="font-mono text-xs uppercase tracking-widest text-amber font-semibold">Our Philosophy</span>
-          <h3 className="mt-3 font-display text-2xl font-bold tracking-tight text-ink md:text-3xl">
-            Different businesses. Different challenges. One philosophy.
-          </h3>
-          <p className="mt-3 text-base leading-relaxed text-body font-medium">
-            We don&apos;t copy strategies from one client to another. We study the business, understand the customer, build the right system, and execute with complete ownership. That&apos;s how growth becomes repeatable—not accidental.
-          </p>
-        </div>
+      {/* Closing Statement & Primary CTA — Premium Rearranged Layout */}
+      <div className="mt-16 md:mt-24 relative overflow-hidden rounded-[32px] border border-black/10 dark:border-white/12 bg-gradient-to-br from-surface via-surface to-paper dark:from-[#14141a] dark:via-[#16161f] dark:to-[#0e0e12] p-8 sm:p-10 md:p-14 shadow-2xl transition-all duration-500 hover:border-accent/40">
+        {/* Ambient Glows */}
+        <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-accent/15 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -left-20 -bottom-20 h-72 w-72 rounded-full bg-amber/15 blur-3xl" />
 
-        <div className="shrink-0 flex justify-center md:justify-start">
-          <Magnetic strength={12}>
-            <a
-              href="/ScaleXpertz_Growth_Playbook.pdf"
-              download
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-8 py-4 text-base font-bold text-ink shadow-xl shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-2xl hover:shadow-accent/40 active:scale-95 group"
-            >
-              Explore Our Growth Research &rarr;
-            </a>
-          </Magnetic>
+        <div className="relative z-10">
+          <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 dark:border-amber/35 bg-accent/10 dark:bg-amber/10 px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-accent dark:text-amber shadow-sm backdrop-blur-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber" />
+            Our Philosophy
+          </span>
+
+          <h3 className="mt-5 font-display text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-ink dark:text-white leading-tight">
+            Different businesses. Different challenges.{" "}
+            <span className="text-accent dark:text-amber block sm:inline">One philosophy.</span>
+          </h3>
+
+          <div className="mt-6 border-l-4 border-accent dark:border-amber pl-6 py-4 bg-accent/5 dark:bg-amber/5 rounded-r-2xl backdrop-blur-sm">
+            <p className="text-base sm:text-lg leading-relaxed text-body dark:text-slate-200 font-medium italic">
+              &ldquo;We don&apos;t copy strategies from one client to another. We study the business, understand the customer, build the right system, and execute with complete ownership. That&apos;s how growth becomes repeatable—not accidental.&rdquo;
+            </p>
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10 flex justify-end sm:justify-start md:justify-end">
+            <div className="shrink-0">
+              <Magnetic strength={12}>
+                <a
+                  href="/ScaleXpertz_Case_Studies_Report.pdf"
+                  download="ScaleXpertz_Growth_Research.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-7 py-4 text-base font-bold text-ink shadow-xl shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-2xl hover:shadow-accent/40 active:scale-95 group leading-none text-center"
+                >
+                  <svg className="h-5 w-5 shrink-0 text-ink transition-transform duration-300 group-hover:translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  <span>Explore Our Growth Research</span>
+                  <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">→</span>
+                </a>
+              </Magnetic>
+            </div>
+          </div>
         </div>
       </div>
 

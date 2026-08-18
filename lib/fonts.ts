@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-import { JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 
 /**
  * Switzer (Fontshare / ITF Free Font License) — free Neue Haas Grotesk
@@ -46,5 +46,17 @@ export const switzer = localFont({
 export const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
+  display: "swap",
+});
+
+export const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap",
+});
+
+export const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-jakarta",
   display: "swap",
 });

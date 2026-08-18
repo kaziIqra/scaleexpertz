@@ -556,18 +556,26 @@ function JourneyScene({ variant }: { variant: Variant }) {
 
       if (!isOverGraph) return;
 
-      const step = e.deltaY > 0 ? 0.05 : -0.05;
-      const nextP = Math.max(0, Math.min(1, progressPRef.current + step));
-      applyProgress(nextP);
+      const currentP = progressPRef.current;
+      const isScrollingDown = e.deltaY > 0;
+      const isScrollingUp = e.deltaY < 0;
 
-      let currentActive = 0;
-      for (let i = 0; i < NODE_T.length; i++) {
-        if (nextP >= NODE_T[i] - 0.08) currentActive = i;
+      // When cursor is over the graph area, scrub the graph movement instead of page scroll
+      if ((isScrollingDown && currentP < 0.999) || (isScrollingUp && currentP > 0.001)) {
+        if (e.cancelable) e.preventDefault();
+        const step = isScrollingDown ? 0.05 : -0.05;
+        const nextP = Math.max(0, Math.min(1, currentP + step));
+        applyProgress(nextP);
+
+        let currentActive = 0;
+        for (let i = 0; i < NODE_T.length; i++) {
+          if (nextP >= NODE_T[i] - 0.08) currentActive = i;
+        }
+        setActive(currentActive);
       }
-      setActive(currentActive);
     };
 
-    window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("wheel", onWheel, { passive: false });
 
     return () => {
       window.removeEventListener("wheel", onWheel);
@@ -599,7 +607,7 @@ function JourneyScene({ variant }: { variant: Variant }) {
       {/* map */}
       <div className={isDesktop ? "mt-12 flex items-center justify-center" : "mt-10"}>
         <div
-          className="relative w-full"
+          className="relative w-full rounded-[32px] border border-black/10 dark:border-white/15 bg-surface dark:bg-[#121217] p-2 shadow-2xl transition-colors duration-300"
           style={{
             aspectRatio: `${route.w} / ${route.h}`,
             ...(isDesktop && {
@@ -618,18 +626,18 @@ function JourneyScene({ variant }: { variant: Variant }) {
               </clipPath>
             </defs>
             <g clipPath={`url(#journey-clip-${variant})`}>
-              {/* premium paper / night panel */}
+              {/* high contrast paper / night theme backdrop */}
               <rect
                 width={route.w}
                 height={route.h}
                 rx={28}
-                className="fill-paper dark:fill-[#101014]"
+                className="fill-[#f5f4ef] dark:fill-[#0e0e12]"
               />
               <rect
                 width={route.w}
                 height={route.h}
                 rx={28}
-                className="fill-accent/[0.04] dark:fill-accent/[0.06]"
+                className="fill-accent/[0.06] dark:fill-amber/[0.05]"
               />
               <rect
                 x={0.75}
@@ -638,7 +646,7 @@ function JourneyScene({ variant }: { variant: Variant }) {
                 height={route.h - 1.5}
                 rx={28}
                 fill="none"
-                className="stroke-ink/10 dark:stroke-white/10"
+                className="stroke-ink/15 dark:stroke-white/15"
                 strokeWidth={1.5}
               />
 

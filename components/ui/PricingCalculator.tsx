@@ -60,11 +60,8 @@ export default function PricingCalculator({
   }, [activeSprint.id]);
 
   const total = useMemo(() => {
-    const addonsTotal = activeSprint.addons
-      .filter((a) => selectedAddons.includes(a.id))
-      .reduce((sum, a) => sum + a.price, 0);
-    return activeSprint.basePrice + addonsTotal;
-  }, [activeSprint, selectedAddons]);
+    return activeSprint.basePrice;
+  }, [activeSprint]);
 
   const toggleAddon = (id: string) => {
     setSelectedAddons((prev) =>
@@ -122,10 +119,7 @@ export default function PricingCalculator({
               {formatINR(total)}
             </p>
             <p className="mt-2 text-xs text-ink/65 dark:text-amber/60 font-medium">
-              Base {formatINR(activeSprint.basePrice)}
-              {selectedAddons.length > 0
-                ? ` + ${selectedAddons.length} included add-on${selectedAddons.length > 1 ? "s" : ""}`
-                : " · starting estimate"}
+              Fixed Sprint Investment · All Add-ons Included at ₹0
             </p>
           </div>
 

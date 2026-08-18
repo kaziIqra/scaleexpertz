@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { jetbrainsMono, switzer } from "@/lib/fonts";
+import { jakarta, jetbrainsMono, playfair, switzer } from "@/lib/fonts";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import { MotionPrefProvider, MotionToggle } from "@/components/providers/MotionPref";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
@@ -26,9 +26,8 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-/** Runs pre-paint so returning visitors never see the preloader flash & default to dark theme.
- *  /diagnosis is always light (booking) — skip dark before first paint to avoid a flash. */
-const PRELOADER_SKIP = `try{var t=localStorage.getItem("theme");var p=location.pathname;if(p==="/diagnosis"||p.indexOf("/diagnosis/")===0){document.documentElement.classList.remove("dark");document.documentElement.dataset.forceLight="1"}else if(t==="dark"||!t)document.documentElement.classList.add("dark");else document.documentElement.classList.remove("dark");if(sessionStorage.getItem("sx-preloaded")==="1")document.documentElement.dataset.preloaded="1"}catch(e){}`;
+/** Runs pre-paint so returning visitors never see the preloader flash & default to dark theme. */
+const PRELOADER_SKIP = `try{var t=localStorage.getItem("theme");if(t==="dark"||!t)document.documentElement.classList.add("dark");else document.documentElement.classList.remove("dark");if(sessionStorage.getItem("sx-preloaded")==="1")document.documentElement.dataset.preloaded="1"}catch(e){}`;
 
 const GRAIN = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`;
 
@@ -41,7 +40,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${switzer.variable} ${jetbrainsMono.variable} antialiased dark`}
+      className={`${switzer.variable} ${jetbrainsMono.variable} ${playfair.variable} ${jakarta.variable} antialiased dark`}
     >
       <body className="bg-paper font-sans text-body transition-colors duration-400">
         <script dangerouslySetInnerHTML={{ __html: PRELOADER_SKIP }} />

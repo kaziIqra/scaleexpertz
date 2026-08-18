@@ -11,39 +11,51 @@ export default function PlaybookBanner() {
 
   return (
     <section className="mx-auto max-w-[1440px] px-6 py-12 md:px-12 md:py-16">
-      <div className="relative overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/10 via-surface to-amber/10 dark:from-[#181828] dark:via-[#141419] dark:to-[#1a1810] p-8 md:p-12 shadow-card">
+      <div className="group relative overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/10 via-surface to-amber/10 dark:from-[#181828] dark:via-[#141419] dark:to-[#1a1810] p-8 md:p-12 shadow-card transition-all duration-500 hover:border-accent/60 hover:shadow-2xl hover:-translate-y-1">
         {/* Background glow Orbs */}
-        <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-accent/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-amber/20 blur-3xl" />
+        <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-accent/20 blur-3xl transition-all duration-700 group-hover:scale-125 group-hover:bg-accent/30" />
+        <div className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-amber/20 blur-3xl transition-all duration-700 group-hover:scale-125 group-hover:bg-amber/30" />
 
-        <div className="relative z-10 grid gap-8 lg:grid-cols-12 lg:items-center">
-          <div className="lg:col-span-8 text-center flex flex-col items-center justify-center">
-            <h2 className="font-display text-2xl font-extrabold tracking-[-0.03em] text-ink dark:text-white sm:text-3xl md:text-4xl">
-              06 — The ScaleXpertz Growth Playbook™
-            </h2>
-            <h3 className="mt-2.5 font-display text-lg font-bold tracking-tight text-accent dark:text-amber sm:text-xl md:text-2xl leading-tight">
-              The Operating System Behind <span className="text-amber">Sustainable Growth.</span>
-            </h3>
-            <p className="mt-3 mx-auto text-sm sm:text-base leading-relaxed text-body dark:text-slate-300 font-medium max-w-2xl">
-              Want to see our full methodology, 90-Day Growth Sprint™ breakdown, and execution framework before making a decision? Download the 15-page ScaleXpertz Growth Playbook™.
-            </p>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-ink dark:text-white">
-              <span className="flex items-center gap-1.5"><span className="text-amber">✓</span> 15-Page Strategy Guide</span>
-              <span className="flex items-center gap-1.5"><span className="text-amber">✓</span> Coordination Chaos™ Fix</span>
-              <span className="flex items-center gap-1.5"><span className="text-amber">✓</span> 90-Day Sprint Roadmap</span>
-            </div>
+        <div className="relative z-10 mx-auto max-w-3xl text-center flex flex-col items-center justify-center space-y-6">
+          {/* 1. Eyebrow badge */}
+          <div className="inline-flex items-center gap-2 rounded-full border border-accent/30 dark:border-amber/35 bg-accent/10 dark:bg-amber/10 px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-accent dark:text-amber shadow-sm backdrop-blur-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber animate-pulse" />
+            06 — The ScaleXpertz Growth Playbook™
           </div>
 
-          <div className="lg:col-span-4 flex flex-col items-center justify-center text-center lg:items-center lg:text-center">
+          {/* 2. Heading */}
+          <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-ink dark:text-white leading-tight">
+            The Operating System Behind{" "}
+            <span className="text-accent dark:text-amber">Sustainable Growth.</span>
+          </h3>
+
+          {/* 3. Description paragraph */}
+          <p className="text-sm sm:text-base leading-relaxed text-body dark:text-slate-300 font-medium max-w-2xl">
+            Want to see our full methodology, 90-Day Growth Sprint™ breakdown, and execution framework before making a decision? Download the 15-page ScaleXpertz Growth Playbook™.
+          </p>
+
+          {/* 4. Feature Pills */}
+          <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-semibold text-ink dark:text-white">
+            <span className="group/pill inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/12 bg-surface/80 dark:bg-white/[0.04] px-4 py-2 text-xs font-semibold text-ink dark:text-white transition-all duration-300 hover:border-accent/50 dark:hover:border-amber/50 hover:bg-accent/15 dark:hover:bg-amber/15 hover:scale-105 shadow-sm">
+              <span className="text-amber font-extrabold transition-transform duration-300 group-hover/pill:scale-125">✓</span> 15-Page Strategy Guide
+            </span>
+            <span className="group/pill inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/12 bg-surface/80 dark:bg-white/[0.04] px-4 py-2 text-xs font-semibold text-ink dark:text-white transition-all duration-300 hover:border-accent/50 dark:hover:border-amber/50 hover:bg-accent/15 dark:hover:bg-amber/15 hover:scale-105 shadow-sm">
+              <span className="text-amber font-extrabold transition-transform duration-300 group-hover/pill:scale-125">✓</span> Coordination Chaos™ Fix
+            </span>
+            <span className="group/pill inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/12 bg-surface/80 dark:bg-white/[0.04] px-4 py-2 text-xs font-semibold text-ink dark:text-white transition-all duration-300 hover:border-accent/50 dark:hover:border-amber/50 hover:bg-accent/15 dark:hover:bg-amber/15 hover:scale-105 shadow-sm">
+              <span className="text-amber font-extrabold transition-transform duration-300 group-hover/pill:scale-125">✓</span> 90-Day Sprint Roadmap
+            </span>
+          </div>
+
+          {/* 5. Button directly below */}
+          <div className="pt-2">
             <button
               onClick={() => setModalOpen(true)}
-              className="inline-flex items-center justify-center gap-3 rounded-full bg-accent px-8 py-4 font-display text-sm font-extrabold text-ink shadow-xl shadow-accent/25 transition-all duration-300 hover:scale-105 hover:bg-accent-strong active:scale-95"
+              className="inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-8 py-4 font-display text-sm font-extrabold text-ink shadow-xl shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-2xl hover:shadow-accent/40 active:scale-95 group/btn cursor-pointer"
             >
-              📖 Download Growth Playbook™
+              <span className="transition-transform duration-300 group-hover/btn:-rotate-12 group-hover/btn:scale-110">📖</span>
+              <span>Download Growth Playbook™</span>
             </button>
-            <span className="mt-2.5 text-xs text-ink/60 dark:text-slate-400 font-mono font-medium">
-              Free PDF download • Instant access
-            </span>
           </div>
         </div>
       </div>

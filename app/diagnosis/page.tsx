@@ -40,7 +40,7 @@ export default function DiagnosisPage() {
   return (
     <div className="min-h-dvh bg-paper text-body dark:bg-[#0c0c0e] dark:text-slate-300 transition-colors duration-300">
       <Navbar />
-      <main className="mx-auto max-w-[1440px] px-6 pb-20 pt-28 md:px-12 md:pt-36">
+      <main className="mx-auto max-w-[1440px] px-6 sm:px-12 md:px-16 lg:px-20 pb-20 pt-28 md:pt-36">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
           {/* Left Column: Heading & Feature Cards */}
           <div className="lg:col-span-6 text-center lg:text-left">

@@ -75,9 +75,9 @@ export default function FounderDiagnosis() {
         <div className="absolute right-[15%] bottom-[10%] h-[400px] w-[400px] rounded-full bg-amber/[0.1] blur-[120px]" />
       </div>
 
-      <div className="relative mx-auto max-w-[1440px] px-6 md:px-12">
-        {/* Full-width intro */}
-        <div className="mx-auto max-w-3xl text-center flex flex-col items-center justify-center">
+      <div className="relative mx-auto max-w-[1440px] px-6 sm:px-12 md:px-16 lg:px-20">
+        {/* Full-width intro with side spacing */}
+        <div className="mx-auto max-w-4xl text-center flex flex-col items-center justify-center px-4 sm:px-8 md:px-12">
           <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-white sm:text-4xl md:text-5xl">
             06 — Founder Growth Diagnosis
           </h2>
@@ -85,10 +85,10 @@ export default function FounderDiagnosis() {
             Every Business Has Blind Spots. Let&apos;s Find Yours.
           </h3>
 
-          <p className="mt-4 mx-auto text-sm sm:text-base text-white/80 leading-relaxed font-medium max-w-2xl">
+          <p className="mt-5 mx-auto text-base sm:text-lg text-white/90 leading-relaxed font-medium max-w-3xl">
             Your next breakthrough might not require a bigger budget. It might require a clearer perspective. Every business has opportunities that are easy to miss from the inside.
           </p>
-          <p className="mt-2 mx-auto text-xs sm:text-sm text-white/60 leading-relaxed max-w-2xl">
+          <p className="mt-3 mx-auto text-xs sm:text-sm text-white/65 leading-relaxed max-w-3xl font-normal">
             Our Founder Growth Diagnosis helps uncover the bottlenecks, hidden opportunities, and strategic gaps that could be limiting your next stage of growth. Because the right decisions start with the right understanding.
           </p>
         </div>

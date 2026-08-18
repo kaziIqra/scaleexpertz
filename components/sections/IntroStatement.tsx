@@ -78,8 +78,7 @@ export default function IntroStatement() {
           02 — The Problem
         </h2>
         <h3 className="mt-3 max-w-3xl font-display text-xl font-bold tracking-tight text-accent dark:text-amber sm:text-2xl md:text-3xl leading-snug">
-          Five Experts. Five Priorities. One Business.{" "}
-          <em className="italic block mt-1">Congratulations. You&apos;re now managing six teams.</em>
+          Five Experts. Five Priorities. One Business.
         </h3>
       </div>
 

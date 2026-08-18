@@ -40,7 +40,7 @@ const SERVICES: ServiceCard[] = [
     description:
       "Your website should build trust, answer questions, and convert visitors—even while you sleep. We design high-converting web applications built for speed and sales.",
     icon: LuGlobe,
-    span: "md:col-span-2 lg:col-span-4",
+    span: "col-span-1",
     accent: "from-amber-500/20 via-gold/15 to-transparent",
     avatarText: "WD",
   },
@@ -50,7 +50,7 @@ const SERVICES: ServiceCard[] = [
     description:
       "We create predictable demand through strategic marketing and targeted performance ads that turn attention into paying customers.",
     icon: LuTrendingUp,
-    span: "md:col-span-2 lg:col-span-2",
+    span: "col-span-1",
     accent: "from-gold/20 via-amber/15 to-transparent",
     avatarText: "MK",
   },
@@ -60,7 +60,7 @@ const SERVICES: ServiceCard[] = [
     description:
       "Great brands aren't just recognized—they're remembered, trusted, and chosen. We shape identity and messaging that commands category leadership.",
     icon: LuPalette,
-    span: "md:col-span-2 lg:col-span-2",
+    span: "col-span-1",
     accent: "from-rose-500/20 via-pink-500/15 to-transparent",
     avatarText: "BD",
   },
@@ -70,7 +70,7 @@ const SERVICES: ServiceCard[] = [
     description:
       "Automate repetitive work, streamline customer operations, and let your business run smarter 24×7 without adding overhead.",
     icon: LuBot,
-    span: "md:col-span-2 lg:col-span-4",
+    span: "col-span-1",
     accent: "from-emerald-500/20 via-teal-500/15 to-transparent",
     avatarText: "AI",
   },
@@ -80,7 +80,7 @@ const SERVICES: ServiceCard[] = [
     description:
       "Better financial systems help you make confident decisions, optimize cash flow, and build a business that scales sustainably.",
     icon: LuWallet,
-    span: "md:col-span-2 lg:col-span-3",
+    span: "col-span-1",
     accent: "from-amber-500/20 via-yellow-500/15 to-transparent",
     avatarText: "FN",
   },
@@ -90,7 +90,7 @@ const SERVICES: ServiceCard[] = [
     description:
       "We build the digital infrastructure, custom APIs, and backend systems that keep every part of your business connected and ready for high volume.",
     icon: LuSettings,
-    span: "md:col-span-2 lg:col-span-3",
+    span: "col-span-1",
     accent: "from-cyan-500/20 via-sky-500/15 to-transparent",
     avatarText: "TC",
   },
@@ -127,9 +127,9 @@ export default function Services() {
         </p>
       </div>
 
-      {/* Dynamic Grid Layout with Engaging Discipline Badges */}
+      {/* Dynamic Grid Layout - 6 Equal Sized Cards */}
       <motion.div
-        className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-6"
+        className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
@@ -139,7 +139,7 @@ export default function Services() {
           <motion.div
             key={s.functionName}
             variants={cardVariants}
-            className={`col-span-1 ${s.span}`}
+            className="col-span-1 flex flex-col"
           >
             <TiltCard className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-[#141419] p-6 sm:p-8 shadow-card transition-all duration-500 hover:border-accent/60 hover:shadow-2xl hover:-translate-y-1">
               {/* Dynamic Hover Radial Gradient */}
