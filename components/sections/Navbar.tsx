@@ -202,12 +202,12 @@ export default function Navbar() {
               className="relative flex h-10 w-10 items-center justify-center md:hidden"
             >
               <span
-                className={`absolute h-px w-5 bg-ink transition-transform duration-300 ${
+                className={`absolute h-px w-5 bg-ink dark:bg-white transition-transform duration-300 ${
                   open ? "rotate-45" : "-translate-y-[3.5px]"
                 }`}
               />
               <span
-                className={`absolute h-px w-5 bg-ink transition-transform duration-300 ${
+                className={`absolute h-px w-5 bg-ink dark:bg-white transition-transform duration-300 ${
                   open ? "-rotate-45" : "translate-y-[3.5px]"
                 }`}
               />
@@ -223,7 +223,7 @@ export default function Navbar() {
             id="mobile-menu"
             role="dialog"
             aria-modal="true"
-            className="fixed inset-0 z-[95] flex flex-col justify-between overflow-hidden bg-paper px-6 pb-10 pt-32 md:hidden"
+            className="fixed inset-0 z-[95] flex flex-col justify-between overflow-y-auto bg-paper dark:bg-[#0c0c10] px-6 pb-8 pt-24 md:hidden"
             initial={{ y: "-100%" }}
             animate={{ y: 0 }}
             exit={{ y: "-100%" }}
@@ -235,63 +235,67 @@ export default function Navbar() {
               className="pointer-events-none absolute -right-24 top-24 h-72 w-72 rounded-full bg-accent/10 blur-3xl"
             />
 
-            <nav aria-label="Mobile">
-              {LINKS.map((l, i) => (
-                <span key={l.href} className="block overflow-hidden">
-                  <motion.a
-                    href={l.href}
-                    onClick={goTo(l.href)}
-                    className="block py-2 font-display text-5xl font-medium tracking-tight text-ink"
-                    initial={{ y: "110%" }}
-                    animate={{
-                      y: 0,
-                      transition: { delay: 0.25 + i * 0.06, duration: 0.7, ease: EASE_OUT_EXPO },
-                    }}
-                    exit={{ y: "110%", transition: { duration: 0.25 } }}
-                  >
-                    <span className="mr-4 align-super font-mono text-xs text-ink/40">
-                      0{i + 1}
-                    </span>
-                    {l.label}
-                  </motion.a>
-                </span>
-              ))}
-
-              {/* About Us group */}
-              <motion.p
-                className="mt-6 font-mono text-xs uppercase tracking-[0.25em] text-ink/40"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { delay: 0.45, duration: 0.4 } }}
-                exit={{ opacity: 0, transition: { duration: 0.2 } }}
-              >
-                About Us
-              </motion.p>
-              <div className="mt-2 flex flex-wrap gap-x-8 gap-y-1">
-                {ABOUT_LINKS.map((l, i) => (
+            <nav aria-label="Mobile" className="my-auto py-4">
+              <div className="space-y-1">
+                {LINKS.map((l, i) => (
                   <span key={l.href} className="block overflow-hidden">
-                    <motion.span
-                      className="block"
+                    <motion.a
+                      href={l.href}
+                      onClick={goTo(l.href)}
+                      className="inline-flex items-baseline py-1.5 font-display text-3xl sm:text-4xl font-bold tracking-tight text-ink dark:text-white transition-colors hover:text-accent dark:hover:text-amber"
                       initial={{ y: "110%" }}
                       animate={{
                         y: 0,
-                        transition: {
-                          delay: 0.5 + i * 0.05,
-                          duration: 0.6,
-                          ease: EASE_OUT_EXPO,
-                        },
+                        transition: { delay: 0.25 + i * 0.06, duration: 0.7, ease: EASE_OUT_EXPO },
                       }}
-                      exit={{ y: "110%", transition: { duration: 0.2 } }}
+                      exit={{ y: "110%", transition: { duration: 0.25 } }}
                     >
-                      <Link
-                        href={l.href}
-                        onClick={() => setOpen(false)}
-                        className="block py-1 font-display text-2xl font-medium tracking-tight text-ink"
-                      >
-                        {l.label}
-                      </Link>
-                    </motion.span>
+                      <span className="mr-3 font-mono text-xs sm:text-sm font-semibold tracking-wider text-accent dark:text-amber">
+                        0{i + 1}
+                      </span>
+                      <span>{l.label}</span>
+                    </motion.a>
                   </span>
                 ))}
+              </div>
+
+              {/* About Us group */}
+              <div className="mt-6 pt-4 border-t border-black/10 dark:border-white/10">
+                <motion.p
+                  className="font-mono text-xs uppercase tracking-[0.25em] text-ink/50 dark:text-white/50 mb-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1, transition: { delay: 0.45, duration: 0.4 } }}
+                  exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                >
+                  About Us
+                </motion.p>
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                  {ABOUT_LINKS.map((l, i) => (
+                    <span key={l.href} className="block overflow-hidden">
+                      <motion.span
+                        className="block"
+                        initial={{ y: "110%" }}
+                        animate={{
+                          y: 0,
+                          transition: {
+                            delay: 0.5 + i * 0.05,
+                            duration: 0.6,
+                            ease: EASE_OUT_EXPO,
+                          },
+                        }}
+                        exit={{ y: "110%", transition: { duration: 0.2 } }}
+                      >
+                        <Link
+                          href={l.href}
+                          onClick={() => setOpen(false)}
+                          className="block py-1 font-display text-lg sm:text-xl font-semibold text-ink/80 dark:text-slate-200 transition-colors hover:text-accent dark:hover:text-amber"
+                        >
+                          {l.label}
+                        </Link>
+                      </motion.span>
+                    </span>
+                  ))}
+                </div>
               </div>
             </nav>
 
@@ -299,18 +303,22 @@ export default function Navbar() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0, transition: { delay: 0.55, duration: 0.5 } }}
               exit={{ opacity: 0, transition: { duration: 0.2 } }}
-              className="flex flex-col gap-4"
+              className="mt-6 pt-4 border-t border-black/10 dark:border-white/10 flex flex-col gap-3.5"
             >
               <Link
                 href="/diagnosis"
                 onClick={() => setOpen(false)}
-                className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-4 text-base font-medium text-ink"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-6 py-3.5 text-base font-bold text-ink shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-[1.02] active:scale-95 text-center"
               >
-                Book a Call
+                <span>Book a Call</span>
+                <span className="text-lg">→</span>
               </Link>
-              <p className="text-center font-mono text-xs uppercase tracking-[0.2em] text-ink/40">
+              <a
+                href="mailto:scalexpertz@gmail.com"
+                className="text-center font-mono text-xs uppercase tracking-[0.2em] text-ink/50 dark:text-white/50 hover:text-accent dark:hover:text-amber transition-colors"
+              >
                 scalexpertz@gmail.com
-              </p>
+              </a>
             </motion.div>
           </motion.div>
         )}

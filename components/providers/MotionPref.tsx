@@ -63,7 +63,7 @@ export function MotionToggle() {
       aria-pressed={paused}
       aria-label={paused ? "Resume animations" : "Pause animations"}
       title={paused ? "Resume animations" : "Pause animations"}
-      className="fixed bottom-5 left-5 z-[150] flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.1] dark:border-white/15 bg-surface/80 text-ink/60 shadow-card backdrop-blur-md transition-colors duration-300 hover:text-ink"
+      className="fixed bottom-5 left-5 z-40 flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.1] dark:border-white/15 bg-surface/80 text-ink/60 shadow-card backdrop-blur-md transition-colors duration-300 hover:text-ink"
     >
       {paused ? (
         <svg className="ml-0.5 h-3.5 w-3.5" viewBox="0 0 16 16" fill="currentColor" aria-hidden>
