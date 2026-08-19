@@ -36,7 +36,7 @@ export default function PlaybookBanner() {
           {/* 1. Eyebrow badge */}
           <div className="inline-flex items-center gap-2 rounded-full border border-accent/30 dark:border-amber/35 bg-accent/10 dark:bg-amber/10 px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-accent dark:text-amber shadow-sm backdrop-blur-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-amber animate-pulse" />
-            06 — The ScaleXpertz Growth Playbook™
+            The ScaleXpertz Growth Playbook™
           </div>
 
           {/* 2. Heading */}

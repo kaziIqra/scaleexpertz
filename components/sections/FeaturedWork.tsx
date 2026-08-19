@@ -151,7 +151,7 @@ export default function FeaturedWork() {
       {/* Header section */}
       <div className="mx-auto max-w-4xl text-center flex flex-col items-center justify-center">
         <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-ink dark:text-white sm:text-4xl md:text-5xl">
-          05 — Proof Over Promises
+          04 — Proof Over Promises
         </h2>
         <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-accent dark:text-amber sm:text-2xl md:text-3xl">
           Results are easy to claim. Proof is harder to fake.

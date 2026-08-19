@@ -76,7 +76,7 @@ export default function IntroStatement() {
       {/* Heading (H2) and Sub-heading (H3) */}
       <div className="mx-auto max-w-4xl text-center flex flex-col items-center justify-center">
         <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-ink dark:text-white sm:text-4xl md:text-5xl">
-          02 — The Problem
+          01 — The Problem
         </h2>
         <h3 className="mt-3 max-w-3xl font-display text-xl font-bold tracking-tight text-accent dark:text-amber sm:text-2xl md:text-3xl leading-snug">
           Five Experts. Five Priorities. One Business.
