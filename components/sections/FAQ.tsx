@@ -57,12 +57,30 @@ export default function FAQ() {
             If you&apos;re wondering the same thing, you&apos;re probably not the first.
           </p>
 
-          <div className="mt-8 hidden md:block rounded-2xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-6 shadow-card">
-            <h3 className="font-display text-base font-bold text-ink">Still have questions?</h3>
-            <p className="mt-2 text-xs sm:text-sm text-body leading-relaxed font-medium">
+          <div className="group relative overflow-hidden mt-8 hidden md:block rounded-2xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-6 shadow-card transition-all duration-500 hover:border-accent/40">
+            {/* Scroll Shimmer Light Sweep */}
+            <motion.div
+              initial={{ x: "-100%", opacity: 0 }}
+              whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 1.2, ease: "easeInOut", delay: 0.1 }}
+              className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/35 via-amber/20 to-transparent -skew-x-12"
+              aria-hidden
+            />
+            {/* Scroll & Hover Ambient Gradient */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 0.4 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.8 }}
+              className="absolute inset-0 bg-gradient-to-br from-accent/20 via-amber/12 to-transparent transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
+              aria-hidden
+            />
+            <h3 className="font-display text-base font-bold text-ink dark:text-white relative z-10">Still have questions?</h3>
+            <p className="mt-2 text-xs sm:text-sm text-body dark:text-slate-300 leading-relaxed font-medium relative z-10">
               Let&apos;s talk. Sometimes a 30-minute conversation brings more clarity than hours of research.
             </p>
-            <div className="mt-5">
+            <div className="mt-5 relative z-10">
               <a
                 href="/diagnosis"
                 className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent-strong px-5 py-2.5 text-xs font-bold text-ink shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/40 active:scale-95"

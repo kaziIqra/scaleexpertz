@@ -173,9 +173,23 @@ export default function FeaturedWork() {
             className="group cursor-pointer relative flex flex-col justify-between overflow-hidden rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-[#141419] p-6 shadow-card transition-all duration-500 hover:-translate-y-2 hover:border-accent/60 hover:shadow-2xl"
             onClick={() => setSelectedCase(p)}
           >
-            {/* Dynamic Card Hover Gradient Effect */}
-            <div
-              className="absolute inset-0 bg-gradient-to-br from-accent/15 via-amber-500/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none"
+            {/* Scroll Shimmer Light Sweep */}
+            <motion.div
+              initial={{ x: "-100%", opacity: 0 }}
+              whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 1.3, ease: "easeInOut", delay: (i % 3) * 0.12 }}
+              className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/35 via-amber-500/20 to-transparent -skew-x-12"
+              aria-hidden
+            />
+
+            {/* Dynamic Card Scroll & Hover Gradient Effect */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 0.4 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.8, delay: i * 0.08 }}
+              className="absolute inset-0 bg-gradient-to-br from-accent/22 via-amber-500/15 via-35% to-transparent transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
               aria-hidden
             />
 

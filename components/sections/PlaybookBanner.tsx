@@ -11,7 +11,23 @@ export default function PlaybookBanner() {
 
   return (
     <section className="mx-auto max-w-[1440px] px-6 py-12 md:px-12 md:py-16">
-      <div className="group relative overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/10 via-surface to-amber/10 dark:from-[#181828] dark:via-[#141419] dark:to-[#1a1810] p-8 md:p-12 shadow-card transition-all duration-500 hover:border-accent/60 hover:shadow-2xl hover:-translate-y-1">
+      <motion.div
+        initial={{ opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.8 }}
+        className="group relative overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/10 via-surface to-amber/10 dark:from-[#181828] dark:via-[#141419] dark:to-[#1a1810] p-8 md:p-12 shadow-card transition-all duration-500 hover:border-accent/60 hover:shadow-2xl hover:-translate-y-1"
+      >
+        {/* Scroll Shimmer Light Sweep */}
+        <motion.div
+          initial={{ x: "-100%", opacity: 0 }}
+          whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 1.3, ease: "easeInOut", delay: 0.15 }}
+          className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/35 via-amber/25 to-transparent -skew-x-12"
+          aria-hidden
+        />
+
         {/* Background glow Orbs */}
         <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-accent/20 blur-3xl transition-all duration-700 group-hover:scale-125 group-hover:bg-accent/30" />
         <div className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-amber/20 blur-3xl transition-all duration-700 group-hover:scale-125 group-hover:bg-amber/30" />
@@ -58,7 +74,7 @@ export default function PlaybookBanner() {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Playbook Download Modal */}
       <AnimatePresence>

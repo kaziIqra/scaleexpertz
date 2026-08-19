@@ -114,19 +114,21 @@ export default function DiagnosisForm() {
         />
       </label>
 
-      <button
-        type="submit"
-        className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent-strong dark:from-amber dark:to-accent px-8 py-4 text-sm font-extrabold text-ink shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-accent/40 active:scale-95 sm:w-auto sm:self-start"
-      >
-        <span>Book Your Founder Growth Diagnosis</span>
-        <svg className="h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="none">
-          <path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
+      <div className="mt-2 flex flex-col items-center justify-center gap-3 text-center">
+        <button
+          type="submit"
+          className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent-strong dark:from-amber dark:to-accent px-8 py-4 text-sm font-extrabold text-ink shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-accent/40 active:scale-95"
+        >
+          <span>Book Your Founder Growth Diagnosis</span>
+          <svg className="h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="none">
+            <path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
 
-      <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-ink/50 dark:text-slate-400 font-medium">
-        No sales pitch. 100% confidential. 45 minutes · ₹0
-      </p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-ink/50 dark:text-slate-400 font-medium">
+          No sales pitch. 100% confidential. 45 minutes · ₹0
+        </p>
+      </div>
     </form>
   );
 }

@@ -189,8 +189,8 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* below lg: faint 3D monogram behind the headline */}
-      <div aria-hidden className="pointer-events-none absolute right-[-14%] top-[8%] w-[250px] opacity-[0.15] dark:opacity-[0.2] lg:hidden">
+      {/* below lg: faint 3D monogram centered behind the headline on mobile */}
+      <div aria-hidden className="pointer-events-none absolute left-1/2 top-[10%] -translate-x-1/2 w-[260px] max-w-[75vw] opacity-[0.18] dark:opacity-[0.22] lg:hidden flex justify-center items-center">
         {isDesktop !== true && (
           <LogoEntrance play={done} variant="hero" className="aspect-[912/700] w-full">
             <Logo3D className="h-full w-full" glow={false} />

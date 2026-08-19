@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { motion } from "framer-motion";
 
 export interface PricingAddon {
   id: string;
@@ -70,7 +71,23 @@ export default function PricingCalculator({
   };
 
   return (
-    <div className="overflow-hidden rounded-[28px] border border-black/[0.08] bg-white shadow-card dark:border-white/10 dark:bg-[#141419]">
+    <motion.div
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.8 }}
+      className="group relative overflow-hidden rounded-[28px] border border-black/[0.08] bg-white shadow-card dark:border-white/10 dark:bg-[#141419]"
+    >
+      {/* Scroll Shimmer Light Sweep */}
+      <motion.div
+        initial={{ x: "-100%", opacity: 0 }}
+        whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.5, 0] }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 1.4, ease: "easeInOut" }}
+        className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/30 via-amber/20 to-transparent -skew-x-12"
+        aria-hidden
+      />
+
       {/* Category tabs */}
       <div className="border-b border-black/[0.06] bg-paper/80 px-3 pt-3 dark:border-white/10 dark:bg-[#1a1a22]/80 sm:px-5">
         <div className="flex items-center gap-1 overflow-x-auto pb-3 scrollbar-none">
@@ -97,7 +114,16 @@ export default function PricingCalculator({
       <div className="grid gap-8 p-5 sm:p-8 lg:grid-cols-12 lg:gap-10 lg:p-10">
         {/* Right on desktop, TOP on mobile: live total + CTAs */}
         <div className="order-1 lg:order-2 lg:col-span-5">
-          <div className="rounded-[24px] border border-accent/35 bg-gradient-to-br from-accent/25 via-amber/10 to-accent/5 p-6 shadow-[0_0_0_1px_rgba(212,175,55,0.08)] dark:border-accent/40 dark:from-[#1c1810] dark:via-[#16140f] dark:to-[#12110e] dark:shadow-[0_12px_40px_rgba(212,175,55,0.12)] sm:p-7">
+          <div className="relative overflow-hidden rounded-[24px] border border-accent/35 bg-gradient-to-br from-accent/25 via-amber/10 to-accent/5 p-6 shadow-[0_0_0_1px_rgba(212,175,55,0.08)] dark:border-accent/40 dark:from-[#1c1810] dark:via-[#16140f] dark:to-[#12110e] dark:shadow-[0_12px_40px_rgba(212,175,55,0.12)] sm:p-7">
+            {/* Scroll Light Sweep */}
+            <motion.div
+              initial={{ x: "-100%", opacity: 0 }}
+              whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.7, 0] }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 1.2, ease: "easeInOut", delay: 0.2 }}
+              className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-amber/40 to-transparent -skew-x-12"
+              aria-hidden
+            />
             <div className="flex items-center justify-between gap-3">
               <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-accent/80 dark:text-amber/75">
                 ScaleXpertz
@@ -234,6 +260,6 @@ export default function PricingCalculator({
           </ul>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

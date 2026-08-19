@@ -41,7 +41,7 @@ const SERVICES: ServiceCard[] = [
       "Your website should build trust, answer questions, and convert visitors—even while you sleep. We design high-converting web applications built for speed and sales.",
     icon: LuGlobe,
     span: "col-span-1",
-    accent: "from-amber-500/20 via-gold/15 to-transparent",
+    accent: "from-amber-500/25 via-gold/18 to-transparent",
     avatarText: "WD",
   },
   {
@@ -51,7 +51,7 @@ const SERVICES: ServiceCard[] = [
       "We create predictable demand through strategic marketing and targeted performance ads that turn attention into paying customers.",
     icon: LuTrendingUp,
     span: "col-span-1",
-    accent: "from-gold/20 via-amber/15 to-transparent",
+    accent: "from-gold/25 via-amber/18 to-transparent",
     avatarText: "MK",
   },
   {
@@ -61,7 +61,7 @@ const SERVICES: ServiceCard[] = [
       "Great brands aren't just recognized—they're remembered, trusted, and chosen. We shape identity and messaging that commands category leadership.",
     icon: LuPalette,
     span: "col-span-1",
-    accent: "from-rose-500/20 via-pink-500/15 to-transparent",
+    accent: "from-rose-500/25 via-pink-500/18 to-transparent",
     avatarText: "BD",
   },
   {
@@ -71,7 +71,7 @@ const SERVICES: ServiceCard[] = [
       "Automate repetitive work, streamline customer operations, and let your business run smarter 24×7 without adding overhead.",
     icon: LuBot,
     span: "col-span-1",
-    accent: "from-emerald-500/20 via-teal-500/15 to-transparent",
+    accent: "from-emerald-500/25 via-teal-500/18 to-transparent",
     avatarText: "AI",
   },
   {
@@ -81,7 +81,7 @@ const SERVICES: ServiceCard[] = [
       "Better financial systems help you make confident decisions, optimize cash flow, and build a business that scales sustainably.",
     icon: LuWallet,
     span: "col-span-1",
-    accent: "from-amber-500/20 via-yellow-500/15 to-transparent",
+    accent: "from-amber-500/25 via-yellow-500/18 to-transparent",
     avatarText: "FN",
   },
   {
@@ -91,7 +91,7 @@ const SERVICES: ServiceCard[] = [
       "We build the digital infrastructure, custom APIs, and backend systems that keep every part of your business connected and ready for high volume.",
     icon: LuSettings,
     span: "col-span-1",
-    accent: "from-cyan-500/20 via-sky-500/15 to-transparent",
+    accent: "from-cyan-500/25 via-sky-500/18 to-transparent",
     avatarText: "TC",
   },
 ];
@@ -142,9 +142,23 @@ export default function Services() {
             className="col-span-1 flex flex-col"
           >
             <TiltCard className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-[#141419] p-6 sm:p-8 shadow-card transition-all duration-500 hover:border-accent/60 hover:shadow-2xl hover:-translate-y-1">
-              {/* Dynamic Hover Radial Gradient */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${s.accent} opacity-0 transition-all duration-500 group-hover:opacity-100`}
+              {/* Scroll Shimmer Light Sweep */}
+              <motion.div
+                initial={{ x: "-100%", opacity: 0 }}
+                whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 1.2, ease: "easeInOut", delay: 0.15 }}
+                className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/35 via-amber/20 to-transparent -skew-x-12"
+                aria-hidden
+              />
+
+              {/* Dynamic Scroll & Hover Gradient */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 0.5 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.8 }}
+                className={`absolute inset-0 bg-gradient-to-br ${s.accent} transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none`}
                 aria-hidden
               />
 

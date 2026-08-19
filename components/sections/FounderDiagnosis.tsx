@@ -105,8 +105,20 @@ export default function FounderDiagnosis() {
                   key={item.title}
                   className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-accent/50 hover:bg-white/[0.06] hover:shadow-xl"
                 >
-                  <div
-                    className="absolute inset-0 bg-gradient-to-br from-accent/10 via-amber/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none"
+                  <motion.div
+                    initial={{ x: "-100%", opacity: 0 }}
+                    whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 1.2, ease: "easeInOut" }}
+                    className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/35 via-amber/20 to-transparent -skew-x-12"
+                    aria-hidden
+                  />
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 0.4 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.6 }}
+                    className="absolute inset-0 bg-gradient-to-br from-accent/22 via-amber/15 via-35% to-transparent transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
                     aria-hidden
                   />
                   <div className="relative z-10 flex items-center gap-3">
@@ -171,8 +183,8 @@ export default function FounderDiagnosis() {
                 confirm a 45-minute slot within 24 hours.
               </p>
 
-              <div className="mt-8">
-                <Magnetic strength={10}>
+              <div className="mt-8 flex flex-col items-center justify-center">
+                <Magnetic strength={10} className="w-full flex justify-center">
                   <Link
                     href="/diagnosis"
                     className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-6 py-4 text-sm sm:text-base font-extrabold text-ink shadow-xl shadow-accent/30 transition-all duration-500 hover:bg-[position:right_center] hover:scale-[1.02] hover:shadow-2xl hover:shadow-accent/50 active:scale-98"

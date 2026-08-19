@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import Eyebrow from "../ui/Eyebrow";
 
 const PLAYBACK_RATE = 0.75;
@@ -87,27 +88,47 @@ export default function IntroStatement() {
         <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
           <div className="grid gap-3.5 sm:grid-cols-2">
             {statementCards.map((card, i) => (
-              <div
+              <motion.div
                 key={card.text}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.7, delay: i * 0.08 }}
                 className={`group relative overflow-hidden rounded-2xl border p-5 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl ${card.featured
                     ? "sm:col-span-2 border-accent/40 bg-gradient-to-r from-accent/15 via-amber/10 to-accent/5 dark:border-amber/40 hover:border-accent hover:shadow-accent/20"
                     : "border-black/[0.08] dark:border-white/12 bg-surface dark:bg-[#141419] hover:border-accent/50 dark:hover:border-amber/50"
                   }`}
               >
-                <div
-                  className="absolute inset-0 bg-gradient-to-br from-accent/15 via-amber/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none"
+                {/* Scroll Shimmer Light Sweep */}
+                <motion.div
+                  initial={{ x: "-100%", opacity: 0 }}
+                  whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 1.2, ease: "easeInOut", delay: i * 0.1 }}
+                  className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/35 via-amber/20 to-transparent -skew-x-12"
                   aria-hidden
                 />
-                <span className="font-mono text-xs font-bold uppercase tracking-wider text-accent dark:text-amber">
+
+                {/* Scroll & Hover Ambient Gradient */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 0.5 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.8, delay: i * 0.06 }}
+                  className="absolute inset-0 bg-gradient-to-br from-accent/20 via-amber/12 to-transparent transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
+                  aria-hidden
+                />
+
+                <span className="font-mono text-xs font-bold uppercase tracking-wider text-accent dark:text-amber relative z-10">
                   0{i + 1} · {card.highlight}
                 </span>
                 <p
-                  className={`mt-2 font-display text-xl font-bold tracking-tight text-ink dark:text-white group-hover:text-accent dark:group-hover:text-amber transition-colors ${card.isItalic ? "italic text-accent dark:text-amber text-2xl sm:text-3xl" : "sm:text-2xl"
+                  className={`mt-2 font-display text-xl font-bold tracking-tight text-ink dark:text-white group-hover:text-accent dark:group-hover:text-amber transition-colors relative z-10 ${card.isItalic ? "italic text-accent dark:text-amber text-2xl sm:text-3xl" : "sm:text-2xl"
                     }`}
                 >
                   {card.text}
                 </p>
-              </div>
+              </motion.div>
             ))}
           </div>
 

@@ -544,41 +544,35 @@ function JourneyScene({ variant }: { variant: Variant }) {
     gsap.set(progress, { strokeDasharray: L, strokeDashoffset: L });
     applyProgress(0);
 
-    const onWheel = (e: WheelEvent) => {
+    const handleScroll = () => {
       const el = containerRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      const isOverGraph =
-        e.clientX >= rect.left &&
-        e.clientX <= rect.right &&
-        e.clientY >= rect.top &&
-        e.clientY <= rect.bottom;
+      const vh = window.innerHeight || document.documentElement.clientHeight;
 
-      if (!isOverGraph) return;
+      // Sync graph progress smoothly as the section scrolls into/through the viewport
+      const start = vh * 0.85;
+      const end = vh * 0.15;
+      const totalRange = rect.height + start - end;
+      if (totalRange <= 0) return;
 
-      const currentP = progressPRef.current;
-      const isScrollingDown = e.deltaY > 0;
-      const isScrollingUp = e.deltaY < 0;
+      const scrolled = start - rect.top;
+      const progressP = Math.max(0, Math.min(1, scrolled / totalRange));
 
-      // When cursor is over the graph area, scrub the graph movement instead of page scroll
-      if ((isScrollingDown && currentP < 0.999) || (isScrollingUp && currentP > 0.001)) {
-        if (e.cancelable) e.preventDefault();
-        const step = isScrollingDown ? 0.05 : -0.05;
-        const nextP = Math.max(0, Math.min(1, currentP + step));
-        applyProgress(nextP);
+      applyProgress(progressP);
 
-        let currentActive = 0;
-        for (let i = 0; i < NODE_T.length; i++) {
-          if (nextP >= NODE_T[i] - 0.08) currentActive = i;
-        }
-        setActive(currentActive);
+      let currentActive = 0;
+      for (let i = 0; i < NODE_T.length; i++) {
+        if (progressP >= NODE_T[i] - 0.08) currentActive = i;
       }
+      setActive(currentActive);
     };
 
-    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
 
     return () => {
-      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("scroll", handleScroll);
       travelTweenRef.current?.kill();
     };
   }, [applyProgress, isDesktop]);
@@ -786,15 +780,155 @@ function JourneyScene({ variant }: { variant: Variant }) {
   );
 }
 
-/** SCALE journey map: click S–C–A–L–E nodes to move the traveler and open a stage popover. */
+function StageCard({
+  stage,
+  index,
+}: {
+  stage: (typeof STAGES)[number];
+  index: number;
+}) {
+  return (
+    <motion.div
+      id={`stage-${stage.letter.toLowerCase()}`}
+      initial={{ opacity: 0, y: 36, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: (index % 3) * 0.08 }}
+      className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-black/10 dark:border-white/12 bg-surface dark:bg-[#141419]/90 p-6 sm:p-7 shadow-xl backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:border-accent/50 hover:shadow-2xl hover:shadow-accent/15"
+    >
+      {/* Scroll-triggered Luminous Gradient Sweep */}
+      <motion.div
+        initial={{ x: "-100%", opacity: 0 }}
+        whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.7, 0] }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 1.3, ease: "easeInOut", delay: (index % 3) * 0.12 }}
+        className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/35 via-amber/25 to-transparent -skew-x-12"
+        aria-hidden
+      />
+
+      {/* Scroll & Hover Ambient Gradient Background */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 0.45 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.8, delay: (index % 3) * 0.08 }}
+        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent/30 via-amber/18 via-40% to-transparent transition-opacity duration-500 group-hover:!opacity-100"
+        aria-hidden
+      />
+
+      <div className="relative z-10 flex flex-col justify-between h-full">
+        <div>
+          {/* Header row: Phase badge + Letter pill */}
+          <div className="flex items-center justify-between gap-3 border-b border-black/10 dark:border-white/10 pb-4">
+            <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-accent dark:text-amber">
+              {stage.week}
+            </span>
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent/15 border border-accent/30 font-mono text-sm font-bold text-accent shadow-sm transition-transform duration-300 group-hover:scale-110">
+              {stage.letter}
+            </span>
+          </div>
+
+          {/* Title & Tagline */}
+          <h3 className="mt-4 font-display text-2xl font-bold tracking-tight text-ink dark:text-white group-hover:text-accent dark:group-hover:text-amber transition-colors duration-300">
+            {stage.title}
+          </h3>
+          <p className="mt-1 text-sm font-semibold text-accent/90 dark:text-amber/90">
+            {stage.tagline}
+          </p>
+
+          {/* Paragraphs */}
+          <div className="mt-4 space-y-2 text-xs sm:text-sm leading-relaxed text-body dark:text-white/70 font-medium">
+            {stage.paragraphs.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
+          </div>
+
+          {/* What's Included */}
+          <div className="mt-6 border-t border-black/10 dark:border-white/10 pt-4">
+            <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-ink/50 dark:text-white/50 mb-3">
+              What&apos;s Included
+            </p>
+            <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {stage.includes.map((item) => (
+                <li key={item} className="flex items-start gap-2 text-xs font-medium text-body dark:text-white/80">
+                  <span className="mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Outcome Box */}
+        <div className="mt-6 rounded-2xl border border-accent/20 bg-accent/5 dark:bg-accent/10 p-3.5 text-xs font-medium text-ink dark:text-white/90">
+          <span className="font-bold text-accent dark:text-amber">Outcome: </span>
+          {stage.outcome}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function PhaseQuickJump() {
+  const scrollToStage = (letter: string) => {
+    const el = document.getElementById(`stage-${letter.toLowerCase()}`);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  return (
+    <div className="inline-flex items-center justify-center gap-2 py-2 px-3 rounded-full border border-black/10 dark:border-white/15 bg-surface dark:bg-white/[0.04] backdrop-blur-md shadow-md">
+      {STAGES.map((s) => (
+        <button
+          key={s.letter}
+          type="button"
+          onClick={() => scrollToStage(s.letter)}
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-accent/20 bg-accent/10 font-mono text-xs font-bold text-accent transition-all duration-300 hover:scale-110 hover:bg-accent hover:text-ink active:scale-95 cursor-pointer"
+          aria-label={`Jump to ${s.title} stage`}
+        >
+          {s.letter}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** SCALE journey map: interactive route graph + scroll animated stage cards. */
 export default function JourneyMap() {
   return (
-    <section id="framework" className="scroll-mt-24">
+    <section id="framework" className="relative scroll-mt-24 py-10 md:py-16 overflow-hidden">
+      {/* Interactive SVG graph scene */}
       <div className="hidden md:block">
         <JourneyScene variant="desktop" />
       </div>
-      <div className="md:hidden">
+      <div className="md:hidden px-4">
         <JourneyScene variant="mobile" />
+      </div>
+
+      {/* Animated Stage Cards Grid on Scroll */}
+      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 md:px-12 mt-12 md:mt-20">
+        <div className="flex flex-col items-center text-center mb-10">
+          <span className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-accent dark:text-amber">
+            Framework Roadmap
+          </span>
+          <h3 className="mt-2 font-display text-2xl font-bold tracking-tight text-ink dark:text-white sm:text-3xl md:text-4xl">
+            Explore All 5 Growth Phases
+          </h3>
+          <p className="mt-3 text-xs sm:text-sm text-body dark:text-white/70 font-medium max-w-xl">
+            Tap any phase letter below or scroll through each card to inspect deliverables, scope, and strategic outcomes.
+          </p>
+
+          <div className="mt-5">
+            <PhaseQuickJump />
+          </div>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {STAGES.map((stage, i) => (
+            <StageCard key={stage.letter} stage={stage} index={i} />
+          ))}
+        </div>
       </div>
     </section>
   );
