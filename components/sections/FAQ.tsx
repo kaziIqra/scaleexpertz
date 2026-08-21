@@ -57,14 +57,14 @@ export default function FAQ() {
             If you&apos;re wondering the same thing, you&apos;re probably not the first.
           </p>
 
-          <div className="group relative overflow-hidden mt-8 hidden md:block rounded-2xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-6 shadow-card transition-all duration-500 hover:border-accent/40">
+          <div className="group relative overflow-hidden mt-8 hidden md:block rounded-2xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-6 shadow-card transition-all duration-500 hover:border-slate-800/40 dark:hover:border-accent/40">
             {/* Scroll Shimmer Light Sweep */}
             <motion.div
               initial={{ x: "-100%", opacity: 0 }}
               whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 1.2, ease: "easeInOut", delay: 0.1 }}
-              className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/35 via-amber/20 to-transparent -skew-x-12"
+              className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-slate-800/20 via-slate-900/15 dark:via-accent/35 dark:via-amber/20 to-transparent -skew-x-12"
               aria-hidden
             />
             {/* Scroll & Hover Ambient Gradient */}
@@ -73,7 +73,7 @@ export default function FAQ() {
               whileInView={{ opacity: 0.4 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.8 }}
-              className="absolute inset-0 bg-gradient-to-br from-accent/20 via-amber/12 to-transparent transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
+              className="absolute inset-0 bg-gradient-to-br from-emerald-950/20 via-teal-950/15 to-transparent dark:from-accent/20 dark:via-amber/12 transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
               aria-hidden
             />
             <h3 className="font-display text-base font-bold text-ink dark:text-white relative z-10">Still have questions?</h3>

@@ -103,14 +103,14 @@ export default function FounderDiagnosis() {
               {INCLUDED_ITEMS.map((item) => (
                 <div
                   key={item.title}
-                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-accent/50 hover:bg-white/[0.06] hover:shadow-xl"
+                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-slate-800/50 dark:hover:border-accent/50 hover:bg-white/[0.06] hover:shadow-xl"
                 >
                   <motion.div
                     initial={{ x: "-100%", opacity: 0 }}
                     whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: 1.2, ease: "easeInOut" }}
-                    className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/35 via-amber/20 to-transparent -skew-x-12"
+                    className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-slate-800/20 via-slate-900/15 dark:via-accent/35 dark:via-amber/20 to-transparent -skew-x-12"
                     aria-hidden
                   />
                   <motion.div
@@ -118,7 +118,7 @@ export default function FounderDiagnosis() {
                     whileInView={{ opacity: 0.4 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: 0.6 }}
-                    className="absolute inset-0 bg-gradient-to-br from-accent/22 via-amber/15 via-35% to-transparent transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
+                    className="absolute inset-0 bg-gradient-to-br from-slate-900/15 via-indigo-950/10 dark:from-accent/22 dark:via-amber/15 via-35% to-transparent transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
                     aria-hidden
                   />
                   <div className="relative z-10 flex items-center gap-3">
@@ -197,7 +197,7 @@ export default function FounderDiagnosis() {
                 </Magnetic>
               </div>
 
-              <p className="text-center font-mono text-[10px] text-white/40 pt-4">
+              <p className="text-center font-sans text-xs font-semibold text-white/50 tracking-wider pt-4">
                 No sales pitch guaranteed. 100% confidential.
               </p>
             </motion.div>

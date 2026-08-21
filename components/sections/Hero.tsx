@@ -278,29 +278,6 @@ export default function Hero() {
           </div>
         </FadeUp>
 
-        {/* Mobile Visual — black indexed tags matching desktop orbit */}
-        <FadeUp delay={1.2} play={done} className="mt-12 lg:hidden">
-          <div className="relative mx-auto w-full max-w-sm">
-            <p className="mb-4 text-center font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-accent">
-              One Connected System
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              {DISCIPLINES.map((d) => (
-                <span
-                  key={d.name}
-                  className="inline-flex items-baseline gap-2 border border-accent/40 bg-night px-3 py-2"
-                >
-                  <span className="font-mono text-[10px] font-bold tracking-[0.15em] text-accent">
-                    {d.index}
-                  </span>
-                  <span className="font-display text-xs font-semibold tracking-tight text-white">
-                    {d.name}
-                  </span>
-                </span>
-              ))}
-            </div>
-          </div>
-        </FadeUp>
       </div>
 
 

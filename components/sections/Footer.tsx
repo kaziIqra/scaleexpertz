@@ -9,12 +9,9 @@ const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] =
     {
       heading: "Services",
       links: [
-        { label: "Web Development", href: "#services" },
-        { label: "App Development", href: "#services" },
-        { label: "Digital Marketing", href: "#services" },
-        { label: "Finance & Accounting", href: "#services" },
-        { label: "Branding & Design", href: "#services" },
-        { label: "AI Solutions", href: "#services" },
+        { label: "B2C Growth Sprint", href: "#pricing" },
+        { label: "B2B Growth Sprint", href: "#pricing" },
+        { label: "Custom Growth Solutions", href: "#pricing" },
       ],
     },
     {
@@ -148,7 +145,7 @@ export default function Footer() {
             <form onSubmit={onSubscribe} className="mt-8 mx-auto max-w-xs md:mx-0">
               <label
                 htmlFor="newsletter"
-                className="font-mono text-xs uppercase tracking-[0.2em] text-ink/50"
+                className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-ink/50"
               >
                 Growth notes, monthly
               </label>
@@ -193,7 +190,7 @@ export default function Footer() {
               aria-label={col.heading}
               className="md:col-span-2 text-center md:text-left"
             >
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink/50">
+              <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">
                 {col.heading}
               </p>
               <ul className="mt-4 space-y-2.5">
@@ -214,7 +211,7 @@ export default function Footer() {
 
           {/* contact + socials */}
           <div className="md:col-span-2 text-center md:text-left">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink/50">
+            <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">
               Contact
             </p>
             <ul className="mt-4 space-y-2.5 text-sm text-body">
@@ -257,7 +254,7 @@ export default function Footer() {
           <p className="text-xs text-ink/40">
             © {new Date().getFullYear()} ScaleXpertz. All rights reserved.
           </p>
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink/40">
+          <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-ink/40">
             Made with precision
           </p>
         </div>

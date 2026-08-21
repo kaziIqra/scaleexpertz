@@ -73,7 +73,7 @@ export default function ScaleFramework() {
               className={`group flex items-center gap-3 rounded-2xl px-5 py-3 transition-all duration-300 ${
                 isActive
                   ? "bg-accent text-ink shadow-lg shadow-accent/25"
-                  : "bg-surface dark:bg-[#141419] border border-black/[0.08] dark:border-white/10 text-ink dark:text-white hover:border-accent"
+                  : "bg-surface dark:bg-[#141419] border border-black/[0.08] dark:border-white/10 text-ink dark:text-white hover:border-slate-800/40 dark:hover:border-accent"
               }`}
             >
               <span

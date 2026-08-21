@@ -95,8 +95,8 @@ export default function IntroStatement() {
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.7, delay: i * 0.08 }}
                 className={`group relative overflow-hidden rounded-2xl border p-5 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl ${card.featured
-                    ? "sm:col-span-2 border-accent/40 bg-gradient-to-r from-accent/15 via-amber/10 to-accent/5 dark:border-amber/40 hover:border-accent hover:shadow-accent/20"
-                    : "border-black/[0.08] dark:border-white/12 bg-surface dark:bg-[#141419] hover:border-accent/50 dark:hover:border-amber/50"
+                    ? "sm:col-span-2 border-black/15 bg-gradient-to-r from-slate-900/[0.05] via-slate-800/[0.03] to-transparent dark:border-amber/40 dark:from-accent/15 dark:via-amber/10 hover:border-slate-800/40 dark:hover:border-amber/60 hover:shadow-slate-900/10"
+                    : "border-black/[0.08] dark:border-white/12 bg-surface dark:bg-[#141419] hover:border-slate-800/40 dark:hover:border-amber/50"
                   }`}
               >
                 {/* Scroll Shimmer Light Sweep */}
@@ -105,7 +105,7 @@ export default function IntroStatement() {
                   whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 1.2, ease: "easeInOut", delay: i * 0.1 }}
-                  className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/35 via-amber/20 to-transparent -skew-x-12"
+                  className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-slate-800/15 via-slate-900/10 dark:via-amber/20 to-transparent -skew-x-12"
                   aria-hidden
                 />
 
@@ -115,15 +115,15 @@ export default function IntroStatement() {
                   whileInView={{ opacity: 0.5 }}
                   viewport={{ once: true, amount: 0.15 }}
                   transition={{ duration: 0.8, delay: i * 0.06 }}
-                  className="absolute inset-0 bg-gradient-to-br from-accent/20 via-amber/12 to-transparent transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
+                  className="absolute inset-0 bg-gradient-to-br from-slate-900/[0.06] via-indigo-950/[0.04] to-transparent dark:from-accent/20 dark:via-amber/12 transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
                   aria-hidden
                 />
 
-                <span className="font-mono text-xs font-bold uppercase tracking-wider text-accent dark:text-amber relative z-10">
+                <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-950 dark:text-amber relative z-10">
                   0{i + 1} · {card.highlight}
                 </span>
                 <p
-                  className={`mt-2 font-display text-xl font-bold tracking-tight text-ink dark:text-white group-hover:text-accent dark:group-hover:text-amber transition-colors relative z-10 ${card.isItalic ? "italic text-accent dark:text-amber text-2xl sm:text-3xl" : "sm:text-2xl"
+                  className={`mt-2 font-display text-xl font-bold tracking-tight text-ink dark:text-white group-hover:text-slate-950 dark:group-hover:text-amber transition-colors relative z-10 ${card.isItalic ? "italic text-slate-950 dark:text-amber text-2xl sm:text-3xl" : "sm:text-2xl"
                     }`}
                 >
                   {card.text}

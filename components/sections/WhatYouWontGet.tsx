@@ -69,7 +69,7 @@ export default function WhatYouWontGet() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.8, ease: EASE_OUT_EXPO, delay: i * 0.06 }}
-              className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-[#141419]/90 p-6 sm:p-7 shadow-2xl backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:border-[#d4af37]/60 hover:shadow-[#d4af37]/15"
+              className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-[#141419]/90 p-6 sm:p-7 shadow-2xl backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:border-red-500/60 hover:shadow-red-500/20"
             >
               {/* Scroll Shimmer Light Sweep */}
               <motion.div
@@ -77,7 +77,7 @@ export default function WhatYouWontGet() {
                 whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 1.2, ease: "easeInOut", delay: (i % 3) * 0.12 }}
-                className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-[#d4af37]/35 via-amber-500/20 to-transparent -skew-x-12"
+                className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-rose-500/35 via-red-500/20 to-transparent -skew-x-12"
                 aria-hidden
               />
 
@@ -87,7 +87,7 @@ export default function WhatYouWontGet() {
                 whileInView={{ opacity: 0.4 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.8, delay: i * 0.05 }}
-                className="absolute inset-0 bg-gradient-to-br from-[#d4af37]/22 via-amber-500/15 via-35% to-transparent transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
+                className="absolute inset-0 bg-gradient-to-br from-red-600/30 via-rose-600/20 via-35% to-transparent transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
                 aria-hidden
               />
 

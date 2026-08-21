@@ -16,7 +16,7 @@ export default function PlaybookBanner() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.8 }}
-        className="group relative overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-accent/10 via-surface to-amber/10 dark:from-[#181828] dark:via-[#141419] dark:to-[#1a1810] p-8 md:p-12 shadow-card transition-all duration-500 hover:border-accent/60 hover:shadow-2xl hover:-translate-y-1"
+        className="group relative overflow-hidden rounded-3xl border border-black/10 dark:border-accent/30 bg-surface dark:bg-gradient-to-br dark:from-[#181828] dark:via-[#141419] dark:to-[#1a1810] p-8 md:p-12 shadow-card transition-all duration-500 hover:border-slate-800/40 dark:hover:border-accent/60 hover:shadow-2xl hover:-translate-y-1"
       >
         {/* Scroll Shimmer Light Sweep */}
         <motion.div
@@ -24,18 +24,18 @@ export default function PlaybookBanner() {
           whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 1.3, ease: "easeInOut", delay: 0.15 }}
-          className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/35 via-amber/25 to-transparent -skew-x-12"
+          className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-slate-800/20 via-slate-900/15 dark:via-accent/35 dark:via-amber/25 to-transparent -skew-x-12"
           aria-hidden
         />
 
         {/* Background glow Orbs */}
-        <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-accent/20 blur-3xl transition-all duration-700 group-hover:scale-125 group-hover:bg-accent/30" />
-        <div className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-amber/20 blur-3xl transition-all duration-700 group-hover:scale-125 group-hover:bg-amber/30" />
+        <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-slate-900/10 dark:bg-accent/20 blur-3xl transition-all duration-700 group-hover:scale-125 dark:group-hover:bg-accent/30" />
+        <div className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-slate-800/10 dark:bg-amber/20 blur-3xl transition-all duration-700 group-hover:scale-125 dark:group-hover:bg-amber/30" />
 
         <div className="relative z-10 mx-auto max-w-3xl text-center flex flex-col items-center justify-center space-y-6">
           {/* 1. Eyebrow badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-accent/30 dark:border-amber/35 bg-accent/10 dark:bg-amber/10 px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-accent dark:text-amber shadow-sm backdrop-blur-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-amber animate-pulse" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-amber/35 bg-black/5 dark:bg-amber/10 px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-ink dark:text-amber shadow-sm backdrop-blur-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent dark:bg-amber animate-pulse" />
             The ScaleXpertz Growth Playbook™
           </div>
 
@@ -52,14 +52,14 @@ export default function PlaybookBanner() {
 
           {/* 4. Feature Pills */}
           <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-semibold text-ink dark:text-white">
-            <span className="group/pill inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/12 bg-surface/80 dark:bg-white/[0.04] px-4 py-2 text-xs font-semibold text-ink dark:text-white transition-all duration-300 hover:border-accent/50 dark:hover:border-amber/50 hover:bg-accent/15 dark:hover:bg-amber/15 hover:scale-105 shadow-sm">
-              <span className="text-amber font-extrabold transition-transform duration-300 group-hover/pill:scale-125">✓</span> 15-Page Strategy Guide
+            <span className="group/pill inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/12 bg-surface/80 dark:bg-white/[0.04] px-4 py-2 text-xs font-semibold text-ink dark:text-white transition-all duration-300 hover:border-slate-800/40 dark:hover:border-amber/50 hover:bg-slate-900/10 dark:hover:bg-amber/15 hover:scale-105 shadow-sm">
+              <span className="text-accent dark:text-amber font-extrabold transition-transform duration-300 group-hover/pill:scale-125">✓</span> 15-Page Strategy Guide
             </span>
-            <span className="group/pill inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/12 bg-surface/80 dark:bg-white/[0.04] px-4 py-2 text-xs font-semibold text-ink dark:text-white transition-all duration-300 hover:border-accent/50 dark:hover:border-amber/50 hover:bg-accent/15 dark:hover:bg-amber/15 hover:scale-105 shadow-sm">
-              <span className="text-amber font-extrabold transition-transform duration-300 group-hover/pill:scale-125">✓</span> Coordination Chaos™ Fix
+            <span className="group/pill inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/12 bg-surface/80 dark:bg-white/[0.04] px-4 py-2 text-xs font-semibold text-ink dark:text-white transition-all duration-300 hover:border-slate-800/40 dark:hover:border-amber/50 hover:bg-slate-900/10 dark:hover:bg-amber/15 hover:scale-105 shadow-sm">
+              <span className="text-accent dark:text-amber font-extrabold transition-transform duration-300 group-hover/pill:scale-125">✓</span> Coordination Chaos™ Fix
             </span>
-            <span className="group/pill inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/12 bg-surface/80 dark:bg-white/[0.04] px-4 py-2 text-xs font-semibold text-ink dark:text-white transition-all duration-300 hover:border-accent/50 dark:hover:border-amber/50 hover:bg-accent/15 dark:hover:bg-amber/15 hover:scale-105 shadow-sm">
-              <span className="text-amber font-extrabold transition-transform duration-300 group-hover/pill:scale-125">✓</span> 90-Day Sprint Roadmap
+            <span className="group/pill inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/12 bg-surface/80 dark:bg-white/[0.04] px-4 py-2 text-xs font-semibold text-ink dark:text-white transition-all duration-300 hover:border-slate-800/40 dark:hover:border-amber/50 hover:bg-slate-900/10 dark:hover:bg-amber/15 hover:scale-105 shadow-sm">
+              <span className="text-accent dark:text-amber font-extrabold transition-transform duration-300 group-hover/pill:scale-125">✓</span> 90-Day Sprint Roadmap
             </span>
           </div>
 

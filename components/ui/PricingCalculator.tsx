@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 export interface PricingAddon {
   id: string;
   label: string;
+  originalPrice?: number;
   price: number;
   unit?: string;
 }
@@ -142,7 +143,7 @@ export default function PricingCalculator({
               Total Growth Investment
             </p>
             <p className="mt-2 font-display text-4xl font-black tracking-tight text-ink dark:text-amber sm:text-5xl sm:leading-none">
-              {formatINR(total)}
+              {activeSprint.price}
             </p>
             <p className="mt-2 text-xs text-ink/65 dark:text-amber/60 font-medium">
               Fixed Sprint Investment · All Add-ons Included at ₹0
@@ -178,7 +179,7 @@ export default function PricingCalculator({
 
           {/* Described & readable Diagnosis Scope callout box */}
           <div className="mt-4 rounded-2xl border border-accent/30 bg-accent/5 p-4 text-center dark:border-amber/30 dark:bg-amber/5">
-            <p className="font-mono text-xs font-bold uppercase tracking-wider text-accent dark:text-amber">
+            <p className="font-sans text-xs font-bold uppercase tracking-wider text-accent dark:text-amber">
               ✦ Final Scope Confirmed After Diagnosis
             </p>
             <p className="mt-1 text-xs leading-relaxed text-body dark:text-slate-300 font-medium">
@@ -211,7 +212,7 @@ export default function PricingCalculator({
             {activeSprint.subtitle}
           </p>
 
-          <p className="mt-6 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-ink/50 dark:text-slate-400">
+          <p className="mt-6 font-sans text-xs font-bold uppercase tracking-[0.2em] text-ink/50 dark:text-slate-400">
             Optional add-ons (All Included at ₹0)
           </p>
           <div className="mt-3 rounded-3xl border border-black/10 dark:border-white/10 bg-ink p-3 dark:bg-black sm:p-4">
@@ -225,19 +226,22 @@ export default function PricingCalculator({
                     onClick={() => toggleAddon(addon.id)}
                     className={`flex min-h-[3.5rem] items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-300 ${
                       selected
-                        ? "border-accent bg-accent/20 shadow-sm"
-                        : "border-accent/30 bg-white/[0.06] hover:border-accent/50 hover:bg-white/[0.1]"
+                        ? "border-amber bg-accent/20 shadow-sm"
+                        : "border-white/20 bg-white/[0.06] hover:border-slate-300 dark:hover:border-accent/50 hover:bg-white/[0.12]"
                     }`}
                   >
                     <span className="min-w-0 font-display text-sm font-semibold leading-snug text-white">
                       {addon.label}
                     </span>
-                    <span
-                      className={`shrink-0 font-mono text-[11px] font-extrabold ${
-                        selected ? "text-amber" : "text-accent"
-                      }`}
-                    >
-                      {formatAddonPrice(addon)}
+                    <span className="shrink-0 font-mono text-xs font-extrabold flex items-center gap-1.5">
+                      {addon.originalPrice ? (
+                        <span className="line-through text-white/50 font-medium text-[11px]">
+                          ₹{addon.originalPrice.toLocaleString("en-IN")}
+                        </span>
+                      ) : null}
+                      <span className={selected ? "text-amber font-black" : "text-accent font-bold"}>
+                        ₹0
+                      </span>
                     </span>
                   </button>
                 );

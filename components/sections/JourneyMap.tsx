@@ -157,186 +157,134 @@ function Flag({ at, label, tone }: { at: Pt; label: string; tone: string }) {
   );
 }
 
-/* ---------- graph / growth backdrop (no nature scene) ---------- */
+/* ---------- graph / growth backdrop (telemetry metrics & reticles) ---------- */
 
-function ChartGrid({ w, h }: { w: number; h: number }) {
-  const xs = Array.from({ length: Math.floor(w / 48) + 1 }, (_, i) => i * 48);
-  const ys = Array.from({ length: Math.floor(h / 48) + 1 }, (_, i) => i * 48);
+function TechGrid({ w, h }: { w: number; h: number }) {
+  const xs = Array.from({ length: Math.floor(w / 56) + 1 }, (_, i) => i * 56);
+  const ys = Array.from({ length: Math.floor(h / 56) + 1 }, (_, i) => i * 56);
   return (
-    <g className="text-ink/20 dark:text-white/15" aria-hidden>
+    <g className="text-white/25 dark:text-slate-300/30" aria-hidden>
       {xs.map((x) => (
-        <line key={`vx-${x}`} x1={x} y1={0} x2={x} y2={h} stroke="currentColor" strokeWidth={1} />
+        <line key={`vx-${x}`} x1={x} y1={0} x2={x} y2={h} stroke="currentColor" strokeWidth={0.9} strokeDasharray="3 6" />
       ))}
       {ys.map((y) => (
-        <line key={`hy-${y}`} x1={0} y1={y} x2={w} y2={y} stroke="currentColor" strokeWidth={1} />
+        <line key={`hy-${y}`} x1={0} y1={y} x2={w} y2={y} stroke="currentColor" strokeWidth={0.9} strokeDasharray="3 6" />
       ))}
+      {xs.filter((_, idx) => idx % 2 === 0).map((x) =>
+        ys.filter((_, idy) => idy % 2 === 0).map((y) => (
+          <g key={`cross-${x}-${y}`} transform={`translate(${x} ${y})`}>
+            <line x1={-4} y1={0} x2={4} y2={0} stroke="currentColor" strokeWidth={1.2} />
+            <line x1={0} y1={-4} x2={0} y2={4} stroke="currentColor" strokeWidth={1.2} />
+          </g>
+        ))
+      )}
     </g>
   );
 }
 
-function Sparkline({
-  x,
-  y,
-  points,
-  w = 140,
-  h = 36,
-}: {
-  x: number;
-  y: number;
-  points: number[];
-  w?: number;
-  h?: number;
-}) {
-  const max = Math.max(...points);
-  const min = Math.min(...points);
-  const range = max - min || 1;
-  const step = w / (points.length - 1);
-  const coords = points
-    .map((p, i) => {
-      const px = i * step;
-      const py = h - ((p - min) / range) * h;
-      return `${i === 0 ? "M" : "L"}${px.toFixed(1)} ${py.toFixed(1)}`;
-    })
-    .join(" ");
-  const area = `${coords} L${w} ${h} L0 ${h} Z`;
-  return (
-    <g transform={`translate(${x} ${y})`} aria-hidden>
-      <path d={area} className="fill-accent/10 dark:fill-accent/15" />
-      <path
-        d={coords}
-        fill="none"
-        className="stroke-accent/55 dark:stroke-accent/70"
-        strokeWidth={1.6}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </g>
-  );
-}
-
-function GrowthBars({ x, y, heights }: { x: number; y: number; heights: number[] }) {
-  const barW = 10;
-  const gap = 8;
-  return (
-    <g transform={`translate(${x} ${y})`} aria-hidden>
-      {heights.map((h, i) => (
-        <rect
-          key={i}
-          x={i * (barW + gap)}
-          y={-h}
-          width={barW}
-          height={h}
-          rx={2}
-          className={
-            i === heights.length - 1
-              ? "fill-accent/70 dark:fill-accent/80"
-              : "fill-ink/12 dark:fill-white/15"
-          }
-        />
-      ))}
-    </g>
-  );
-}
-
-function KpiChip({ x, y, label, value }: { x: number; y: number; label: string; value: string }) {
+function TelemetryChip({ x, y, label, value, badge }: { x: number; y: number; label: string; value: string; badge?: string }) {
   return (
     <g transform={`translate(${x} ${y})`} aria-hidden>
       <rect
-        width={88}
-        height={36}
-        rx={8}
-        className="fill-surface/70 dark:fill-white/[0.04] stroke-ink/10 dark:stroke-white/10"
-        strokeWidth={1}
+        width={108}
+        height={44}
+        rx={10}
+        className="fill-slate-900/90 dark:fill-slate-900/95 stroke-amber/40 dark:stroke-amber/50 shadow-xl backdrop-blur-md"
+        strokeWidth={1.2}
       />
-      <text x={10} y={14} fontSize={8} className="fill-ink/40 dark:fill-white/40 font-mono uppercase tracking-wider">
+      <circle cx={14} cy={17} r={3.5} className="fill-amber animate-pulse" />
+      <text x={24} y={19} fontSize={8.5} className="fill-amber font-sans uppercase tracking-widest font-bold">
         {label}
       </text>
-      <text x={10} y={28} fontSize={12} className="fill-ink/70 dark:fill-white/75 font-display font-semibold">
+      <text x={14} y={35} fontSize={13.5} className="fill-white font-display font-extrabold tracking-tight">
         {value}
+      </text>
+      {badge && (
+        <text x={96} y={34} textAnchor="end" fontSize={9} className="fill-amber font-mono font-bold">
+          {badge}
+        </text>
+      )}
+    </g>
+  );
+}
+
+function TargetCrosshair({ x, y, code }: { x: number; y: number; code: string }) {
+  return (
+    <g transform={`translate(${x} ${y})`} aria-hidden className="text-amber/80">
+      <circle r={18} fill="none" stroke="currentColor" strokeWidth={1.2} strokeDasharray="3 3" />
+      <circle r={3.5} fill="currentColor" opacity={0.9} />
+      <line x1={-24} y1={0} x2={24} y2={0} stroke="currentColor" strokeWidth={1.2} />
+      <line x1={0} y1={-24} x2={0} y2={24} stroke="currentColor" strokeWidth={1.2} />
+      <text x={24} y={-8} fontSize={8.5} className="fill-amber font-mono font-bold uppercase tracking-wider">
+        {code}
       </text>
     </g>
   );
 }
 
-/** Subtle dashboard / growth scenery behind the route. */
+function PulseRings({ x, y, radius = 32 }: { x: number; y: number; radius?: number }) {
+  return (
+    <g transform={`translate(${x} ${y})`} aria-hidden>
+      <circle r={radius} fill="none" className="stroke-amber/40" strokeWidth={1.2} strokeDasharray="4 6" />
+      <circle r={radius * 1.6} fill="none" className="stroke-amber/25" strokeWidth={1.2} strokeDasharray="2 8" />
+    </g>
+  );
+}
+
+/** Telemetry & metric backdrop behind the route graph. */
 function MapDoodles({ variant }: { variant: Variant }) {
   if (variant === "desktop") {
     return (
       <g aria-hidden>
-        <ChartGrid w={1200} h={640} />
+        <TechGrid w={1200} h={640} />
 
-        {/* baseline trend */}
+        {/* Curved telemetry wave background */}
         <path
-          d="M40 560 C 220 540 320 500 480 470 C 680 430 820 380 980 300 C 1080 250 1140 200 1180 150"
+          d="M 30 580 Q 250 520 450 490 T 850 280 T 1170 120"
           fill="none"
-          className="stroke-accent/20 dark:stroke-accent/25"
-          strokeWidth={1.5}
-          strokeDasharray="4 10"
+          className="stroke-amber/40"
+          strokeWidth={1.8}
+          strokeDasharray="4 8"
           strokeLinecap="round"
         />
 
-        <Sparkline
-          x={140}
-          y={70}
-          points={[12, 18, 15, 22, 28, 24, 35, 42, 38, 48, 55]}
-          w={160}
-          h={42}
-        />
-        <Sparkline
-          x={720}
-          y={480}
-          points={[40, 36, 44, 42, 50, 58, 55, 62, 70]}
-          w={150}
-          h={40}
-        />
+        <PulseRings x={430} y={520} radius={36} />
+        <PulseRings x={950} y={320} radius={44} />
 
-        <GrowthBars x={980} y={560} heights={[18, 28, 24, 40, 36, 52, 64]} />
-        <GrowthBars x={60} y={280} heights={[22, 18, 32, 28, 44]} />
+        <TargetCrosshair x={240} y={110} code="STRAT-01" />
+        <TargetCrosshair x={880} y={480} code="SCALE-90" />
 
-        <KpiChip x={430} y={80} label="Pipeline" value="+38%" />
-        <KpiChip x={980} y={40} label="ROAS" value="4.2x" />
-        <KpiChip x={200} y={340} label="Leads" value="↑ 2.1k" />
-
-        {/* faint donut / share ring */}
-        <g transform="translate(1100 280)" className="text-ink/12 dark:text-white/15">
-          <circle r={34} fill="none" stroke="currentColor" strokeWidth={8} />
-          <circle
-            r={34}
-            fill="none"
-            className="stroke-accent/50"
-            strokeWidth={8}
-            strokeDasharray="70 144"
-            strokeLinecap="round"
-            transform="rotate(-90)"
-          />
-        </g>
+        <TelemetryChip x={130} y={60} label="Conversion" value="+4.8%" badge="↑ 3x" />
+        <TelemetryChip x={430} y={70} label="MRR Scale" value="$125k" badge="98%" />
+        <TelemetryChip x={960} y={40} label="ROAS Peak" value="4.8x" badge="MAX" />
+        <TelemetryChip x={710} y={490} label="CAC Drop" value="-52%" badge="⚡" />
+        <TelemetryChip x={180} y={380} label="LTV : CAC" value="9.2x" badge="OPT" />
       </g>
     );
   }
 
   return (
     <g aria-hidden>
-      <ChartGrid w={390} h={1500} />
+      <TechGrid w={390} h={1500} />
 
       <path
-        d="M40 80 C 120 200 280 280 200 400 C 100 540 280 680 200 820 C 110 980 280 1120 200 1280 C 140 1380 180 1440 200 1480"
+        d="M 40 80 Q 200 300 120 600 T 260 1000 T 180 1440"
         fill="none"
-        className="stroke-accent/18 dark:stroke-accent/22"
-        strokeWidth={1.4}
-        strokeDasharray="4 10"
+        className="stroke-amber/40"
+        strokeWidth={1.8}
+        strokeDasharray="4 8"
         strokeLinecap="round"
       />
 
-      <Sparkline x={40} y={180} points={[10, 16, 14, 22, 30, 28, 36]} w={120} h={34} />
-      <Sparkline x={220} y={720} points={[20, 18, 26, 32, 30, 40, 48]} w={120} h={34} />
-      <Sparkline x={40} y={1100} points={[30, 34, 32, 42, 50, 48, 58]} w={120} h={34} />
+      <PulseRings x={200} y={330} radius={28} />
+      <PulseRings x={195} y={950} radius={34} />
 
-      <GrowthBars x={280} y={420} heights={[16, 24, 20, 34, 42]} />
-      <GrowthBars x={40} y={900} heights={[20, 18, 28, 36, 48]} />
+      <TargetCrosshair x={80} y={220} code="T-01" />
+      <TargetCrosshair x={310} y={780} code="T-02" />
 
-      <KpiChip x={40} y={40} label="Pipeline" value="+38%" />
-      <KpiChip x={250} y={560} label="ROAS" value="4.2x" />
-      <KpiChip x={40} y={1320} label="Leads" value="↑ 2.1k" />
+      <TelemetryChip x={40} y={40} label="Conversion" value="+4.8%" badge="↑" />
+      <TelemetryChip x={240} y={560} label="ROAS Peak" value="4.8x" badge="MAX" />
+      <TelemetryChip x={40} y={1320} label="CAC Drop" value="-52%" badge="⚡" />
     </g>
   );
 }
@@ -502,7 +450,7 @@ function JourneyScene({ variant }: { variant: Variant }) {
       const proxy = { p: from };
       travelTweenRef.current = gsap.to(proxy, {
         p: target,
-        duration: Math.min(1.1, 0.35 + Math.abs(target - from) * 0.9),
+        duration: Math.min(2.2, 0.7 + Math.abs(target - from) * 1.6),
         ease: "power2.inOut",
         onUpdate() {
           applyProgress(proxy.p);
@@ -550,14 +498,16 @@ function JourneyScene({ variant }: { variant: Variant }) {
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
 
-      // Sync graph progress smoothly as the section scrolls into/through the viewport
-      const start = vh * 0.85;
-      const end = vh * 0.15;
-      const totalRange = rect.height + start - end;
-      if (totalRange <= 0) return;
+      // Progress stays STRICTLY 0 (Strategy) until user actually reaches the graph in the viewport
+      const scrollStart = vh * 0.35;
+      const scrollEnd = -rect.height + vh * 0.7;
+      const totalDistance = scrollStart - scrollEnd;
+      if (totalDistance <= 0) return;
 
-      const scrolled = start - rect.top;
-      const progressP = Math.max(0, Math.min(1, scrolled / totalRange));
+      const scrolled = scrollStart - rect.top;
+      const rawP = Math.max(0, Math.min(1, scrolled / totalDistance));
+      // Smooth slow easing curve
+      const progressP = Math.pow(rawP, 1.4);
 
       applyProgress(progressP);
 
@@ -601,7 +551,7 @@ function JourneyScene({ variant }: { variant: Variant }) {
       {/* map */}
       <div className={isDesktop ? "mt-12 flex items-center justify-center" : "mt-10"}>
         <div
-          className="relative w-full rounded-[32px] border border-black/10 dark:border-white/15 bg-surface dark:bg-[#121217] p-2 shadow-2xl transition-colors duration-300"
+          className="relative w-full rounded-[32px] border border-slate-700/50 dark:border-indigo-500/35 bg-[#141624] dark:bg-[#1a1c30] p-2 shadow-2xl transition-colors duration-300"
           style={{
             aspectRatio: `${route.w} / ${route.h}`,
             ...(isDesktop && {
@@ -618,20 +568,27 @@ function JourneyScene({ variant }: { variant: Variant }) {
               <clipPath id={`journey-clip-${variant}`}>
                 <rect width={route.w} height={route.h} rx={28} />
               </clipPath>
+              <linearGradient id="scale-route-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#f59e0b" />
+                <stop offset="25%" stopColor="#ec4899" />
+                <stop offset="50%" stopColor="#3b82f6" />
+                <stop offset="75%" stopColor="#8b5cf6" />
+                <stop offset="100%" stopColor="#10b981" />
+              </linearGradient>
             </defs>
             <g clipPath={`url(#journey-clip-${variant})`}>
-              {/* high contrast paper / night theme backdrop */}
+              {/* high contrast dark navy command-center backdrop matching theme */}
               <rect
                 width={route.w}
                 height={route.h}
                 rx={28}
-                className="fill-[#f5f4ef] dark:fill-[#0e0e12]"
+                className="fill-[#141624] dark:fill-[#1a1c30]"
               />
               <rect
                 width={route.w}
                 height={route.h}
                 rx={28}
-                className="fill-accent/[0.06] dark:fill-amber/[0.05]"
+                className="fill-amber/[0.05]"
               />
               <rect
                 x={0.75}
@@ -640,66 +597,97 @@ function JourneyScene({ variant }: { variant: Variant }) {
                 height={route.h - 1.5}
                 rx={28}
                 fill="none"
-                className="stroke-ink/15 dark:stroke-white/15"
+                className="stroke-amber/30"
                 strokeWidth={1.5}
               />
 
               <MapDoodles variant={variant} />
 
-              {/* muted route + gold traveled portion */}
+              {/* glowing route path + vibrant linear gradient traveled line */}
               <path
                 ref={pathRef}
                 d={route.d}
-                className="text-ink/20 dark:text-white/20"
-                stroke="currentColor"
+                stroke="rgba(255, 255, 255, 0.2)"
                 fill="none"
-                strokeWidth={2}
+                strokeWidth={3}
                 strokeLinecap="round"
-                strokeDasharray="0.5 9"
+                strokeDasharray="4 8"
               />
               <path
                 ref={progressRef}
                 d={route.d}
-                className="text-accent"
-                stroke="currentColor"
+                stroke="url(#scale-route-gradient)"
                 fill="none"
-                strokeWidth={2.5}
+                strokeWidth={4.5}
                 strokeLinecap="round"
               />
 
               {points && (
                 <>
-                  <Flag at={points.start} label="Strategy" tone="text-ink/45 dark:text-white/45" />
-                  <Flag at={points.end} label="Evolve" tone="text-accent" />
+                  <Flag at={points.start} label="Strategy" tone="text-amber" />
+                  <Flag at={points.end} label="Evolve" tone="text-emerald-400" />
                   {points.nodes.map((n, i) => {
                     const reached = i <= active;
+                    const stageLabels = [
+                      "S · STRATEGY",
+                      "C · CREATE",
+                      "A · ACCELERATE",
+                      "L · LEAD",
+                      "E · EVOLVE",
+                    ];
                     return (
                       <g key={STAGES[i].letter} transform={`translate(${n.x} ${n.y})`}>
                         <circle
-                          r={26}
-                          className={`fill-accent/15 origin-center transition-transform duration-500 [transform-box:fill-box] ${
-                            i === active ? "scale-100" : "scale-0"
+                          r={32}
+                          className={`fill-amber/20 origin-center transition-transform duration-500 [transform-box:fill-box] ${
+                            i === active ? "scale-100 animate-pulse" : "scale-0"
                           }`}
                         />
                         <circle
-                          r={14}
-                          className={`transition-colors duration-500 ${
+                          r={16}
+                          className={`transition-all duration-500 ${
                             reached
-                              ? "fill-accent stroke-accent"
-                              : "fill-surface stroke-ink/20 dark:fill-[#141419] dark:stroke-white/20"
+                              ? "fill-amber stroke-white stroke-2 shadow-lg"
+                              : "fill-[#141520] stroke-white/40"
                           }`}
-                          strokeWidth={1.5}
+                          strokeWidth={2}
                         />
                         <text
-                          y={4}
+                          y={5}
                           textAnchor="middle"
-                          fontSize={11}
-                          className={`font-mono font-bold transition-colors duration-500 ${
-                            reached ? "fill-ink dark:fill-[#0a0a0a]" : "fill-ink/50 dark:fill-white/50"
+                          fontSize={12}
+                          className={`font-display font-extrabold transition-colors duration-500 ${
+                            reached ? "fill-slate-950 font-black" : "fill-white/80"
                           }`}
                         >
                           {STAGES[i].letter}
                         </text>
+                        {/* SCALE Motto Milestone Chip */}
+                        <g transform="translate(0 34)">
+                          <rect
+                            x={-48}
+                            y={-10}
+                            width={96}
+                            height={20}
+                            rx={6}
+                            className={
+                              reached
+                                ? "fill-slate-900/95 stroke-amber/60 shadow-md"
+                                : "fill-slate-900/70 stroke-white/20"
+                            }
+                            strokeWidth={1}
+                          />
+                          <text
+                            y={4}
+                            textAnchor="middle"
+                            fontSize={8.5}
+                            className={`font-mono font-bold uppercase tracking-wider ${
+                              reached ? "fill-amber" : "fill-white/60"
+                            }`}
+                          >
+                            {stageLabels[i]}
+                          </text>
+                        </g>
                       </g>
                     );
                   })}
@@ -711,15 +699,15 @@ function JourneyScene({ variant }: { variant: Variant }) {
                 ref={travelerRef}
                 style={{ visibility: points ? "visible" : "hidden" }}
               >
-                <circle r={17} className="fill-ink dark:fill-white" />
+                <circle r={17} className="fill-white dark:fill-ink" />
                 <circle
                   r={21}
                   fill="none"
-                  className="stroke-ink/15 dark:stroke-white/20"
+                  className="stroke-white/30 dark:stroke-black/20"
                 />
                 <path
                   d="M -6 5.5 L 9 0 L -6 -5.5 L -2.5 0 Z"
-                  className="fill-surface dark:fill-[#0c0c0e]"
+                  className="fill-[#0c0c0e] dark:fill-surface"
                 />
               </g>
             </g>
@@ -794,7 +782,7 @@ function StageCard({
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: (index % 3) * 0.08 }}
-      className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-black/10 dark:border-white/12 bg-surface dark:bg-[#141419]/90 p-6 sm:p-7 shadow-xl backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:border-accent/50 hover:shadow-2xl hover:shadow-accent/15"
+      className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-black/10 dark:border-white/12 bg-surface dark:bg-[#141419]/90 p-6 sm:p-7 shadow-xl backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:border-slate-800/40 dark:hover:border-accent/50 hover:shadow-2xl"
     >
       {/* Scroll-triggered Luminous Gradient Sweep */}
       <motion.div
@@ -802,7 +790,7 @@ function StageCard({
         whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.7, 0] }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 1.3, ease: "easeInOut", delay: (index % 3) * 0.12 }}
-        className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/35 via-amber/25 to-transparent -skew-x-12"
+        className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-slate-800/20 via-slate-900/15 dark:via-accent/35 dark:via-amber/25 to-transparent -skew-x-12"
         aria-hidden
       />
 
@@ -812,7 +800,7 @@ function StageCard({
         whileInView={{ opacity: 0.45 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.8, delay: (index % 3) * 0.08 }}
-        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent/30 via-amber/18 via-40% to-transparent transition-opacity duration-500 group-hover:!opacity-100"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-slate-900/[0.06] via-indigo-950/[0.04] to-transparent dark:from-accent/30 dark:via-amber/18 via-40% transition-opacity duration-500 group-hover:!opacity-100"
         aria-hidden
       />
 
@@ -820,19 +808,19 @@ function StageCard({
         <div>
           {/* Header row: Phase badge + Letter pill */}
           <div className="flex items-center justify-between gap-3 border-b border-black/10 dark:border-white/10 pb-4">
-            <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-accent dark:text-amber">
+            <span className="font-sans text-xs font-bold uppercase tracking-[0.2em] text-slate-900 dark:text-amber">
               {stage.week}
             </span>
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent/15 border border-accent/30 font-mono text-sm font-bold text-accent shadow-sm transition-transform duration-300 group-hover:scale-110">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-900/10 border border-slate-900/20 font-sans text-sm font-bold text-slate-950 dark:bg-accent/15 dark:border-accent/30 dark:text-accent shadow-sm transition-transform duration-300 group-hover:scale-110">
               {stage.letter}
             </span>
           </div>
 
           {/* Title & Tagline */}
-          <h3 className="mt-4 font-display text-2xl font-bold tracking-tight text-ink dark:text-white group-hover:text-accent dark:group-hover:text-amber transition-colors duration-300">
+          <h3 className="mt-4 font-display text-2xl font-bold tracking-tight text-ink dark:text-white group-hover:text-slate-950 dark:group-hover:text-amber transition-colors duration-300">
             {stage.title}
           </h3>
-          <p className="mt-1 text-sm font-semibold text-accent/90 dark:text-amber/90">
+          <p className="mt-1 text-sm font-bold text-slate-900 dark:text-amber/90">
             {stage.tagline}
           </p>
 
@@ -845,13 +833,13 @@ function StageCard({
 
           {/* What's Included */}
           <div className="mt-6 border-t border-black/10 dark:border-white/10 pt-4">
-            <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-ink/50 dark:text-white/50 mb-3">
+            <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-ink/50 dark:text-white/50 mb-3">
               What&apos;s Included
             </p>
             <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               {stage.includes.map((item) => (
                 <li key={item} className="flex items-start gap-2 text-xs font-medium text-body dark:text-white/80">
-                  <span className="mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
+                  <span className="mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900 dark:bg-amber" aria-hidden />
                   <span>{item}</span>
                 </li>
               ))}
@@ -860,8 +848,8 @@ function StageCard({
         </div>
 
         {/* Outcome Box */}
-        <div className="mt-6 rounded-2xl border border-accent/20 bg-accent/5 dark:bg-accent/10 p-3.5 text-xs font-medium text-ink dark:text-white/90">
-          <span className="font-bold text-accent dark:text-amber">Outcome: </span>
+        <div className="mt-6 rounded-2xl border border-slate-800/20 bg-slate-900/5 dark:border-accent/20 dark:bg-accent/10 p-3.5 text-xs font-medium text-ink dark:text-white/90">
+          <span className="font-bold text-slate-950 dark:text-amber">Outcome: </span>
           {stage.outcome}
         </div>
       </div>
@@ -884,7 +872,7 @@ function PhaseQuickJump() {
           key={s.letter}
           type="button"
           onClick={() => scrollToStage(s.letter)}
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-accent/20 bg-accent/10 font-mono text-xs font-bold text-accent transition-all duration-300 hover:scale-110 hover:bg-accent hover:text-ink active:scale-95 cursor-pointer"
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-900/20 bg-slate-900/10 font-sans text-xs font-bold text-slate-950 dark:border-accent/20 dark:bg-accent/10 dark:text-accent transition-all duration-300 hover:scale-110 hover:bg-slate-950 hover:text-white dark:hover:bg-amber dark:hover:text-ink active:scale-95 cursor-pointer"
           aria-label={`Jump to ${s.title} stage`}
         >
           {s.letter}
@@ -909,7 +897,7 @@ export default function JourneyMap() {
       {/* Animated Stage Cards Grid on Scroll */}
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 md:px-12 mt-12 md:mt-20">
         <div className="flex flex-col items-center text-center mb-10">
-          <span className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-accent dark:text-amber">
+          <span className="font-sans text-xs font-bold uppercase tracking-[0.25em] text-slate-950 dark:text-amber">
             Framework Roadmap
           </span>
           <h3 className="mt-2 font-display text-2xl font-bold tracking-tight text-ink dark:text-white sm:text-3xl md:text-4xl">

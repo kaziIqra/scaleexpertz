@@ -170,7 +170,7 @@ export default function FeaturedWork() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.8, ease: EASE_OUT_EXPO, delay: i * 0.08 }}
-            className="group cursor-pointer relative flex flex-col justify-between overflow-hidden rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-[#141419] p-6 shadow-card transition-all duration-500 hover:-translate-y-2 hover:border-accent/60 hover:shadow-2xl"
+            className="group cursor-pointer relative flex flex-col justify-between overflow-hidden rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-[#141419] p-6 shadow-card transition-all duration-500 hover:-translate-y-2 hover:border-slate-800/40 dark:hover:border-accent/60 hover:shadow-2xl"
             onClick={() => setSelectedCase(p)}
           >
             {/* Scroll Shimmer Light Sweep */}
@@ -179,7 +179,7 @@ export default function FeaturedWork() {
               whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 1.3, ease: "easeInOut", delay: (i % 3) * 0.12 }}
-              className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/35 via-amber-500/20 to-transparent -skew-x-12"
+              className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-slate-800/20 via-slate-900/15 dark:via-accent/35 dark:via-amber-500/20 to-transparent -skew-x-12"
               aria-hidden
             />
 
@@ -189,7 +189,7 @@ export default function FeaturedWork() {
               whileInView={{ opacity: 0.4 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.8, delay: i * 0.08 }}
-              className="absolute inset-0 bg-gradient-to-br from-accent/22 via-amber-500/15 via-35% to-transparent transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
+              className="absolute inset-0 bg-gradient-to-br from-emerald-950/20 via-teal-950/15 to-transparent dark:from-accent/22 dark:via-amber-500/15 via-35% transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
               aria-hidden
             />
 
@@ -213,7 +213,7 @@ export default function FeaturedWork() {
               </div>
 
               {/* Bold headline & outcome */}
-              <h3 className="mt-5 font-display text-xl font-bold tracking-tight text-ink dark:text-white group-hover:text-accent dark:group-hover:text-amber transition-colors duration-300">
+              <h3 className="mt-5 font-display text-xl font-bold tracking-tight text-ink dark:text-white group-hover:text-emerald-800 dark:group-hover:text-amber transition-colors duration-300">
                 {p.headline}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-body dark:text-slate-300 font-medium">
@@ -231,7 +231,7 @@ export default function FeaturedWork() {
       </div>
 
       {/* Closing Statement & Primary CTA — Premium Rearranged Layout */}
-      <div className="mt-16 md:mt-24 relative overflow-hidden rounded-[32px] border border-black/10 dark:border-white/12 bg-gradient-to-br from-surface via-surface to-paper dark:from-[#14141a] dark:via-[#16161f] dark:to-[#0e0e12] p-6 sm:p-10 md:p-14 shadow-2xl transition-all duration-500 hover:border-accent/40">
+      <div className="mt-16 md:mt-24 relative overflow-hidden rounded-[32px] border border-black/10 dark:border-white/12 bg-gradient-to-br from-surface via-surface to-paper dark:from-[#14141a] dark:via-[#16161f] dark:to-[#0e0e12] p-6 sm:p-10 md:p-14 shadow-2xl transition-all duration-500 hover:border-slate-800/40 dark:hover:border-accent/40">
         {/* Ambient Glows */}
         <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-accent/15 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute -left-20 -bottom-20 h-72 w-72 rounded-full bg-amber/15 blur-3xl" />
