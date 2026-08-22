@@ -150,66 +150,88 @@ export default function FounderDiagnosis() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, ease: EASE_OUT_EXPO }}
-                  className="flex h-full flex-col justify-between rounded-3xl border border-white/15 bg-white/[0.05] p-6 sm:p-7 shadow-2xl backdrop-blur-xl hover:border-accent/40 transition-colors duration-500"
+                  className="group/card relative flex h-full flex-col justify-between overflow-hidden rounded-3xl p-[1.5px] bg-gradient-to-b from-pink-400/35 via-rose-400/30 to-amber-400/25 shadow-[0_0_25px_rgba(244,114,182,0.15)] transition-all duration-500 hover:shadow-[0_0_35px_rgba(244,114,182,0.25)] hover:from-pink-400/50 hover:via-rose-400/45 hover:to-amber-400/40"
                 >
-                  <div>
-                    <div className="flex items-center justify-between border-b border-white/10 pb-5">
-                      <div>
-                        <span className="font-mono text-[11px] uppercase tracking-widest text-amber font-semibold">
-                          Find My Growth Bottleneck
-                        </span>
-                        <h3 className="mt-1 font-display text-xl sm:text-2xl font-bold text-white">
-                          Book Founder Diagnosis
-                        </h3>
+                  {/* Subtle Light Sweep Overlay */}
+                  <motion.div
+                    initial={{ x: "-100%", opacity: 0 }}
+                    whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.5, 0] }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 1.4, ease: "easeInOut", delay: 0.2 }}
+                    className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-pink-400/20 via-rose-400/15 to-transparent -skew-x-12"
+                    aria-hidden
+                  />
+
+                  {/* 1 Shade Lighter Soft Dark Interior Container */}
+                  <div className="relative flex h-full w-full flex-col justify-between rounded-[22.5px] bg-gradient-to-b from-[#1d1a24]/90 via-[#16141e]/90 to-[#121018]/90 p-6 sm:p-7 backdrop-blur-xl">
+                    {/* Soft Ambient Glows */}
+                    <div aria-hidden className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-pink-500/10 blur-3xl" />
+                    <div aria-hidden className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-amber-500/10 blur-3xl" />
+
+                    <div>
+                      {/* Light Subtle Pink Badge Tag */}
+                      <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-pink-400/30 bg-pink-500/10 px-3.5 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-pink-300/90 shadow-sm">
+                        <span className="h-1.5 w-1.5 rounded-full bg-pink-400 animate-pulse" />
+                        Recommended Action
                       </div>
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent/20 text-accent">
-                        <LuCalendar size={20} strokeWidth={1.75} aria-hidden />
-                      </span>
+
+                      <div className="flex items-center justify-between border-b border-white/10 pb-5">
+                        <div>
+                          <span className="font-mono text-[11px] uppercase tracking-widest text-pink-300 font-bold">
+                            Find My Growth Bottleneck
+                          </span>
+                          <h3 className="mt-1 font-display text-xl sm:text-2xl font-bold text-white">
+                            Book Founder Diagnosis
+                          </h3>
+                        </div>
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-pink-400/30 bg-pink-500/15 text-pink-300">
+                          <LuCalendar size={22} strokeWidth={1.75} aria-hidden />
+                        </span>
+                      </div>
+
+                      <div className="mt-5 grid grid-cols-3 gap-2 rounded-2xl border border-white/10 bg-black/40 p-2.5 text-center text-xs font-mono text-white/80">
+                        <span className="inline-flex items-center justify-center gap-1.5 py-1">
+                          <span className="inline-flex h-5 w-5 items-center justify-center rounded-md border border-pink-400/20 bg-pink-400/10 text-pink-300 shrink-0">
+                            <LuClock size={12} strokeWidth={1.75} aria-hidden />
+                          </span>
+                          <span className="truncate font-medium text-white/90">45 Mins</span>
+                        </span>
+                        <span className="inline-flex items-center justify-center gap-1.5 py-1">
+                          <span className="inline-flex h-5 w-5 items-center justify-center rounded-md border border-pink-400/20 bg-pink-400/10 text-pink-300 shrink-0">
+                            <LuVideo size={12} strokeWidth={1.75} aria-hidden />
+                          </span>
+                          <span className="truncate font-medium text-white/90">Online</span>
+                        </span>
+                        <span className="inline-flex items-center justify-center gap-1.5 py-1 font-bold text-pink-300 rounded-lg bg-pink-500/10 border border-pink-400/30">
+                          <span className="inline-flex h-5 w-5 items-center justify-center rounded-md border border-pink-400/30 bg-pink-400/20 font-display text-[10px] font-bold leading-none text-pink-300 shrink-0">
+                            ₹
+                          </span>
+                          <span className="truncate">₹0 Free</span>
+                        </span>
+                      </div>
+
+                      <p className="mt-5 text-xs sm:text-sm leading-relaxed text-white/80 font-medium">
+                        Tell us about your business and primary growth bottleneck. We&apos;ll
+                        confirm a 45-minute slot within 24 hours.
+                      </p>
                     </div>
 
-                    <div className="mt-5 grid grid-cols-3 gap-2 rounded-2xl border border-white/10 bg-black/40 p-2.5 text-center text-xs font-mono text-white/80">
-                      <span className="inline-flex items-center justify-center gap-1.5 py-1">
-                        <span className="inline-flex h-5 w-5 items-center justify-center rounded-md border border-accent/20 bg-accent/10 text-accent shrink-0">
-                          <LuClock size={12} strokeWidth={1.75} aria-hidden />
-                        </span>
-                        <span className="truncate">45 Mins</span>
-                      </span>
-                      <span className="inline-flex items-center justify-center gap-1.5 py-1">
-                        <span className="inline-flex h-5 w-5 items-center justify-center rounded-md border border-accent/20 bg-accent/10 text-accent shrink-0">
-                          <LuVideo size={12} strokeWidth={1.75} aria-hidden />
-                        </span>
-                        <span className="truncate">Online</span>
-                      </span>
-                      <span className="inline-flex items-center justify-center gap-1.5 py-1 font-bold text-amber">
-                        <span className="inline-flex h-5 w-5 items-center justify-center rounded-md border border-accent/20 bg-accent/10 font-display text-[10px] font-bold leading-none text-accent shrink-0">
-                          ₹
-                        </span>
-                        <span className="truncate">₹0 Free</span>
-                      </span>
-                    </div>
-
-                    <p className="mt-5 text-xs sm:text-sm leading-relaxed text-white/70 font-medium">
-                      Tell us about your business and primary growth bottleneck. We&apos;ll
-                      confirm a 45-minute slot within 24 hours.
-                    </p>
-                  </div>
-
-                  <div className="mt-6 pt-2">
-                    <Magnetic strength={10} className="w-full flex justify-center">
+                    <div className="mt-6 pt-2 flex flex-col items-center justify-center text-center">
                       <Link
                         href="/diagnosis"
-                        className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-6 py-3.5 text-sm font-extrabold text-ink shadow-xl shadow-accent/30 transition-all duration-500 hover:bg-[position:right_center] hover:scale-[1.02] hover:shadow-2xl hover:shadow-accent/50 active:scale-98"
+                        className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber via-50% to-pink-500/90 bg-[length:200%_auto] px-8 py-3.5 text-sm font-extrabold text-ink shadow-lg shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:shadow-xl hover:shadow-pink-500/30 active:scale-98"
                       >
                         <span className="tracking-tight text-center">Book Your Founder Growth Diagnosis</span>
                         <svg className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">
                           <path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </Link>
-                    </Magnetic>
 
-                    <p className="text-center font-sans text-xs font-semibold text-white/50 tracking-wider pt-3">
-                      No sales pitch guaranteed. 100% confidential.
-                    </p>
+                      <p className="text-center font-sans text-xs font-semibold text-white/60 tracking-wider pt-3.5 flex items-center justify-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-pink-400/80" />
+                        No sales pitch guaranteed. 100% confidential.
+                      </p>
+                    </div>
                   </div>
                 </motion.div>
               </div>

@@ -112,7 +112,7 @@ export default function Navbar() {
                 className="h-7 sm:h-8 w-auto block dark:hidden object-contain"
               />
             </div>
-            <span>ScaleXpertz<span className="text-accent dark:text-amber">.</span></span>
+            <span className="whitespace-nowrap">ScaleXpertz<span className="text-accent dark:text-amber">.</span></span>
           </a>
 
           <nav className="hidden items-center gap-4 lg:gap-6 md:flex" aria-label="Primary">

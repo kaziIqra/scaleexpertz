@@ -77,7 +77,7 @@ export default function TextReveal({
         <span
           key={i}
           aria-hidden
-          className="inline-flex overflow-hidden pb-[0.1em] -mb-[0.1em] align-bottom"
+          className="inline-flex overflow-hidden pt-[0.05em] -mt-[0.05em] pb-[0.25em] -mb-[0.25em] px-[0.05em] -mx-[0.05em] align-bottom"
         >
           <motion.span
             variants={word}

@@ -21,12 +21,12 @@ const SERVICES = [
 ];
 
 const DISCIPLINES = [
-  { index: "01", name: "Web Architecture", x: -245, y: -145 },
-  { index: "02", name: "Growth Marketing", x: 245, y: -150 },
-  { index: "03", name: "Brand Strategy", x: -235, y: 10 },
-  { index: "04", name: "AI & Automation", x: 225, y: 10 },
-  { index: "05", name: "Financial Strategy", x: -220, y: 160 },
-  { index: "06", name: "Enterprise Tech", x: 220, y: 160 },
+  { index: "01", name: "Web Architecture", x: -185, y: -140 },
+  { index: "02", name: "Growth Marketing", x: 185, y: -145 },
+  { index: "03", name: "Brand Strategy", x: -180, y: 10 },
+  { index: "04", name: "AI & Automation", x: 175, y: 10 },
+  { index: "05", name: "Financial Strategy", x: -170, y: 155 },
+  { index: "06", name: "Enterprise Tech", x: 170, y: 155 },
 ];
 
 function FadeUp({
@@ -80,8 +80,8 @@ function SystemMergeVisual({ play }: { play: boolean }) {
         {DISCIPLINES.map((d, i) => (
           <motion.line
             key={d.name}
-            x1={270 + d.x * 0.88}
-            y1={240 + d.y * 0.88}
+            x1={270 + d.x * 0.85}
+            y1={240 + d.y * 0.85}
             x2="270"
             y2="240"
             stroke="rgba(212, 175, 55, 0.35)"
@@ -118,20 +118,21 @@ function SystemMergeVisual({ play }: { play: boolean }) {
       {DISCIPLINES.map((d, i) => (
         <motion.div
           key={d.name}
-          initial={{ opacity: 0, x: d.x * 1.25, y: d.y * 1.25 }}
-          animate={play ? { opacity: 1, x: d.x, y: d.y } : {}}
+          style={{ left: "50%", top: "50%" }}
+          initial={{ opacity: 0, x: `calc(-50% + ${d.x * 1.25}px)`, y: `calc(-50% + ${d.y * 1.25}px)` }}
+          animate={play ? { opacity: 1, x: `calc(-50% + ${d.x}px)`, y: `calc(-50% + ${d.y}px)` } : {}}
           transition={{
             duration: 0.9,
             delay: 0.35 + i * 0.08,
             ease: EASE_OUT_EXPO,
           }}
-          className="absolute z-10"
+          className="absolute z-10 whitespace-nowrap"
         >
           <div className="flex items-baseline gap-2.5 border border-accent/40 bg-night px-3.5 py-2 shadow-[0_8px_24px_rgba(0,0,0,0.2)]">
             <span className="font-mono text-[10px] font-bold tracking-[0.15em] text-accent">
               {d.index}
             </span>
-            <span className="font-display text-xs font-semibold tracking-tight text-white">
+            <span className="font-display text-xs font-semibold tracking-tight text-white whitespace-nowrap">
               {d.name}
             </span>
           </div>
@@ -272,9 +273,9 @@ export default function Hero() {
 
           {/* Trust line below CTA */}
           <div className="mt-6 flex items-center justify-center lg:justify-start">
-            <span className="inline-flex items-center gap-2.5 rounded-full border border-accent/30 dark:border-amber/35 bg-accent/10 dark:bg-amber/10 px-4 py-1.5 font-[family-name:var(--font-jakarta)] text-xs sm:text-sm font-extrabold uppercase tracking-[0.25em] text-accent dark:text-amber shadow-sm backdrop-blur-sm">
-              <span className="h-2 w-2 rounded-full bg-amber animate-pulse" />
-              One Team. Every Growth Solution.
+            <span className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-accent/30 dark:border-amber/35 bg-accent/10 dark:bg-amber/10 px-4 py-1.5 font-[family-name:var(--font-jakarta)] text-xs sm:text-sm font-extrabold uppercase tracking-[0.15em] sm:tracking-[0.25em] text-accent dark:text-amber shadow-sm backdrop-blur-sm">
+              <span className="h-2 w-2 shrink-0 rounded-full bg-amber animate-pulse" />
+              <span className="truncate">One Team. Every Growth Solution.</span>
             </span>
           </div>
         </FadeUp>
