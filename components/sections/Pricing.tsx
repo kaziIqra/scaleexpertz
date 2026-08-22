@@ -210,25 +210,43 @@ export default function Pricing() {
   const [activeSprint, setActiveSprint] = useState<SprintData>(SPRINTS[0]);
 
   return (
-    <section id="pricing" className="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-10 md:px-12 md:py-14">
-      <div className="mx-auto max-w-4xl text-center flex flex-col items-center justify-center">
-        <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-ink dark:text-white sm:text-4xl md:text-5xl">
-          05 — Investment & Growth Sprints
-        </h2>
-        <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-accent dark:text-amber sm:text-2xl md:text-3xl leading-snug">
-          Growth Isn&apos;t Purchased. It&apos;s Built Through Commitment.
-        </h3>
-        <p className="mt-4 text-sm sm:text-base leading-relaxed text-body dark:text-slate-300 font-medium">
-          Every Growth Sprint™ is a focused engagement where strategy, execution, and optimisation work together under one accountable team. Configure add-ons below to see your estimate.
-        </p>
-      </div>
-
-      <div className="mt-12">
-        <PricingCalculator
-          sprints={SPRINTS}
-          activeSprint={activeSprint}
-          onSelectSprint={setActiveSprint}
+    <section id="pricing" className="relative mx-auto max-w-[1440px] scroll-mt-24 px-4 sm:px-6 md:px-12 py-10 md:py-14">
+      {/* Section 05 Entire Box with Gradient Outline & Glowing Shadow Effect */}
+      <div className="group/box relative rounded-[32px] sm:rounded-[40px] p-[1.5px] sm:p-[2px] bg-gradient-to-r from-accent/45 via-amber-400/50 via-50% to-amber-500/45 shadow-[0_0_35px_-10px_rgba(212,175,55,0.2),_0_0_25px_-5px_rgba(245,158,11,0.15)] transition-all duration-500 hover:shadow-[0_0_55px_-5px_rgba(212,175,55,0.35),_0_0_35px_0px_rgba(245,158,11,0.25)]">
+        
+        {/* Ambient Glowing Aura behind the Outline Gradient */}
+        <div 
+          aria-hidden 
+          className="pointer-events-none absolute -inset-[1px] rounded-[33px] sm:rounded-[41px] bg-gradient-to-r from-amber-500/25 via-accent/30 via-50% to-amber-400/25 opacity-40 blur-md transition-opacity duration-500 group-hover/box:opacity-80" 
         />
+
+        {/* Main Inner Glassmorphic Box */}
+        <div className="relative rounded-[30.5px] sm:rounded-[38px] bg-white/95 dark:bg-[#121217]/95 p-6 sm:p-10 md:p-14 backdrop-blur-2xl overflow-hidden">
+          {/* Soft Ambient Corner Glows */}
+          <div aria-hidden className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
+          <div aria-hidden className="pointer-events-none absolute -right-20 -bottom-20 h-64 w-64 rounded-full bg-amber-500/10 blur-3xl" />
+
+          {/* Section Header */}
+          <div className="mx-auto max-w-4xl text-center flex flex-col items-center justify-center relative z-10">
+            <h2 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-ink dark:text-white sm:text-4xl md:text-5xl">
+              05 — Investment & Growth Sprints
+            </h2>
+            <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-accent dark:text-amber sm:text-2xl md:text-3xl leading-snug">
+              Growth Isn&apos;t Purchased. It&apos;s Built Through Commitment.
+            </h3>
+            <p className="mt-4 text-sm sm:text-base leading-relaxed text-body dark:text-slate-300 font-medium">
+              Every Growth Sprint™ is a focused engagement where strategy, execution, and optimisation work together under one accountable team. Configure add-ons below to see your estimate.
+            </p>
+          </div>
+
+          <div className="mt-12 relative z-10">
+            <PricingCalculator
+              sprints={SPRINTS}
+              activeSprint={activeSprint}
+              onSelectSprint={setActiveSprint}
+            />
+          </div>
+        </div>
       </div>
     </section>
   );
