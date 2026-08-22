@@ -83,14 +83,16 @@ export default function Navbar() {
             }`}
         >
           <a
-            href="#top"
+            href="/"
             onClick={(e) => {
-              e.preventDefault();
               setOpen(false);
-              lenis ? lenis.scrollTo(0, { duration: 1.4 }) : window.scrollTo({ top: 0, behavior: "smooth" });
+              if (pathname === "/") {
+                e.preventDefault();
+                lenis ? lenis.scrollTo(0, { duration: 1.4 }) : window.scrollTo({ top: 0, behavior: "smooth" });
+              }
             }}
             className="flex shrink-0 items-center gap-2 font-display text-lg sm:text-xl font-semibold tracking-tight text-ink dark:text-white"
-            aria-label="ScaleXpertz — back to top"
+            aria-label="ScaleXpertz — home"
           >
             <div className="relative inline-flex shrink-0 items-center">
               {/* Dark Theme Logo */}
