@@ -63,11 +63,11 @@ export default function FounderDiagnosis() {
       <div className="relative mx-auto max-w-[1440px] px-4 sm:px-6 md:px-12">
         {/* Section 06 Entire Box with Gradient Outline & Glowing Shadow Effect */}
         <div className="group/box relative rounded-[32px] sm:rounded-[40px] p-[1.5px] sm:p-[2px] bg-gradient-to-r from-accent/45 via-amber-400/50 via-50% to-amber-500/45 shadow-[0_0_35px_-10px_rgba(212,175,55,0.2),_0_0_25px_-5px_rgba(245,158,11,0.15)] transition-all duration-500 hover:shadow-[0_0_55px_-5px_rgba(212,175,55,0.35),_0_0_35px_0px_rgba(245,158,11,0.25)]">
-          
+
           {/* Ambient Glowing Aura behind the Outline Gradient */}
-          <div 
-            aria-hidden 
-            className="pointer-events-none absolute -inset-[1px] rounded-[33px] sm:rounded-[41px] bg-gradient-to-r from-amber-500/25 via-accent/30 via-50% to-amber-400/25 opacity-40 blur-md transition-opacity duration-500 group-hover/box:opacity-80" 
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-[1px] rounded-[33px] sm:rounded-[41px] bg-gradient-to-r from-amber-500/25 via-accent/30 via-50% to-amber-400/25 opacity-40 blur-md transition-opacity duration-500 group-hover/box:opacity-80"
           />
 
           {/* Main Inner Glassmorphic Box */}
@@ -219,7 +219,7 @@ export default function FounderDiagnosis() {
                     <div className="mt-6 pt-2 flex flex-col items-center justify-center text-center">
                       <Link
                         href="/diagnosis"
-                        className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber via-50% to-pink-500/90 bg-[length:200%_auto] px-8 py-3.5 text-sm font-extrabold text-ink shadow-lg shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:shadow-xl hover:shadow-pink-500/30 active:scale-98"
+                        className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber via-50% to-pink-500/90 bg-[length:200%_auto] px-8 py-3.5 text-sm font-extrabold text-ink shadow-lg shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-xl hover:shadow-pink-500/40 active:scale-95"
                       >
                         <span className="tracking-tight text-center">Book Your Founder Growth Diagnosis</span>
                         <svg className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">

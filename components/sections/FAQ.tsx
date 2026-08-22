@@ -122,9 +122,8 @@ export default function FAQ() {
                   </span>
                   <span
                     aria-hidden
-                    className={`relative h-4 w-4 shrink-0 transition-transform duration-300 ease-out ${
-                      isOpen ? "rotate-45 text-accent" : "text-ink/60"
-                    }`}
+                    className={`relative h-4 w-4 shrink-0 transition-transform duration-300 ease-out ${isOpen ? "rotate-45 text-accent" : "text-ink/60"
+                      }`}
                   >
                     <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-current" />
                     <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-current" />

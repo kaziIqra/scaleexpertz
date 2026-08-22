@@ -42,7 +42,7 @@ export default function DiagnosisForm() {
             href={CALENDLY_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-3.5 text-sm font-extrabold text-ink shadow-lg shadow-accent/25 transition-transform hover:scale-105 dark:bg-amber dark:text-black"
+            className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent via-amber via-50% to-pink-500/90 bg-[length:200%_auto] px-8 py-3.5 text-sm font-extrabold text-ink shadow-lg shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-xl hover:shadow-pink-500/40 active:scale-95"
           >
             Open Calendly Calendar &rarr;
           </a>
@@ -117,10 +117,10 @@ export default function DiagnosisForm() {
       <div className="mt-2 flex flex-col items-center justify-center gap-3 text-center">
         <button
           type="submit"
-          className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent-strong dark:from-amber dark:to-accent px-8 py-4 text-sm font-extrabold text-ink shadow-lg shadow-accent/25 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-accent/40 active:scale-95"
+          className="group inline-flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-accent via-amber via-50% to-pink-500/90 bg-[length:200%_auto] px-8 py-4 text-sm font-extrabold text-ink shadow-lg shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-[1.02] hover:shadow-xl hover:shadow-pink-500/40 active:scale-95 cursor-pointer"
         >
           <span>Book Your Founder Growth Diagnosis</span>
-          <svg className="h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="none">
+          <svg className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">
             <path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
