@@ -147,9 +147,14 @@ export default function DiagnosisPage() {
 
           {/* Right Column: Sticky Booking Form */}
           <div className="lg:col-span-5 lg:sticky lg:top-28 text-left">
-            <h2 className="mb-3 font-display text-xl font-bold tracking-tight text-ink dark:text-white">
-              Book Your 45-Min Session
-            </h2>
+            <div className="mb-3">
+              <span className="font-mono text-[11px] uppercase tracking-widest text-pink-500 dark:text-pink-300 font-bold">
+                Recommended Action
+              </span>
+              <h2 className="mt-0.5 font-display text-xl sm:text-2xl font-bold tracking-tight text-ink dark:text-white">
+                Book Your 45-Min Session
+              </h2>
+            </div>
             <DiagnosisForm />
           </div>
         </div>
