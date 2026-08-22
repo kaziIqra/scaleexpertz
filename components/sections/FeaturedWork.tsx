@@ -193,6 +193,16 @@ export default function FeaturedWork() {
               aria-hidden
             />
 
+            {/* Mobile View Scroll Ambient Gold Gradient Overlay (sm:hidden: Mobile Only for both Light & Dark Theme) */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 0.45 }}
+              viewport={{ once: false, amount: 0.25 }}
+              transition={{ duration: 0.8, delay: i * 0.08 }}
+              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/18 via-amber-400/12 to-amber-300/15 dark:from-accent/30 dark:via-amber/18 transition-opacity duration-500 sm:hidden"
+              aria-hidden
+            />
+
             <div className="relative z-10">
               {/* Image thumbnail */}
               <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-ink/5 ring-1 ring-black/[0.06] dark:bg-white/5 dark:ring-white/10 group-hover:scale-[1.02] transition-transform duration-500">

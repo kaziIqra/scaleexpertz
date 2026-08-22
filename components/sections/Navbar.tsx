@@ -77,11 +77,10 @@ export default function Navbar() {
         transition={{ duration: 0.8, ease: EASE_OUT_EXPO, delay: 0.3 }}
       >
         <div
-          className={`flex w-full items-center justify-between transition-all duration-500 ease-out ${
-            scrolled
-              ? "mx-3 mt-3 max-w-[1080px] rounded-full border border-black/[0.08] dark:border-white/15 bg-white/90 dark:bg-[#141419]/90 px-5 py-2.5 shadow-card backdrop-blur-xl md:mx-6"
-              : "max-w-[1440px] border border-transparent bg-transparent px-6 py-5 md:px-12"
-          }`}
+          className={`flex w-full items-center justify-between transition-all duration-500 ease-out ${scrolled
+            ? "mx-3 mt-3 max-w-[1080px] rounded-full border border-black/[0.08] dark:border-white/15 bg-white/90 dark:bg-[#141419]/90 px-5 py-2.5 shadow-card backdrop-blur-xl md:mx-6"
+            : "max-w-[1440px] border border-transparent bg-transparent px-6 py-5 md:px-12"
+            }`}
         >
           <a
             href="#top"
@@ -105,10 +104,10 @@ export default function Navbar() {
               />
               {/* Light Theme Logo */}
               <Image
-                src="/logo-mark-3d-gold.png"
+                src="/image.png"
                 alt="ScaleXpertz Logo"
-                width={441}
-                height={344}
+                width={212}
+                height={160}
                 priority
                 className="h-7 sm:h-8 w-auto block dark:hidden object-contain"
               />
@@ -202,14 +201,12 @@ export default function Navbar() {
               className="relative flex h-10 w-10 items-center justify-center md:hidden"
             >
               <span
-                className={`absolute h-px w-5 bg-ink dark:bg-white transition-transform duration-300 ${
-                  open ? "rotate-45" : "-translate-y-[3.5px]"
-                }`}
+                className={`absolute h-px w-5 bg-ink dark:bg-white transition-transform duration-300 ${open ? "rotate-45" : "-translate-y-[3.5px]"
+                  }`}
               />
               <span
-                className={`absolute h-px w-5 bg-ink dark:bg-white transition-transform duration-300 ${
-                  open ? "-rotate-45" : "translate-y-[3.5px]"
-                }`}
+                className={`absolute h-px w-5 bg-ink dark:bg-white transition-transform duration-300 ${open ? "-rotate-45" : "translate-y-[3.5px]"
+                  }`}
               />
             </button>
           </div>

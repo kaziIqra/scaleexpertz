@@ -170,15 +170,25 @@ export default function Services() {
                 aria-hidden
               />
 
-              {/* Service Logo Watermark — Transparent & Embedded in both light & dark theme */}
+              {/* Mobile View Scroll Ambient Gold Gradient Overlay (sm:hidden: Mobile Only for both Light & Dark Theme) */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 0.45 }}
+                viewport={{ once: false, amount: 0.25 }}
+                transition={{ duration: 0.8 }}
+                className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/18 via-amber-400/12 to-amber-300/15 dark:from-accent/25 dark:via-amber/15 sm:hidden"
+                aria-hidden
+              />
+
+              {/* Service Logo Watermark — Matching Card Color in Dark Theme */}
               <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-3xl">
                 {/* Ambient Gold Radial Glow */}
                 <div className="absolute right-3 top-3 h-28 w-28 rounded-full bg-accent/10 dark:bg-amber/12 blur-2xl transition-all duration-700 group-hover:scale-125 group-hover:bg-amber/20" />
 
-                {/* Embedded Top-Right Service Logo Watermark Image (s.image) — 100% Transparent */}
-                <div className="absolute top-4 right-4 sm:top-5 sm:right-5 h-14 w-14 sm:h-16 sm:w-16 opacity-20 dark:opacity-25 mix-blend-multiply dark:invert dark:mix-blend-screen transition-all duration-500 group-hover:opacity-45 dark:group-hover:opacity-50 group-hover:scale-105 [mask-image:radial-gradient(circle_at_center,black_60%,transparent_100%)]">
+                {/* Embedded Top-Right Service Logo Watermark Image (s.image) — 100% Card Color Matched in Dark Theme */}
+                <div className="absolute top-4 right-4 sm:top-5 sm:right-5 h-20 w-20 sm:h-24 sm:w-24 opacity-25 dark:opacity-35 dark:invert transition-all duration-500 group-hover:opacity-50 dark:group-hover:opacity-65 group-hover:scale-105">
                   <Image
-                    src={s.image}
+                    src={s.image.replace('.jpg', '_trans.png').replace('.png', '_trans.png').replace('_trans_trans.png', '_trans.png')}
                     alt=""
                     fill
                     unoptimized
@@ -202,7 +212,7 @@ export default function Services() {
                   </span>
                 </div>
 
-                <h3 className="mt-6 font-display text-xl font-bold tracking-tight text-ink dark:text-white md:text-2xl group-hover:text-amber-800 dark:group-hover:text-amber transition-colors duration-300">
+                <h3 className="mt-6 font-display text-xl font-bold tracking-tight text-ink dark:text-white md:text-2xl group-hover:text-amber-800 dark:group-hover:text-amber transition-colors duration-300 pr-20 sm:pr-24">
                   {s.cardTitle}
                 </h3>
 

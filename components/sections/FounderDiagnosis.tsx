@@ -121,6 +121,15 @@ export default function FounderDiagnosis() {
                     className="absolute inset-0 bg-gradient-to-br from-[#1c1810] via-[#141419] to-[#0c0c0e] opacity-0 transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
                     aria-hidden
                   />
+                  {/* Mobile View Scroll Ambient Gold Gradient Overlay (sm:hidden: Mobile Only for both Light & Dark Theme) */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 0.45 }}
+                    viewport={{ once: false, amount: 0.25 }}
+                    transition={{ duration: 0.8 }}
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/18 via-amber-400/12 to-amber-300/15 dark:from-accent/25 dark:via-amber/15 transition-opacity duration-500 sm:hidden"
+                    aria-hidden
+                  />
                   <div className="relative z-10 flex items-center gap-3">
                     <IconBadge icon={item.icon} size={20} />
                     <h4 className="font-display text-base font-bold text-white group-hover:text-amber transition-colors duration-300 group-hover:drop-shadow-[0_2px_8px_rgba(212,175,55,0.4)]">

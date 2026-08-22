@@ -94,21 +94,12 @@ export default function IntroStatement() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.7, delay: i * 0.08 }}
-                className={`group relative overflow-hidden rounded-2xl border p-5 sm:p-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl ${card.featured
+                className={`group relative overflow-hidden rounded-2xl border p-5 sm:p-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl ${
+                  card.featured
                     ? "sm:col-span-2 border-accent/80 dark:border-amber/70 bg-gradient-to-br from-amber-400/30 via-yellow-200/22 to-amber-500/25 dark:from-accent/30 dark:via-amber/20 dark:to-accent/15 shadow-[0_8px_32px_rgba(212,175,55,0.25)] hover:border-amber-500 dark:hover:border-amber hover:shadow-[0_12px_44px_rgba(212,175,55,0.4)]"
                     : "border-amber-500/30 dark:border-amber/35 bg-gradient-to-br from-amber-500/12 via-amber-400/8 to-amber-300/10 dark:from-accent/20 dark:via-amber/12 dark:to-transparent hover:border-amber-500/60 dark:hover:border-amber/60 shadow-md hover:shadow-xl"
-                  }`}
+                }`}
               >
-                {/* Scroll Shimmer Light Sweep */}
-                <motion.div
-                  initial={{ x: "-100%", opacity: 0 }}
-                  whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.8, 0] }}
-                  viewport={{ once: false, amount: 0.2 }}
-                  transition={{ duration: 1.2, ease: "easeInOut", delay: i * 0.1 }}
-                  className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-amber-400/40 via-amber-500/30 dark:via-amber/30 to-transparent -skew-x-12"
-                  aria-hidden
-                />
-
                 {/* Ambient Gold Radial Glow & Tech Grid Backdrop */}
                 <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-2xl">
                   <div className="absolute right-2 top-2 h-28 w-28 rounded-full bg-accent/12 dark:bg-amber/15 blur-2xl transition-all duration-700 group-hover:scale-125" />
@@ -119,13 +110,23 @@ export default function IntroStatement() {
                   </svg>
                 </div>
 
-                {/* Scroll & Hover Ambient Warm Gold Gradient Overlay */}
+                {/* Mobile View Scroll Gold Gradient Shimmer Sweep (Mobile Only: sm:hidden) */}
+                <motion.div
+                  initial={{ x: "-100%", opacity: 0 }}
+                  whileInView={{ x: ["-100%", "130%"], opacity: [0, 0.75, 0] }}
+                  viewport={{ once: false, amount: 0.25 }}
+                  transition={{ duration: 1.2, ease: "easeInOut", delay: i * 0.1 }}
+                  className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-amber-400/35 via-yellow-300/30 dark:via-amber/30 to-transparent -skew-x-12 sm:hidden"
+                  aria-hidden
+                />
+
+                {/* Mobile View Scroll Ambient Gold Gradient Overlay (Mobile Only: sm:hidden) */}
                 <motion.div
                   initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 0.6 }}
-                  viewport={{ once: false, amount: 0.2 }}
+                  whileInView={{ opacity: 0.4 }}
+                  viewport={{ once: false, amount: 0.25 }}
                   transition={{ duration: 0.8, delay: i * 0.06 }}
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/22 via-amber-400/15 to-amber-300/18 dark:from-accent/35 dark:via-amber/22 transition-opacity duration-500 group-hover:!opacity-100 group-active:!opacity-100"
+                  className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-br from-amber-500/18 via-amber-400/12 to-amber-300/15 dark:from-accent/25 dark:via-amber/15 transition-opacity duration-500 sm:hidden"
                   aria-hidden
                 />
 

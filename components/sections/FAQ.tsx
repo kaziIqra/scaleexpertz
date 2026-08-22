@@ -100,8 +100,17 @@ export default function FAQ() {
             return (
               <div
                 key={item.q}
-                className="group border-b border-black/[0.07] dark:border-white/10 first:border-t transition-all duration-300 hover:bg-gradient-to-r hover:from-amber-400/15 hover:via-yellow-200/10 hover:to-transparent px-3 rounded-lg"
+                className="group relative border-b border-black/[0.07] dark:border-white/10 first:border-t transition-all duration-300 hover:bg-gradient-to-r hover:from-amber-400/15 hover:via-yellow-200/10 hover:to-transparent px-3 rounded-lg overflow-hidden"
               >
+                {/* Mobile View Scroll Ambient Gold Gradient Overlay (sm:hidden: Mobile Only for both Light & Dark Theme) */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 0.35 }}
+                  viewport={{ once: false, amount: 0.25 }}
+                  transition={{ duration: 0.8 }}
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/15 via-amber-400/10 to-transparent dark:from-accent/20 dark:via-amber/12 rounded-lg sm:hidden"
+                  aria-hidden
+                />
                 <button
                   type="button"
                   aria-expanded={isOpen}

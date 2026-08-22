@@ -95,6 +95,16 @@ export default function PricingCalculator({
         aria-hidden
       />
 
+      {/* Mobile View Scroll Ambient Gold Gradient Overlay (sm:hidden: Mobile Only for both Light & Dark Theme) */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 0.45 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.8 }}
+        className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-br from-amber-500/18 via-amber-400/12 to-transparent dark:from-accent/25 dark:via-amber/15 transition-opacity duration-500 sm:hidden"
+        aria-hidden
+      />
+
       {/* Category tabs */}
       <div className="border-b border-black/[0.06] bg-paper/80 px-3 pt-3 dark:border-white/10 dark:bg-[#1a1a22]/80 sm:px-5">
         <div className="flex items-center gap-1 overflow-x-auto pb-3 scrollbar-none">
@@ -105,11 +115,10 @@ export default function PricingCalculator({
                 key={s.id}
                 type="button"
                 onClick={() => onSelectSprint(s)}
-                className={`shrink-0 rounded-full px-4 py-2.5 font-mono text-[11px] font-bold uppercase tracking-wider transition-all duration-300 sm:px-5 sm:text-xs ${
-                  active
-                    ? "bg-accent text-ink font-extrabold shadow-md dark:bg-amber dark:text-black"
-                    : "text-ink/60 hover:text-ink dark:text-slate-400 dark:hover:text-white"
-                }`}
+                className={`shrink-0 rounded-full px-4 py-2.5 font-mono text-[11px] font-bold uppercase tracking-wider transition-all duration-300 sm:px-5 sm:text-xs ${active
+                  ? "bg-accent text-ink font-extrabold shadow-md dark:bg-amber dark:text-black"
+                  : "text-ink/60 hover:text-ink dark:text-slate-400 dark:hover:text-white"
+                  }`}
               >
                 {s.title.replace("™", "")}
               </button>
@@ -132,13 +141,21 @@ export default function PricingCalculator({
               aria-hidden
             />
 
-            {/* Scalisite-Style Embedded Top-Right Monogram Logo Watermark — 100% background blended */}
-            <div className="pointer-events-none absolute top-3 right-3 sm:top-4 sm:right-4 z-0 h-28 w-28 sm:h-36 sm:w-36 opacity-20 dark:opacity-25 transition-transform duration-700 group-hover:scale-105">
+            {/* Embedded Top-Right Logo Watermark */}
+            <div className="pointer-events-none absolute top-3 right-3 sm:top-4 sm:right-4 z-10 h-24 w-24 sm:h-32 sm:w-32 transition-transform duration-700 group-hover:scale-105">
+              {/* Dark Theme: Same logo as nav bar dark theme */}
               <Image
-                src="/logo-mark-3d-gold.webp"
+                src="/logo-mark-3d-dark.png"
                 alt="ScaleXpertz Logo Mark"
                 fill
-                className="object-contain mix-blend-overlay dark:mix-blend-lighten drop-shadow-[0_4px_20px_rgba(212,175,55,0.25)]"
+                className="hidden dark:block object-contain opacity-50 drop-shadow-[0_4px_20px_rgba(212,175,55,0.3)]"
+              />
+              {/* Light Theme: image.png */}
+              <Image
+                src="/image.png"
+                alt="ScaleXpertz Logo Mark"
+                fill
+                className="block dark:hidden object-contain opacity-35 drop-shadow-[0_4px_20px_rgba(212,175,55,0.25)]"
               />
             </div>
 
@@ -206,7 +223,7 @@ export default function PricingCalculator({
             >
               {activeSprint.title.replace("™", "")}
             </h3>
-            
+
             {/* Highlighted 90 Days badge */}
             <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-accent/25 to-amber/25 border border-accent/40 px-3.5 py-1 font-mono text-xs font-extrabold text-accent dark:text-amber shadow-sm">
               <svg className="h-3.5 w-3.5 text-amber" viewBox="0 0 16 16" fill="none" aria-hidden>
@@ -233,11 +250,10 @@ export default function PricingCalculator({
                     key={addon.id}
                     type="button"
                     onClick={() => toggleAddon(addon.id)}
-                    className={`flex min-h-[3.5rem] items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-300 ${
-                      selected
-                        ? "border-amber bg-accent/20 shadow-sm"
-                        : "border-white/20 bg-white/[0.06] hover:border-slate-300 dark:hover:border-accent/50 hover:bg-white/[0.12]"
-                    }`}
+                    className={`flex min-h-[3.5rem] items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-300 ${selected
+                      ? "border-amber bg-accent/20 shadow-sm"
+                      : "border-white/20 bg-white/[0.06] hover:border-slate-300 dark:hover:border-accent/50 hover:bg-white/[0.12]"
+                      }`}
                   >
                     <span className="min-w-0 font-display text-sm font-semibold leading-snug text-white">
                       {addon.label}
