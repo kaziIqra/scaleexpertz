@@ -61,19 +61,19 @@ export default function FAQ() {
             {/* Scroll Shimmer Light Sweep */}
             <motion.div
               initial={{ x: "-100%", opacity: 0 }}
-              whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
+              whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.7, 0] }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 1.2, ease: "easeInOut", delay: 0.1 }}
-              className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-slate-800/20 via-slate-900/15 dark:via-accent/35 dark:via-amber/20 to-transparent -skew-x-12"
+              className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-amber-400/35 via-amber-500/25 dark:via-accent/35 dark:via-amber/20 to-transparent -skew-x-12"
               aria-hidden
             />
             {/* Scroll & Hover Ambient Gradient */}
             <motion.div
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 0.4 }}
+              whileInView={{ opacity: 0.5 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.8 }}
-              className="absolute inset-0 bg-gradient-to-br from-emerald-950/20 via-teal-950/15 to-transparent dark:from-accent/20 dark:via-amber/12 transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
+              className="absolute inset-0 bg-gradient-to-br from-amber-500/18 via-amber-400/12 to-transparent dark:from-accent/20 dark:via-amber/12 transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
               aria-hidden
             />
             <h3 className="font-display text-base font-bold text-ink dark:text-white relative z-10">Still have questions?</h3>
@@ -100,7 +100,7 @@ export default function FAQ() {
             return (
               <div
                 key={item.q}
-                className="border-b border-black/[0.07] dark:border-white/10 first:border-t transition-colors duration-300 hover:bg-black/[0.01]"
+                className="group border-b border-black/[0.07] dark:border-white/10 first:border-t transition-all duration-300 hover:bg-gradient-to-r hover:from-amber-400/15 hover:via-yellow-200/10 hover:to-transparent px-3 rounded-lg"
               >
                 <button
                   type="button"
@@ -108,7 +108,7 @@ export default function FAQ() {
                   onClick={() => setOpen(isOpen ? null : i)}
                   className="flex w-full items-center justify-between gap-6 py-5 text-left"
                 >
-                  <span className="font-display text-base font-medium tracking-tight text-ink md:text-lg">
+                  <span className="font-display text-base font-medium tracking-tight text-ink dark:text-white md:text-lg group-hover:text-amber-800 dark:group-hover:text-amber transition-colors duration-300">
                     {item.q}
                   </span>
                   <span

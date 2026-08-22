@@ -11,21 +11,22 @@ import { usePreloaderDone } from "@/lib/preloader";
 import { EASE_OUT_EXPO } from "@/lib/animations";
 
 const SERVICES = [
-  "Web Development",
-  "App Development",
-  "Digital Marketing",
-  "Finance & Accounting",
-  "Branding & Design",
-  "AI Solutions",
+  "Web Architecture",
+  "Growth Marketing",
+  "Brand Strategy",
+  "AI & Automation",
+  "Financial Strategy",
+  "Enterprise Infrastructure",
+  "Conversion Systems",
 ];
 
 const DISCIPLINES = [
-  { index: "01", name: "Website", x: -175, y: -120 },
-  { index: "02", name: "Marketing", x: 175, y: -125 },
-  { index: "03", name: "Branding", x: -160, y: 10 },
-  { index: "04", name: "AI", x: 150, y: 10 },
-  { index: "05", name: "Finance", x: -145, y: 140 },
-  { index: "06", name: "Technology", x: 145, y: 140 },
+  { index: "01", name: "Web Architecture", x: -245, y: -145 },
+  { index: "02", name: "Growth Marketing", x: 245, y: -150 },
+  { index: "03", name: "Brand Strategy", x: -235, y: 10 },
+  { index: "04", name: "AI & Automation", x: 225, y: 10 },
+  { index: "05", name: "Financial Strategy", x: -220, y: 160 },
+  { index: "06", name: "Enterprise Tech", x: 220, y: 160 },
 ];
 
 function FadeUp({

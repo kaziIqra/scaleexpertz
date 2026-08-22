@@ -77,15 +77,21 @@ export default function PricingCalculator({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.8 }}
-      className="group relative overflow-hidden rounded-[28px] border border-black/[0.08] bg-white shadow-card dark:border-white/10 dark:bg-[#141419]"
+      className="group relative overflow-hidden rounded-[28px] border border-black/[0.08] bg-white shadow-card dark:border-white/10 dark:bg-[#141419] transition-all duration-500 hover:border-amber-500/50 dark:hover:border-amber/50 hover:shadow-2xl"
     >
       {/* Scroll Shimmer Light Sweep */}
       <motion.div
         initial={{ x: "-100%", opacity: 0 }}
-        whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.5, 0] }}
+        whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.7, 0] }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 1.4, ease: "easeInOut" }}
-        className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-accent/30 via-amber/20 to-transparent -skew-x-12"
+        className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-amber-400/35 via-amber-500/25 dark:via-accent/30 dark:via-amber/20 to-transparent -skew-x-12"
+        aria-hidden
+      />
+
+      {/* Full-Card Ambient Hover Gradient Sheen */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-br from-amber-500/16 via-gold/10 via-35% to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 dark:from-accent/22 dark:via-amber/12"
         aria-hidden
       />
 
@@ -115,7 +121,7 @@ export default function PricingCalculator({
       <div className="grid gap-8 p-5 sm:p-8 lg:grid-cols-12 lg:gap-10 lg:p-10">
         {/* Right on desktop, TOP on mobile: live total + CTAs */}
         <div className="order-1 lg:order-2 lg:col-span-5">
-          <div className="relative overflow-hidden rounded-[24px] border border-accent/35 bg-gradient-to-br from-accent/25 via-amber/10 to-accent/5 p-6 shadow-[0_0_0_1px_rgba(212,175,55,0.08)] dark:border-accent/40 dark:from-[#1c1810] dark:via-[#16140f] dark:to-[#12110e] dark:shadow-[0_12px_40px_rgba(212,175,55,0.12)] sm:p-7">
+          <div className="relative overflow-hidden rounded-[24px] border border-accent/40 bg-gradient-to-br from-accent/30 via-amber/15 to-accent/10 p-6 shadow-xl dark:border-accent/50 dark:from-[#1e1b14] dark:via-[#181510] dark:to-[#12100c] dark:shadow-[0_16px_48px_rgba(212,175,55,0.15)] sm:p-7">
             {/* Scroll Light Sweep */}
             <motion.div
               initial={{ x: "-100%", opacity: 0 }}
@@ -125,29 +131,32 @@ export default function PricingCalculator({
               className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-amber/40 to-transparent -skew-x-12"
               aria-hidden
             />
-            <div className="flex items-center justify-between gap-3">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-accent/80 dark:text-amber/75">
-                ScaleXpertz
-              </p>
-              {/* Logo icon instead of SX text */}
+
+            {/* Scalisite-Style Embedded Top-Right Monogram Logo Watermark — 100% background blended */}
+            <div className="pointer-events-none absolute top-3 right-3 sm:top-4 sm:right-4 z-0 h-28 w-28 sm:h-36 sm:w-36 opacity-20 dark:opacity-25 transition-transform duration-700 group-hover:scale-105">
               <Image
-                src="/logo-mark.png"
-                alt="ScaleXpertz Logo"
-                width={36}
-                height={28}
-                priority
-                className="h-7 w-auto object-contain"
+                src="/logo-mark-3d-gold.webp"
+                alt="ScaleXpertz Logo Mark"
+                fill
+                className="object-contain mix-blend-overlay dark:mix-blend-lighten drop-shadow-[0_4px_20px_rgba(212,175,55,0.25)]"
               />
             </div>
-            <p className="mt-5 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-accent/70 dark:text-amber/60">
-              Total Growth Investment
-            </p>
-            <p className="mt-2 font-display text-4xl font-black tracking-tight text-ink dark:text-amber sm:text-5xl sm:leading-none">
-              {activeSprint.price}
-            </p>
-            <p className="mt-2 text-xs text-ink/65 dark:text-amber/60 font-medium">
-              Fixed Sprint Investment · All Add-ons Included at ₹0
-            </p>
+
+            <div className="relative z-10">
+              <h4 className="font-display text-xl sm:text-2xl font-black uppercase tracking-tight text-ink dark:text-amber">
+                SCALEXPERTZ
+              </h4>
+
+              <p className="mt-6 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-accent-strong dark:text-amber/80">
+                TOTAL GROWTH INVESTMENT
+              </p>
+              <p className="mt-2 font-display text-4xl font-black tracking-tight text-ink dark:text-white sm:text-5xl sm:leading-none">
+                {activeSprint.price}
+              </p>
+              <p className="mt-2 text-xs text-ink/75 dark:text-amber/70 font-semibold">
+                Fixed Sprint Investment · All Add-ons Included at ₹0
+              </p>
+            </div>
           </div>
 
           <div className="mt-5 flex flex-col gap-3">

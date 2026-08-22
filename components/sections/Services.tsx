@@ -150,56 +150,68 @@ export default function Services() {
             className="col-span-1 flex flex-col"
           >
             <TiltCard className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-[#141419] p-6 sm:p-8 shadow-card transition-all duration-500 hover:border-slate-800/40 dark:hover:border-accent/60 hover:shadow-2xl hover:-translate-y-1">
-              {/* Scroll Shimmer Light Sweep */}
+              {/* Mobile On-Scroll & Hover Gold Gradient Shimmer Sweep */}
               <motion.div
                 initial={{ x: "-100%", opacity: 0 }}
-                whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 1.2, ease: "easeInOut", delay: 0.15 }}
-                className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-slate-800/20 via-slate-900/15 dark:via-accent/35 dark:via-amber/20 to-transparent -skew-x-12"
+                whileInView={{ x: ["-100%", "130%"], opacity: [0, 0.85, 0] }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 1.1, ease: "easeInOut", delay: 0.1 }}
+                className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-amber-400/40 via-yellow-300/30 to-transparent -skew-x-12"
                 aria-hidden
               />
 
-              {/* Dynamic Scroll & Hover Gradient */}
+              {/* Light Theme Hover & Mobile On-Scroll Gold Gradient Overlay */}
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 0.5 }}
-                viewport={{ once: true, amount: 0.15 }}
+                viewport={{ once: false, amount: 0.3 }}
                 transition={{ duration: 0.8 }}
-                className={`absolute inset-0 bg-gradient-to-br from-slate-900/[0.06] via-indigo-950/[0.04] to-transparent dark:${s.accent} transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none`}
+                className="absolute inset-0 bg-gradient-to-br from-amber-500/18 via-amber-400/12 to-amber-300/15 opacity-0 transition-opacity duration-500 group-hover:!opacity-100 dark:hidden pointer-events-none"
                 aria-hidden
               />
 
-              <div className="relative z-10">
-                <div className="flex items-start justify-between gap-4">
-                  <span className="font-sans text-[11px] font-bold uppercase tracking-wider text-accent bg-accent/10 px-3.5 py-1 rounded-full border border-accent/20">
-                    {s.functionName}
-                  </span>
-                  
-                  {/* Enhanced & Zoomed Service Image Icon Badge */}
-                  <div className="relative flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-black/10 dark:border-white/20 bg-gradient-to-b from-white via-slate-50 to-slate-100 dark:from-[#1f1f2a] dark:via-[#181824] dark:to-[#14141d] p-2 shadow-lg shadow-black/5 dark:shadow-black/60 ring-1 ring-black/5 dark:ring-white/10 transition-all duration-500 group-hover:scale-105 group-hover:border-slate-800/60 dark:group-hover:border-amber/60 group-hover:shadow-2xl group-hover:shadow-indigo-950/15 dark:group-hover:shadow-amber/20">
-                    <Image
-                      src={s.image}
-                      alt={s.functionName}
-                      width={64}
-                      height={64}
-                      unoptimized
-                      className="h-full w-full object-contain scale-105 group-hover:scale-120 transition-all duration-500 dark:invert dark:brightness-200 dark:contrast-125"
-                    />
-                    <span aria-hidden className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-slate-900 dark:bg-amber ring-2 ring-white dark:ring-[#141419] shadow-sm" />
-                  </div>
+              {/* Service Logo Watermark — Transparent & Embedded in both light & dark theme */}
+              <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-3xl">
+                {/* Ambient Gold Radial Glow */}
+                <div className="absolute right-3 top-3 h-28 w-28 rounded-full bg-accent/10 dark:bg-amber/12 blur-2xl transition-all duration-700 group-hover:scale-125 group-hover:bg-amber/20" />
+
+                {/* Embedded Top-Right Service Logo Watermark Image (s.image) — 100% Transparent */}
+                <div className="absolute top-4 right-4 sm:top-5 sm:right-5 h-14 w-14 sm:h-16 sm:w-16 opacity-20 dark:opacity-25 mix-blend-multiply dark:invert dark:mix-blend-screen transition-all duration-500 group-hover:opacity-45 dark:group-hover:opacity-50 group-hover:scale-105 [mask-image:radial-gradient(circle_at_center,black_60%,transparent_100%)]">
+                  <Image
+                    src={s.image}
+                    alt=""
+                    fill
+                    unoptimized
+                    className="object-contain"
+                  />
                 </div>
 
-                <h3 className="mt-6 font-display text-xl font-bold tracking-tight text-ink dark:text-white md:text-2xl group-hover:text-slate-950 dark:group-hover:text-amber transition-colors duration-300">
+                {/* Embedded Tech Grid overlay matching graph aesthetic */}
+                <svg className="absolute inset-0 h-full w-full opacity-15 dark:opacity-25" viewBox="0 0 360 280" aria-hidden>
+                  <line x1="0" y1="44" x2="360" y2="44" stroke="currentColor" strokeWidth="0.8" strokeDasharray="3 6" className="text-amber/40" />
+                  <line x1="290" y1="0" x2="290" y2="280" stroke="currentColor" strokeWidth="0.8" strokeDasharray="3 6" className="text-amber/40" />
+                  <circle cx="290" cy="44" r="14" fill="none" stroke="currentColor" strokeWidth="0.8" strokeDasharray="2 4" className="text-amber/60" />
+                  <circle cx="290" cy="44" r="3" className="fill-amber/80" />
+                </svg>
+              </div>
+
+              <div className="relative z-10">
+                <div className="flex items-start justify-between gap-4">
+                  <span className="font-sans text-[11px] font-bold uppercase tracking-wider text-accent bg-accent/10 px-3.5 py-1 rounded-full border border-accent/20 transition-colors duration-300 group-hover:border-accent/40 group-hover:bg-accent/20">
+                    {s.functionName}
+                  </span>
+                </div>
+
+                <h3 className="mt-6 font-display text-xl font-bold tracking-tight text-ink dark:text-white md:text-2xl group-hover:text-amber-800 dark:group-hover:text-amber transition-colors duration-300">
                   {s.cardTitle}
                 </h3>
 
-                <p className="mt-3 text-sm leading-relaxed text-body dark:text-slate-300 font-medium">
+                <p className="mt-3 text-sm leading-relaxed text-body dark:text-slate-300 font-medium group-hover:text-slate-950 dark:group-hover:text-white transition-colors duration-300">
                   {s.description}
                 </p>
               </div>
 
-              <div className="relative z-10 mt-6 pt-4 border-t border-black/[0.06] dark:border-white/10 flex items-center justify-between text-xs font-mono text-ink/50 dark:text-slate-400 group-hover:text-accent dark:group-hover:text-amber font-semibold uppercase tracking-wider">
+              <div className="relative z-10 mt-6 pt-4 border-t border-black/[0.06] dark:border-white/10 flex items-center justify-between text-xs font-mono text-ink/50 dark:text-slate-400 group-hover:text-accent dark:group-hover:text-amber font-semibold uppercase tracking-wider transition-colors duration-300">
                 <span>ScaleXpertz Discipline</span>
                 <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
               </div>

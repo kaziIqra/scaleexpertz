@@ -124,9 +124,9 @@ const ROUTES = {
     d: "M 70 520 C 210 420 260 610 430 520 C 560 450 520 300 650 250 C 760 210 830 330 950 320 C 1060 310 1110 220 1130 120",
   },
   mobile: {
-    w: 390,
-    h: 1500,
-    d: "M 80 60 C 300 130 330 240 200 330 C 70 420 60 550 200 640 C 340 730 330 870 195 950 C 60 1030 60 1170 205 1255 C 330 1330 310 1420 190 1450",
+    w: 380,
+    h: 960,
+    d: "M 190 60 C 310 140 320 240 190 320 C 60 400 70 500 190 580 C 310 660 300 760 190 840 C 130 880 130 910 190 920",
   },
 } as const;
 
@@ -146,10 +146,10 @@ function Flag({ at, label, tone }: { at: Pt; label: string; tone: string }) {
     <g transform={`translate(${at.x} ${at.y})`} className={tone}>
       <path d="M0 -6 V-30 M0 -30 h14 l-4 5 4 5 h-14" {...stroke} />
       <text
-        y={16}
+        y={-36}
         textAnchor="middle"
-        fontSize={9}
-        className="fill-current font-mono uppercase tracking-[0.2em]"
+        fontSize={9.5}
+        className="fill-current font-mono font-bold uppercase tracking-[0.2em]"
       >
         {label}
       </text>
@@ -157,13 +157,13 @@ function Flag({ at, label, tone }: { at: Pt; label: string; tone: string }) {
   );
 }
 
-/* ---------- graph / growth backdrop (telemetry metrics & reticles) ---------- */
+/* ---------- graph / growth backdrop (stage-aligned telemetry & reticles) ---------- */
 
 function TechGrid({ w, h }: { w: number; h: number }) {
   const xs = Array.from({ length: Math.floor(w / 56) + 1 }, (_, i) => i * 56);
   const ys = Array.from({ length: Math.floor(h / 56) + 1 }, (_, i) => i * 56);
   return (
-    <g className="text-white/25 dark:text-slate-300/30" aria-hidden>
+    <g className="text-white/20 dark:text-slate-300/25" aria-hidden>
       {xs.map((x) => (
         <line key={`vx-${x}`} x1={x} y1={0} x2={x} y2={h} stroke="currentColor" strokeWidth={0.9} strokeDasharray="3 6" />
       ))}
@@ -173,8 +173,8 @@ function TechGrid({ w, h }: { w: number; h: number }) {
       {xs.filter((_, idx) => idx % 2 === 0).map((x) =>
         ys.filter((_, idy) => idy % 2 === 0).map((y) => (
           <g key={`cross-${x}-${y}`} transform={`translate(${x} ${y})`}>
-            <line x1={-4} y1={0} x2={4} y2={0} stroke="currentColor" strokeWidth={1.2} />
-            <line x1={0} y1={-4} x2={0} y2={4} stroke="currentColor" strokeWidth={1.2} />
+            <line x1={-3} y1={0} x2={3} y2={0} stroke="currentColor" strokeWidth={0.8} />
+            <line x1={0} y1={-3} x2={0} y2={3} stroke="currentColor" strokeWidth={0.8} />
           </g>
         ))
       )}
@@ -182,28 +182,28 @@ function TechGrid({ w, h }: { w: number; h: number }) {
   );
 }
 
-function TelemetryChip({ x, y, label, value, badge }: { x: number; y: number; label: string; value: string; badge?: string }) {
+function TelemetryChip({ x, y, label, value, badge, width = 175 }: { x: number; y: number; label: string; value: string; badge?: string; width?: number }) {
   return (
     <g transform={`translate(${x} ${y})`} aria-hidden>
       <rect
-        width={108}
-        height={44}
+        width={width}
+        height={48}
         rx={10}
-        className="fill-slate-900/90 dark:fill-slate-900/95 stroke-amber/40 dark:stroke-amber/50 shadow-xl backdrop-blur-md"
+        className="fill-[#0b0c16]/95 dark:fill-[#101222]/95 stroke-amber/45 dark:stroke-amber/55 shadow-xl backdrop-blur-md"
         strokeWidth={1.2}
       />
       <circle cx={14} cy={17} r={3.5} className="fill-amber animate-pulse" />
       <text x={24} y={19} fontSize={8.5} className="fill-amber font-sans uppercase tracking-widest font-bold">
         {label}
       </text>
-      <text x={14} y={35} fontSize={13.5} className="fill-white font-display font-extrabold tracking-tight">
-        {value}
-      </text>
       {badge && (
-        <text x={96} y={34} textAnchor="end" fontSize={9} className="fill-amber font-mono font-bold">
+        <text x={width - 12} y={19} textAnchor="end" fontSize={8} className="fill-amber/90 font-mono font-bold uppercase tracking-wider">
           {badge}
         </text>
       )}
+      <text x={14} y={37} fontSize={12} className="fill-white font-display font-extrabold tracking-tight">
+        {value}
+      </text>
     </g>
   );
 }
@@ -231,7 +231,7 @@ function PulseRings({ x, y, radius = 32 }: { x: number; y: number; radius?: numb
   );
 }
 
-/** Telemetry & metric backdrop behind the route graph. */
+/** Telemetry & metric backdrop behind the route graph — directly related to the 5 SCALE phases. */
 function MapDoodles({ variant }: { variant: Variant }) {
   if (variant === "desktop") {
     return (
@@ -242,7 +242,7 @@ function MapDoodles({ variant }: { variant: Variant }) {
         <path
           d="M 30 580 Q 250 520 450 490 T 850 280 T 1170 120"
           fill="none"
-          className="stroke-amber/40"
+          className="stroke-amber/35"
           strokeWidth={1.8}
           strokeDasharray="4 8"
           strokeLinecap="round"
@@ -251,40 +251,40 @@ function MapDoodles({ variant }: { variant: Variant }) {
         <PulseRings x={430} y={520} radius={36} />
         <PulseRings x={950} y={320} radius={44} />
 
-        <TargetCrosshair x={240} y={110} code="STRAT-01" />
-        <TargetCrosshair x={880} y={480} code="SCALE-90" />
+        <TargetCrosshair x={310} y={110} code="AUDIT-OK" />
+        <TargetCrosshair x={880} y={480} code="SCALE-MAX" />
 
-        <TelemetryChip x={130} y={60} label="Conversion" value="+4.8%" badge="↑ 3x" />
-        <TelemetryChip x={430} y={70} label="MRR Scale" value="$125k" badge="98%" />
-        <TelemetryChip x={960} y={40} label="ROAS Peak" value="4.8x" badge="MAX" />
-        <TelemetryChip x={710} y={490} label="CAC Drop" value="-52%" badge="⚡" />
-        <TelemetryChip x={180} y={380} label="LTV : CAC" value="9.2x" badge="OPT" />
+        <TelemetryChip x={60} y={50} label="01 · STRATEGY" value="Roadmap & Audit" badge="PHASE 01" width={175} />
+        <TelemetryChip x={380} y={70} label="02 · CREATE" value="Brand & Web Systems" badge="PHASE 02" width={185} />
+        <TelemetryChip x={930} y={40} label="05 · EVOLVE" value="AI & Auto-Scale" badge="PHASE 05" width={175} />
+        <TelemetryChip x={620} y={510} label="04 · LEAD" value="Category Dominance" badge="PHASE 04" width={185} />
+        <TelemetryChip x={140} y={410} label="03 · ACCELERATE" value="Traffic & Revenue" badge="PHASE 03" width={180} />
       </g>
     );
   }
 
   return (
     <g aria-hidden>
-      <TechGrid w={390} h={1500} />
+      <TechGrid w={380} h={960} />
 
       <path
-        d="M 40 80 Q 200 300 120 600 T 260 1000 T 180 1440"
+        d="M 190 60 Q 320 250 190 500 T 190 920"
         fill="none"
-        className="stroke-amber/40"
+        className="stroke-amber/30"
         strokeWidth={1.8}
         strokeDasharray="4 8"
         strokeLinecap="round"
       />
 
-      <PulseRings x={200} y={330} radius={28} />
-      <PulseRings x={195} y={950} radius={34} />
+      <PulseRings x={190} y={320} radius={24} />
+      <PulseRings x={190} y={780} radius={28} />
 
-      <TargetCrosshair x={80} y={220} code="T-01" />
-      <TargetCrosshair x={310} y={780} code="T-02" />
+      <TargetCrosshair x={285} y={160} code="P-01 AUDIT" />
+      <TargetCrosshair x={70} y={690} code="P-05 SCALE" />
 
-      <TelemetryChip x={40} y={40} label="Conversion" value="+4.8%" badge="↑" />
-      <TelemetryChip x={240} y={560} label="ROAS Peak" value="4.8x" badge="MAX" />
-      <TelemetryChip x={40} y={1320} label="CAC Drop" value="-52%" badge="⚡" />
+      <TelemetryChip x={14} y={115} label="01 · STRATEGY" value="Roadmap & Audit" badge="P1" width={145} />
+      <TelemetryChip x={220} y={430} label="03 · ACCELERATE" value="Traffic & Revenue" badge="P3" width={148} />
+      <TelemetryChip x={14} y={810} label="05 · EVOLVE" value="AI & Auto-Scale" badge="P5" width={145} />
     </g>
   );
 }
@@ -499,8 +499,8 @@ function JourneyScene({ variant }: { variant: Variant }) {
       const vh = window.innerHeight || document.documentElement.clientHeight;
 
       // Progress stays STRICTLY 0 (Strategy) until user actually reaches the graph in the viewport
-      const scrollStart = vh * 0.35;
-      const scrollEnd = -rect.height + vh * 0.7;
+      const scrollStart = vh * 0.15;
+      const scrollEnd = -rect.height + vh * 0.75;
       const totalDistance = scrollStart - scrollEnd;
       if (totalDistance <= 0) return;
 
@@ -513,7 +513,8 @@ function JourneyScene({ variant }: { variant: Variant }) {
 
       let currentActive = 0;
       for (let i = 0; i < NODE_T.length; i++) {
-        if (progressP >= NODE_T[i] - 0.08) currentActive = i;
+        const threshold = i === 0 ? 0 : (NODE_T[i - 1] + NODE_T[i]) / 2;
+        if (progressP >= threshold) currentActive = i;
       }
       setActive(currentActive);
     };
@@ -639,26 +640,23 @@ function JourneyScene({ variant }: { variant: Variant }) {
                       <g key={STAGES[i].letter} transform={`translate(${n.x} ${n.y})`}>
                         <circle
                           r={32}
-                          className={`fill-amber/20 origin-center transition-transform duration-500 [transform-box:fill-box] ${
-                            i === active ? "scale-100 animate-pulse" : "scale-0"
-                          }`}
+                          className={`fill-amber/20 origin-center transition-transform duration-500 [transform-box:fill-box] ${i === active ? "scale-100 animate-pulse" : "scale-0"
+                            }`}
                         />
                         <circle
                           r={16}
-                          className={`transition-all duration-500 ${
-                            reached
+                          className={`transition-all duration-500 ${reached
                               ? "fill-amber stroke-white stroke-2 shadow-lg"
                               : "fill-[#141520] stroke-white/40"
-                          }`}
+                            }`}
                           strokeWidth={2}
                         />
                         <text
                           y={5}
                           textAnchor="middle"
                           fontSize={12}
-                          className={`font-display font-extrabold transition-colors duration-500 ${
-                            reached ? "fill-slate-950 font-black" : "fill-white/80"
-                          }`}
+                          className={`font-display font-extrabold transition-colors duration-500 ${reached ? "fill-slate-950 font-black" : "fill-white/80"
+                            }`}
                         >
                           {STAGES[i].letter}
                         </text>
@@ -681,9 +679,8 @@ function JourneyScene({ variant }: { variant: Variant }) {
                             y={4}
                             textAnchor="middle"
                             fontSize={8.5}
-                            className={`font-mono font-bold uppercase tracking-wider ${
-                              reached ? "fill-amber" : "fill-white/60"
-                            }`}
+                            className={`font-mono font-bold uppercase tracking-wider ${reached ? "fill-amber" : "fill-white/60"
+                              }`}
                           >
                             {stageLabels[i]}
                           </text>
@@ -784,23 +781,23 @@ function StageCard({
       transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: (index % 3) * 0.08 }}
       className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-black/10 dark:border-white/12 bg-surface dark:bg-[#141419]/90 p-6 sm:p-7 shadow-xl backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:border-slate-800/40 dark:hover:border-accent/50 hover:shadow-2xl"
     >
-      {/* Scroll-triggered Luminous Gradient Sweep */}
+      {/* Scroll-triggered Luminous Gold Gradient Sweep */}
       <motion.div
         initial={{ x: "-100%", opacity: 0 }}
         whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.7, 0] }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 1.3, ease: "easeInOut", delay: (index % 3) * 0.12 }}
-        className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-slate-800/20 via-slate-900/15 dark:via-accent/35 dark:via-amber/25 to-transparent -skew-x-12"
+        className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-amber-400/35 via-amber-500/25 dark:via-accent/35 dark:via-amber/25 to-transparent -skew-x-12"
         aria-hidden
       />
 
-      {/* Scroll & Hover Ambient Gradient Background */}
+      {/* Scroll & Hover Ambient Gold Gradient Background */}
       <motion.div
         initial={{ opacity: 0 }}
-        whileInView={{ opacity: 0.45 }}
+        whileInView={{ opacity: 0.5 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.8, delay: (index % 3) * 0.08 }}
-        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-slate-900/[0.06] via-indigo-950/[0.04] to-transparent dark:from-accent/30 dark:via-amber/18 via-40% transition-opacity duration-500 group-hover:!opacity-100"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/18 via-amber-400/12 to-amber-300/15 dark:from-accent/30 dark:via-amber/18 transition-opacity duration-500 group-hover:!opacity-100"
         aria-hidden
       />
 

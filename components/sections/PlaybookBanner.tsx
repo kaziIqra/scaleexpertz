@@ -21,10 +21,10 @@ export default function PlaybookBanner() {
         {/* Scroll Shimmer Light Sweep */}
         <motion.div
           initial={{ x: "-100%", opacity: 0 }}
-          whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
+          whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.7, 0] }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 1.3, ease: "easeInOut", delay: 0.15 }}
-          className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-slate-800/20 via-slate-900/15 dark:via-accent/35 dark:via-amber/25 to-transparent -skew-x-12"
+          className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-amber-400/35 via-amber-500/25 dark:via-accent/35 dark:via-amber/25 to-transparent -skew-x-12"
           aria-hidden
         />
 

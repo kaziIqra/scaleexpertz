@@ -176,20 +176,20 @@ export default function FeaturedWork() {
             {/* Scroll Shimmer Light Sweep */}
             <motion.div
               initial={{ x: "-100%", opacity: 0 }}
-              whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
+              whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.7, 0] }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 1.3, ease: "easeInOut", delay: (i % 3) * 0.12 }}
-              className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-slate-800/20 via-slate-900/15 dark:via-accent/35 dark:via-amber-500/20 to-transparent -skew-x-12"
+              className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-amber-400/35 via-amber-500/25 dark:via-accent/35 dark:via-amber-500/20 to-transparent -skew-x-12"
               aria-hidden
             />
 
-            {/* Dynamic Card Scroll & Hover Gradient Effect */}
+            {/* Light & Dark Hover Gradient Effect — similar to Section 3 */}
             <motion.div
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 0.4 }}
-              viewport={{ once: true, amount: 0.15 }}
+              whileInView={{ opacity: 0.5 }}
+              viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.8, delay: i * 0.08 }}
-              className="absolute inset-0 bg-gradient-to-br from-emerald-950/20 via-teal-950/15 to-transparent dark:from-accent/22 dark:via-amber-500/15 via-35% transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
+              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/18 via-amber-400/12 to-amber-300/15 dark:from-accent/30 dark:via-amber/18 transition-opacity duration-500 group-hover:!opacity-100 group-active:!opacity-100"
               aria-hidden
             />
 
@@ -299,96 +299,96 @@ export default function FeaturedWork() {
                 role="dialog"
                 aria-modal="true"
               >
-              <button
-                onClick={() => setSelectedCase(null)}
-                aria-label="Close modal"
-                className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full border border-black/10 dark:border-white/15 bg-surface dark:bg-[#1f1f28] text-ink dark:text-white transition-colors duration-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
-              >
-                ✕
-              </button>
-
-              <span className="rounded-full bg-accent/10 dark:bg-accent/20 px-3 py-1 font-mono text-xs font-semibold text-accent dark:text-amber">
-                {selectedCase.category} • {selectedCase.client}
-              </span>
-
-              <h2 className="mt-4 font-display text-2xl font-bold tracking-tight text-ink dark:text-white sm:text-3xl">
-                {selectedCase.headline}
-              </h2>
-              <p className="mt-3 text-sm sm:text-base text-body dark:text-slate-300 font-medium">
-                {selectedCase.outcome}
-              </p>
-
-              {/* Metrics Grid */}
-              <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-                {selectedCase.metrics.map((m) => (
-                  <div
-                    key={m.label}
-                    className="rounded-2xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-[#1f1f28] p-4 text-center"
-                  >
-                    <p className="font-display text-xl font-bold tracking-tight text-ink dark:text-white md:text-2xl">
-                      {m.value}
-                    </p>
-                    <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-ink/60 dark:text-slate-400">
-                      {m.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              {/* Problem & Solution */}
-              <div className="mt-8 space-y-4">
-                <div className="rounded-2xl border border-amber/30 bg-amber/5 dark:bg-amber/10 p-5">
-                  <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-amber">
-                    The Challenge
-                  </h4>
-                  <p className="mt-2 text-sm leading-relaxed text-ink/90 dark:text-slate-200">
-                    {selectedCase.problem}
-                  </p>
-                </div>
-
-                <div className="rounded-2xl border border-accent/30 bg-accent/5 dark:bg-accent/10 p-5">
-                  <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-accent dark:text-amber">
-                    The System We Built
-                  </h4>
-                  <p className="mt-2 text-sm leading-relaxed text-ink/90 dark:text-slate-200">
-                    {selectedCase.solution}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-black/[0.08] dark:border-white/10 pt-6">
-                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-                  <a
-                    href="/ScaleXpertz_Case_Studies_Report.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-ink dark:bg-accent px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white dark:text-ink shadow-card transition-colors duration-300 hover:bg-accent hover:text-ink dark:hover:bg-accent-strong"
-                  >
-                    Download Report PDF →
-                  </a>
-
-                  <a
-                    href="/ScaleXpertz_Case_Studies_Report.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-ink/20 dark:border-accent/50 bg-transparent px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-ink dark:text-accent transition-colors duration-300 hover:border-accent hover:bg-accent/10 dark:hover:border-accent dark:hover:bg-accent/15"
-                  >
-                    Read More →
-                  </a>
-                </div>
-
                 <button
                   onClick={() => setSelectedCase(null)}
-                  className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/60 dark:text-slate-400 hover:text-ink dark:hover:text-white"
+                  aria-label="Close modal"
+                  className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full border border-black/10 dark:border-white/15 bg-surface dark:bg-[#1f1f28] text-ink dark:text-white transition-colors duration-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
                 >
-                  Close Window
+                  ✕
                 </button>
-              </div>
-            </motion.div>
+
+                <span className="rounded-full bg-accent/10 dark:bg-accent/20 px-3 py-1 font-mono text-xs font-semibold text-accent dark:text-amber">
+                  {selectedCase.category} • {selectedCase.client}
+                </span>
+
+                <h2 className="mt-4 font-display text-2xl font-bold tracking-tight text-ink dark:text-white sm:text-3xl">
+                  {selectedCase.headline}
+                </h2>
+                <p className="mt-3 text-sm sm:text-base text-body dark:text-slate-300 font-medium">
+                  {selectedCase.outcome}
+                </p>
+
+                {/* Metrics Grid */}
+                <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                  {selectedCase.metrics.map((m) => (
+                    <div
+                      key={m.label}
+                      className="rounded-2xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-[#1f1f28] p-4 text-center"
+                    >
+                      <p className="font-display text-xl font-bold tracking-tight text-ink dark:text-white md:text-2xl">
+                        {m.value}
+                      </p>
+                      <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-ink/60 dark:text-slate-400">
+                        {m.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Problem & Solution */}
+                <div className="mt-8 space-y-4">
+                  <div className="rounded-2xl border border-amber/30 bg-amber/5 dark:bg-amber/10 p-5">
+                    <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-amber">
+                      The Challenge
+                    </h4>
+                    <p className="mt-2 text-sm leading-relaxed text-ink/90 dark:text-slate-200">
+                      {selectedCase.problem}
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl border border-accent/30 bg-accent/5 dark:bg-accent/10 p-5">
+                    <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-accent dark:text-amber">
+                      The System We Built
+                    </h4>
+                    <p className="mt-2 text-sm leading-relaxed text-ink/90 dark:text-slate-200">
+                      {selectedCase.solution}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-black/[0.08] dark:border-white/10 pt-6">
+                  <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                    <a
+                      href="/ScaleXpertz_Case_Studies_Report.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-ink dark:bg-accent px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white dark:text-ink shadow-card transition-colors duration-300 hover:bg-accent hover:text-ink dark:hover:bg-accent-strong"
+                    >
+                      Download Report PDF →
+                    </a>
+
+                    <a
+                      href="/ScaleXpertz_Case_Studies_Report.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-ink/20 dark:border-accent/50 bg-transparent px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-ink dark:text-accent transition-colors duration-300 hover:border-accent hover:bg-accent/10 dark:hover:border-accent dark:hover:bg-accent/15"
+                    >
+                      Read More →
+                    </a>
+                  </div>
+
+                  <button
+                    onClick={() => setSelectedCase(null)}
+                    className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/60 dark:text-slate-400 hover:text-ink dark:hover:text-white"
+                  >
+                    Close Window
+                  </button>
+                </div>
+              </motion.div>
+            </div>
           </div>
-        </div>
-      )}
-    </AnimatePresence>
-  </section>
+        )}
+      </AnimatePresence>
+    </section>
   );
 }

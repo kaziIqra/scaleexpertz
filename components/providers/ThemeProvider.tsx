@@ -18,11 +18,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     setMounted(true);
     const savedTheme = localStorage.getItem("theme") as Theme | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
+    if (savedTheme === "light") {
+      setTheme("light");
+      document.documentElement.classList.remove("dark");
     } else {
-      // Default to dark theme as requested
       setTheme("dark");
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     }
   }, []);
 

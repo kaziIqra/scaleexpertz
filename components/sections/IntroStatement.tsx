@@ -94,36 +94,51 @@ export default function IntroStatement() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.7, delay: i * 0.08 }}
-                className={`group relative overflow-hidden rounded-2xl border p-5 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl ${card.featured
-                    ? "sm:col-span-2 border-black/15 bg-gradient-to-r from-slate-900/[0.05] via-slate-800/[0.03] to-transparent dark:border-amber/40 dark:from-accent/15 dark:via-amber/10 hover:border-slate-800/40 dark:hover:border-amber/60 hover:shadow-slate-900/10"
-                    : "border-black/[0.08] dark:border-white/12 bg-surface dark:bg-[#141419] hover:border-slate-800/40 dark:hover:border-amber/50"
+                className={`group relative overflow-hidden rounded-2xl border p-5 sm:p-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl ${card.featured
+                    ? "sm:col-span-2 border-accent/80 dark:border-amber/70 bg-gradient-to-br from-amber-400/30 via-yellow-200/22 to-amber-500/25 dark:from-accent/30 dark:via-amber/20 dark:to-accent/15 shadow-[0_8px_32px_rgba(212,175,55,0.25)] hover:border-amber-500 dark:hover:border-amber hover:shadow-[0_12px_44px_rgba(212,175,55,0.4)]"
+                    : "border-amber-500/30 dark:border-amber/35 bg-gradient-to-br from-amber-500/12 via-amber-400/8 to-amber-300/10 dark:from-accent/20 dark:via-amber/12 dark:to-transparent hover:border-amber-500/60 dark:hover:border-amber/60 shadow-md hover:shadow-xl"
                   }`}
               >
                 {/* Scroll Shimmer Light Sweep */}
                 <motion.div
                   initial={{ x: "-100%", opacity: 0 }}
-                  whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.6, 0] }}
-                  viewport={{ once: true, amount: 0.2 }}
+                  whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.8, 0] }}
+                  viewport={{ once: false, amount: 0.2 }}
                   transition={{ duration: 1.2, ease: "easeInOut", delay: i * 0.1 }}
-                  className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-slate-800/15 via-slate-900/10 dark:via-amber/20 to-transparent -skew-x-12"
+                  className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-amber-400/40 via-amber-500/30 dark:via-amber/30 to-transparent -skew-x-12"
                   aria-hidden
                 />
 
-                {/* Scroll & Hover Ambient Gradient */}
+                {/* Ambient Gold Radial Glow & Tech Grid Backdrop */}
+                <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-2xl">
+                  <div className="absolute right-2 top-2 h-28 w-28 rounded-full bg-accent/12 dark:bg-amber/15 blur-2xl transition-all duration-700 group-hover:scale-125" />
+                  <svg className="absolute inset-0 h-full w-full opacity-15 dark:opacity-25" viewBox="0 0 360 180" aria-hidden>
+                    <line x1="0" y1="36" x2="360" y2="36" stroke="currentColor" strokeWidth="0.8" strokeDasharray="3 6" className="text-amber/40" />
+                    <line x1="280" y1="0" x2="280" y2="180" stroke="currentColor" strokeWidth="0.8" strokeDasharray="3 6" className="text-amber/40" />
+                    <circle cx="280" cy="36" r="3" className="fill-amber/80" />
+                  </svg>
+                </div>
+
+                {/* Scroll & Hover Ambient Warm Gold Gradient Overlay */}
                 <motion.div
                   initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 0.5 }}
-                  viewport={{ once: true, amount: 0.15 }}
+                  whileInView={{ opacity: 0.6 }}
+                  viewport={{ once: false, amount: 0.2 }}
                   transition={{ duration: 0.8, delay: i * 0.06 }}
-                  className="absolute inset-0 bg-gradient-to-br from-slate-900/[0.06] via-indigo-950/[0.04] to-transparent dark:from-accent/20 dark:via-amber/12 transition-opacity duration-500 group-hover:!opacity-100 pointer-events-none"
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/22 via-amber-400/15 to-amber-300/18 dark:from-accent/35 dark:via-amber/22 transition-opacity duration-500 group-hover:!opacity-100 group-active:!opacity-100"
                   aria-hidden
                 />
 
-                <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-950 dark:text-amber relative z-10">
-                  0{i + 1} · {card.highlight}
-                </span>
+                <div className="flex flex-wrap items-center justify-between gap-2 relative z-10">
+                  <span className={`font-sans text-xs uppercase tracking-wider ${card.featured ? "text-amber-950 dark:text-amber bg-amber-400/35 dark:bg-amber/20 px-3 py-1 rounded-full border border-amber-500/50 dark:border-amber/60 font-extrabold shadow-sm" : "text-amber-900 dark:text-amber bg-amber-500/10 dark:bg-amber/10 px-2.5 py-0.5 rounded-full border border-amber-500/20 dark:border-amber/30 font-bold"}`}>
+                    0{i + 1} · {card.highlight}
+                  </span>
+                </div>
+
                 <p
-                  className={`mt-2 font-display text-xl font-bold tracking-tight text-ink dark:text-white group-hover:text-slate-950 dark:group-hover:text-amber transition-colors relative z-10 ${card.isItalic ? "italic text-slate-950 dark:text-amber text-2xl sm:text-3xl" : "sm:text-2xl"
+                  className={`mt-3 font-display font-bold tracking-tight relative z-10 transition-colors duration-300 ${card.featured
+                      ? "italic text-amber-950 dark:text-amber text-2xl sm:text-3xl font-black drop-shadow-[0_2px_12px_rgba(212,175,55,0.4)]"
+                      : "text-xl text-ink dark:text-white group-hover:text-amber-900 dark:group-hover:text-amber sm:text-2xl"
                     }`}
                 >
                   {card.text}
