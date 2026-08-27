@@ -39,7 +39,7 @@ const MEMBERS = [
       "Content Planning",
       "Creative Direction",
     ],
-    image: "/navya-perfect.jpg",
+    image: "/navya-portrait-centered.jpg",
     linkedin: "https://www.linkedin.com/in/navya-pundir-4a19933b2?utm_source=share_via&utm_content=profile&utm_medium=member_android",
     quoteColor: "border-purple-500 bg-purple-500/[0.08] dark:bg-purple-400/10 text-purple-950 dark:text-purple-200",
     badgeColor: "text-purple-600 dark:text-purple-300 bg-purple-500/10 border-purple-500/20",
@@ -138,12 +138,12 @@ export default function TeamsPage() {
                 <FadeUp delay={0.15} play={done}>
                   <Eyebrow index="01" label="Meet the team" />
                 </FadeUp>
-                
+
                 <h1 className="mt-4 mx-auto font-display text-[clamp(2rem,4.5vw,3.5rem)] font-bold leading-[1.05] tracking-[-0.03em] text-ink lg:mx-0">
                   <TextReveal text="Meet The Team" as="span" className="block" play={done} delay={0.2} />
                   <TextReveal text="Behind Every Growth Decision." as="span" className="block text-accent" play={done} delay={0.35} />
                 </h1>
-                
+
                 <FadeUp delay={0.5} play={done}>
                   <p className="mt-6 mx-auto max-w-2xl text-sm sm:text-base leading-relaxed text-body font-medium lg:mx-0">
                     At ScaleXpertz, growth isn&apos;t handed from one department to another. Every strategy, campaign, website, automation, and system is built by people who take ownership from start to finish. We&apos;re intentionally small, so every client gets experienced minds—not layers of management.
@@ -153,7 +153,7 @@ export default function TeamsPage() {
 
               {/* Right Column: Our Philosophy Card aligned to the right */}
               <div className="lg:col-span-5">
-                <motion.div 
+                <motion.div
                   className="rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-7 md:p-8 shadow-card backdrop-blur-md flex flex-col justify-between gap-6 transition-all duration-500 hover:border-accent/40 hover:shadow-xl"
                   initial={{ opacity: 0, y: 32 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -181,9 +181,9 @@ export default function TeamsPage() {
         </section>
 
         {/* 2. Team Members Grid (Top 3 cards + Bottom 2 centered) */}
-        <section className="mx-auto max-w-[1240px] px-6 py-12 md:px-8 md:py-16">
+        <section className="mx-auto max-w-[1380px] px-6 py-16 md:px-10 md:py-24">
           {/* Top Row: 3 Cards */}
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
             {MEMBERS.slice(0, 3).map((m, idx) => (
               <motion.div
                 key={m.name}
@@ -192,7 +192,7 @@ export default function TeamsPage() {
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.8, ease: EASE_OUT_EXPO, delay: idx * 0.1 }}
               >
-                <div className={`group relative flex h-full flex-col rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-6 sm:p-7 shadow-card backdrop-blur-md transition-all duration-500 hover:-translate-y-2.5 ${m.glowColor}`}>
+                <div className={`group relative flex h-full flex-col rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-7 sm:p-8 md:p-9 shadow-card backdrop-blur-md transition-all duration-500 hover:-translate-y-2.5 ${m.glowColor}`}>
                   {/* Headshot Photo */}
                   <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-ink/5 dark:bg-black/40 border border-black/[0.04] dark:border-white/5">
                     <Image
@@ -200,14 +200,14 @@ export default function TeamsPage() {
                       alt={m.name}
                       fill
                       sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 90vw"
-                      className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                       priority
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-surface/70 via-transparent to-transparent opacity-60 dark:from-[#141419]" />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-accent/0 via-transparent to-accent/15 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   </div>
-                  
-                  <div className="mt-5 flex flex-1 flex-col justify-between">
+
+                  <div className="mt-6 flex flex-1 flex-col justify-between">
                     <div>
                       <div className="flex flex-wrap items-center justify-between gap-3">
                         <h3 className="font-display text-xl font-bold tracking-tight text-ink md:text-2xl transition-colors duration-300 group-hover:text-accent">
@@ -219,14 +219,14 @@ export default function TeamsPage() {
                       </div>
 
                       {/* Tagline Quote with vibrant color accent highlight */}
-                      <div className={`mt-4 rounded-xl border-l-4 p-3.5 text-xs sm:text-sm font-medium italic leading-relaxed shadow-sm transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-md ${m.quoteColor}`}>
+                      <div className={`mt-5 rounded-xl border-l-4 p-4 text-xs sm:text-sm font-medium italic leading-relaxed shadow-sm transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-md ${m.quoteColor}`}>
                         &ldquo;{m.quote}&rdquo;
                       </div>
 
                       {/* Owns Section */}
-                      <div className="mt-5 border-t border-black/[0.06] dark:border-white/10 pt-4">
-                        <h4 className="font-mono text-[11px] uppercase tracking-wider text-ink/40 font-semibold mb-2.5">Owns:</h4>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2">
+                      <div className="mt-6 border-t border-black/[0.06] dark:border-white/10 pt-5">
+                        <h4 className="font-mono text-[11px] uppercase tracking-wider text-ink/40 font-semibold mb-3">Owns:</h4>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2.5">
                           {m.owns.map((point) => (
                             <li key={point} className="flex items-center gap-2 text-xs sm:text-sm text-ink/90 dark:text-white/90 font-medium">
                               <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-accent/20 text-accent text-[9px] font-bold transition-transform duration-300 group-hover:scale-110">
@@ -241,7 +241,7 @@ export default function TeamsPage() {
 
                     {/* LinkedIn button */}
                     {m.linkedin && (
-                      <div className="mt-6 flex justify-start border-t border-black/[0.06] dark:border-white/10 pt-3.5">
+                      <div className="mt-6 flex justify-start border-t border-black/[0.06] dark:border-white/10 pt-4">
                         <a
                           href={m.linkedin}
                           target="_blank"
@@ -262,7 +262,7 @@ export default function TeamsPage() {
           </div>
 
           {/* Bottom Row: 2 Cards Centered */}
-          <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:max-w-[840px] lg:mx-auto">
+          <div className="mt-12 md:mt-16 grid gap-10 sm:grid-cols-2 lg:max-w-[920px] lg:mx-auto lg:gap-12">
             {MEMBERS.slice(3, 5).map((m, idx) => (
               <motion.div
                 key={m.name}
@@ -271,7 +271,7 @@ export default function TeamsPage() {
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ duration: 0.8, ease: EASE_OUT_EXPO, delay: idx * 0.1 }}
               >
-                <div className={`group relative flex h-full flex-col rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-6 sm:p-7 shadow-card backdrop-blur-md transition-all duration-500 hover:-translate-y-2.5 ${m.glowColor}`}>
+                <div className={`group relative flex h-full flex-col rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-7 sm:p-8 md:p-9 shadow-card backdrop-blur-md transition-all duration-500 hover:-translate-y-2.5 ${m.glowColor}`}>
                   {/* Headshot Photo */}
                   <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-ink/5 dark:bg-black/40 border border-black/[0.04] dark:border-white/5">
                     <Image
@@ -279,13 +279,13 @@ export default function TeamsPage() {
                       alt={m.name}
                       fill
                       sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 90vw"
-                      className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-surface/70 via-transparent to-transparent opacity-60 dark:from-[#141419]" />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-accent/0 via-transparent to-accent/15 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   </div>
-                  
-                  <div className="mt-5 flex flex-1 flex-col justify-between">
+
+                  <div className="mt-6 flex flex-1 flex-col justify-between">
                     <div>
                       <div className="flex flex-wrap items-center justify-between gap-3">
                         <h3 className="font-display text-xl font-bold tracking-tight text-ink md:text-2xl transition-colors duration-300 group-hover:text-accent">
@@ -297,14 +297,14 @@ export default function TeamsPage() {
                       </div>
 
                       {/* Tagline Quote with vibrant color accent highlight */}
-                      <div className={`mt-4 rounded-xl border-l-4 p-3.5 text-xs sm:text-sm font-medium italic leading-relaxed shadow-sm transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-md ${m.quoteColor}`}>
+                      <div className={`mt-5 rounded-xl border-l-4 p-4 text-xs sm:text-sm font-medium italic leading-relaxed shadow-sm transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-md ${m.quoteColor}`}>
                         &ldquo;{m.quote}&rdquo;
                       </div>
 
                       {/* Owns Section */}
-                      <div className="mt-5 border-t border-black/[0.06] dark:border-white/10 pt-4">
-                        <h4 className="font-mono text-[11px] uppercase tracking-wider text-ink/40 font-semibold mb-2.5">Owns:</h4>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2">
+                      <div className="mt-6 border-t border-black/[0.06] dark:border-white/10 pt-5">
+                        <h4 className="font-mono text-[11px] uppercase tracking-wider text-ink/40 font-semibold mb-3">Owns:</h4>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2.5">
                           {m.owns.map((point) => (
                             <li key={point} className="flex items-center gap-2 text-xs sm:text-sm text-ink/90 dark:text-white/90 font-medium">
                               <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-accent/20 text-accent text-[9px] font-bold transition-transform duration-300 group-hover:scale-110">
@@ -319,7 +319,7 @@ export default function TeamsPage() {
 
                     {/* LinkedIn button */}
                     {m.linkedin && (
-                      <div className="mt-6 flex justify-start border-t border-black/[0.06] dark:border-white/10 pt-3.5">
+                      <div className="mt-6 flex justify-start border-t border-black/[0.06] dark:border-white/10 pt-4">
                         <a
                           href={m.linkedin}
                           target="_blank"
@@ -355,7 +355,7 @@ export default function TeamsPage() {
                 <h2 className="mt-4 font-display text-3xl font-bold tracking-[-0.03em] text-ink md:text-4xl">
                   No Silos.<br />No Handovers.
                 </h2>
-                
+
                 {/* Pillars Badges */}
                 <div className="mt-5 flex flex-wrap justify-center md:justify-start gap-2">
                   {["Strategy", "Content", "Design", "Technology", "AI"].map((pillar) => (
@@ -385,7 +385,7 @@ export default function TeamsPage() {
 
         {/* 5. Careers Preview */}
         <section className="mx-auto max-w-[1240px] px-6 py-12 md:px-8 md:py-16">
-          <motion.div 
+          <motion.div
             className="rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-white/[0.03] p-8 md:p-12 shadow-card backdrop-blur-md transition-all duration-500 hover:border-accent/40 hover:shadow-xl grid gap-10 md:grid-cols-12 md:items-center"
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -449,7 +449,7 @@ export default function TeamsPage() {
             <p className="mt-6 mx-auto max-w-xl text-base md:text-lg text-white/70 leading-relaxed font-medium">
               We&apos;re building a team that values ownership, curiosity, and execution over job titles.
             </p>
-            
+
             <div className="mt-10">
               <Magnetic strength={12}>
                 <Link
