@@ -48,6 +48,7 @@ export default function AdminPage() {
   const [rememberCreds, setRememberCreds] = useState(true);
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
+  const [dashboardError, setDashboardError] = useState<string | null>(null);
 
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
@@ -76,6 +77,7 @@ export default function AdminPage() {
   const fetchLeads = useCallback(
     async (authToken: string, isSilent = false) => {
       if (!isSilent) setIsRefreshing(true);
+      setDashboardError(null);
       try {
         const res = await fetch("/api/admin/leads", {
           headers: {
@@ -93,9 +95,12 @@ export default function AdminPage() {
         const data = await res.json();
         if (data.success && Array.isArray(data.leads)) {
           setLeads(data.leads);
+        } else if (data.error) {
+          setDashboardError(data.error);
         }
       } catch (err) {
         console.error("Error fetching leads:", err);
+        setDashboardError("Unable to fetch leads. Please check your network and Supabase configuration.");
       } finally {
         setLoading(false);
         setIsRefreshing(false);
@@ -475,6 +480,18 @@ Date: ${new Date(lead.created_at).toLocaleString()}`;
 
       {/* Main Content */}
       <main className="mx-auto max-w-7xl px-4 sm:px-8 py-6 sm:py-8 space-y-6">
+        {dashboardError && (
+          <div className="rounded-2xl border border-rose-500/30 bg-rose-500/10 p-4 text-xs sm:text-sm text-rose-500 dark:text-rose-400 font-medium flex items-center justify-between gap-3">
+            <span>{dashboardError}</span>
+            <button
+              onClick={() => fetchLeads(token)}
+              className="px-3 py-1 bg-rose-500/20 hover:bg-rose-500/30 rounded-lg text-xs font-bold cursor-pointer transition-all shrink-0"
+            >
+              Retry
+            </button>
+          </div>
+        )}
+
         {/* Metric Cards Row */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#131318] p-4 sm:p-5 shadow-sm">

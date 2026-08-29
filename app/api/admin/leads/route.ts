@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
@@ -25,6 +25,16 @@ function isAuthorized(request: Request) {
 export async function GET(request: Request) {
   if (!isAuthorized(request)) {
     return NextResponse.json({ error: "Unauthorized access" }, { status: 401 });
+  }
+
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json(
+      {
+        error:
+          "Supabase secret key is missing on Vercel. Please add SUPABASE_SERVICE_ROLE_KEY in your Vercel Project Settings > Environment Variables and click Redeploy.",
+      },
+      { status: 500 }
+    );
   }
 
   try {
