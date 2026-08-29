@@ -88,12 +88,12 @@ function SystemMergeVisual({ play }: { play: boolean }) {
             strokeWidth="1"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={play ? { pathLength: 1, opacity: 1 } : {}}
-            transition={{ duration: 1, delay: 0.7 + i * 0.08, ease: "easeOut" }}
+            transition={{ duration: 0.6, delay: 0.1 + i * 0.04, ease: "easeOut" }}
           />
         ))}
       </svg>
 
-      {/* Central 3D ScaleXpertz monogram hub — depth → flip → settle */}
+      {/* Central 3D ScaleXpertz monogram hub */}
       <div className="relative z-20 flex flex-col items-center">
         <div className="absolute left-1/2 top-[60%] h-14 w-60 -translate-x-1/2 rounded-[50%] bg-black/25 blur-2xl dark:bg-black/55" />
         <LogoEntrance
@@ -108,22 +108,22 @@ function SystemMergeVisual({ play }: { play: boolean }) {
           className="mt-5 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-accent"
           initial={{ opacity: 0, y: 8 }}
           animate={play ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 2.4, ease: EASE_OUT_EXPO }}
+          transition={{ duration: 0.5, delay: 0.3, ease: EASE_OUT_EXPO }}
         >
           One Connected System
         </motion.p>
       </div>
 
-      {/* Indexed black plates — no emoji, no glass pills */}
+      {/* Indexed black plates */}
       {DISCIPLINES.map((d, i) => (
         <motion.div
           key={d.name}
           style={{ left: "50%", top: "50%" }}
-          initial={{ opacity: 0, x: `calc(-50% + ${d.x * 1.25}px)`, y: `calc(-50% + ${d.y * 1.25}px)` }}
+          initial={{ opacity: 0, x: `calc(-50% + ${d.x}px)`, y: `calc(-50% + ${d.y + 10}px)` }}
           animate={play ? { opacity: 1, x: `calc(-50% + ${d.x}px)`, y: `calc(-50% + ${d.y}px)` } : {}}
           transition={{
-            duration: 0.9,
-            delay: 0.35 + i * 0.08,
+            duration: 0.5,
+            delay: 0.15 + i * 0.04,
             ease: EASE_OUT_EXPO,
           }}
           className="absolute z-10 whitespace-nowrap"
@@ -145,28 +145,16 @@ function SystemMergeVisual({ play }: { play: boolean }) {
 export default function Hero() {
   const done = usePreloaderDone();
   const isDesktop = useIsDesktop();
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handlePointerMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener("mousemove", handlePointerMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handlePointerMove);
-  }, []);
 
   return (
     <section id="top" className="relative isolate flex min-h-svh flex-col overflow-hidden">
-      {/* Mouse-following spotlight aura (Scalisite style effect) */}
+      {/* Ambient glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-[1] transition-opacity duration-700 opacity-60 dark:opacity-75"
-        style={{
-          background: `radial-gradient(650px circle at ${mousePos.x}px ${mousePos.y}px, rgba(212,175,55,0.075), transparent 80%)`,
-        }}
+        className="pointer-events-none absolute inset-0 z-[1] opacity-60 dark:opacity-75 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(212,175,55,0.12),transparent)]"
       />
 
-      {/* perspective grid floor: premium depth cue, masked away before the text zone */}
+      {/* perspective grid floor: depth cue */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
           className="absolute inset-x-[-15%] bottom-[-5%] h-[36%] origin-bottom opacity-[0.06] dark:opacity-[0.12] [transform:perspective(900px)_rotateX(62deg)]"
@@ -185,7 +173,7 @@ export default function Hero() {
         <div className="absolute right-[28%] top-[48%] h-[28vmin] w-[28vmin] rounded-full bg-amber/12 blur-3xl max-md:left-[-8%] max-md:top-[72%]" />
         <div className="absolute right-[18%] top-[30%] hidden h-[34vmin] w-[34vmin] rounded-full bg-gold/10 blur-3xl md:block" />
 
-        {/* Desktop System Merge Visual — geometry is 1:1 with its viewBox only at lg+ */}
+        {/* Desktop System Merge Visual */}
         <div className="absolute inset-0 hidden items-center justify-center lg:flex">
           {isDesktop !== false && <SystemMergeVisual play={done} />}
         </div>
@@ -200,27 +188,29 @@ export default function Hero() {
         )}
       </div>
 
-      {/* readability scrim: text column stays high-contrast over the 3D visual */}
+      {/* readability scrim */}
       <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 hidden w-[58%] bg-gradient-to-r from-paper via-paper/50 to-transparent lg:block" />
 
-      {/* main hero content — centered on mobile, left-aligned from lg for desktop split */}
+      {/* main hero content */}
       <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col items-center justify-center px-6 pb-16 pt-24 text-center md:px-12 md:pb-24 md:pt-28 lg:items-start lg:text-left">
-        <FadeUp delay={0.15} play={done}>
+        <FadeUp delay={0.05} play={done}>
           <p className="font-[family-name:var(--font-playfair)] italic font-semibold text-lg sm:text-xl md:text-2xl tracking-wide text-accent dark:text-amber">
             <span className="mr-3 not-italic text-amber font-bold">✦</span>
             The all-in-one growth partner
           </p>
         </FadeUp>
 
-        {/* Line by line animated headline */}
-        <h1 className="mt-4 font-display text-[clamp(2.25rem,5vw,4.25rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-ink md:mt-6">
-          <TextReveal as="span" className="block text-ink dark:text-white" text="Your Next Hire" play={done} delay={0.2} />
-          <TextReveal as="span" className="block text-ink/85 dark:text-white/90" text="Should Be" play={done} delay={0.5} />
-          <TextReveal as="span" className="mt-1 block text-accent dark:text-amber" text="Your Last Agency." play={done} delay={0.8} />
-        </h1>
+        {/* Headline */}
+        <FadeUp delay={0.1} play={done}>
+          <h1 className="mt-4 font-display text-[clamp(2.25rem,5vw,4.25rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-ink md:mt-6">
+            <span className="block text-ink dark:text-white">Your Next Hire</span>
+            <span className="block text-ink/85 dark:text-white/90">Should Be</span>
+            <span className="mt-1 block text-accent dark:text-amber">Your Last Agency.</span>
+          </h1>
+        </FadeUp>
 
-        {/* Subheadline appears after headline reveal */}
-        <FadeUp delay={1.8} play={done}>
+        {/* Subheadline */}
+        <FadeUp delay={0.18} play={done}>
           <div className="mt-5 max-w-2xl md:mt-6 lg:max-w-3xl">
             <p className="font-display text-base font-bold text-ink dark:text-white sm:text-lg">
               Every new agency solves one problem. And creates another to manage.
@@ -232,7 +222,7 @@ export default function Hero() {
         </FadeUp>
 
         {/* Primary and Secondary CTAs */}
-        <FadeUp delay={2.1} play={done} className="mt-8 md:mt-10 max-w-full">
+        <FadeUp delay={0.25} play={done} className="mt-8 md:mt-10 max-w-full">
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:gap-6 lg:items-start">
             <a
               href="/diagnosis"
@@ -279,17 +269,14 @@ export default function Hero() {
             </span>
           </div>
         </FadeUp>
-
       </div>
-
-
 
       {/* services marquee */}
       <motion.div
         className="absolute inset-x-0 bottom-0 z-10 border-t border-black/[0.05] dark:border-white/10 bg-white/80 dark:bg-[#0c0c0e]/90 backdrop-blur-md"
         initial={{ opacity: 0 }}
         animate={done ? { opacity: 1 } : {}}
-        transition={{ duration: 0.8, delay: 2.2 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
       >
         <Marquee speed={70} className="py-4">
           {SERVICES.map((s) => (

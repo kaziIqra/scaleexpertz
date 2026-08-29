@@ -53,30 +53,23 @@ export default function LogoEntrance({
         className="h-full w-full [transform-style:preserve-3d] will-change-transform"
         initial={{
           opacity: 0,
-          scale: isHero ? 0.38 : 0.5,
-          rotateY: 180,
-          filter: "blur(12px)",
+          scale: isHero ? 0.8 : 0.85,
         }}
         animate={
           play
             ? {
-                opacity: [0, 1, 1],
-                scale: [isHero ? 0.38 : 0.5, 0.94, 1],
-                rotateY: [180, -10, 0],
-                filter: ["blur(12px)", "blur(2px)", "blur(0px)"],
+                opacity: 1,
+                scale: 1,
               }
             : {
                 opacity: 0,
-                scale: isHero ? 0.38 : 0.5,
-                rotateY: 180,
-                filter: "blur(12px)",
+                scale: isHero ? 0.8 : 0.85,
               }
         }
         transition={{
-          duration,
-          delay,
+          duration: 0.8,
+          delay: isHero ? 0.2 : 0.1,
           ease: EASE_OUT_EXPO,
-          times: [0, 0.58, 1],
         }}
         onAnimationComplete={() => {
           if (play) onComplete?.();
