@@ -24,14 +24,20 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    // Use native 120Hz hardware-accelerated momentum scrolling on touch & mobile screens
+    const isTouch =
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      window.innerWidth < 1024;
+
+    if (isTouch) return;
+
     const instance = new Lenis({
-      duration: 0.9,
-      lerp: 0.12,
+      duration: 0.8,
+      lerp: 0.14,
       smoothWheel: true,
-      wheelMultiplier: 1.1,
-      touchMultiplier: 1.2,
+      wheelMultiplier: 1.0,
       syncTouch: false,
-      autoRaf: false,
     });
 
     instance.on("scroll", ScrollTrigger.update);

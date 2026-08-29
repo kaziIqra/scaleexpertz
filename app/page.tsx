@@ -13,13 +13,10 @@ import FAQ from "@/components/sections/FAQ";
 import FinalCTA from "@/components/sections/FinalCTA";
 import Footer from "@/components/sections/Footer";
 import BackgroundShift from "@/components/providers/BackgroundShift";
-import LogoBackdrop3D from "@/components/providers/LogoBackdrop3D";
 
 export default function Home() {
   return (
     <>
-      {/* ambient 3D logo watermark behind everything (fades in after the hero) */}
-      <LogoBackdrop3D />
       <Navbar />
       <main className="relative z-[1] overflow-x-hidden max-w-full">
         {/* Section 1: Hero */}
