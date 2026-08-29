@@ -8,7 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { ScrollTrigger } from "@/lib/gsap";
 
 const LenisContext = createContext<Lenis | null>(null);
 
@@ -21,18 +21,32 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
   const [lenis, setLenis] = useState<Lenis | null>(null);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const instance = new Lenis({ lerp: 0.08, wheelMultiplier: 1 });
+    const instance = new Lenis({
+      duration: 0.9,
+      lerp: 0.12,
+      smoothWheel: true,
+      wheelMultiplier: 1.1,
+      touchMultiplier: 1.2,
+      syncTouch: false,
+      autoRaf: false,
+    });
+
     instance.on("scroll", ScrollTrigger.update);
 
-    const tick = (time: number) => instance.raf(time * 1000);
-    gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
+    let rafId: number;
+    const raf = (time: number) => {
+      instance.raf(time);
+      rafId = requestAnimationFrame(raf);
+    };
+    rafId = requestAnimationFrame(raf);
+
     setLenis(instance);
 
     return () => {
-      gsap.ticker.remove(tick);
+      cancelAnimationFrame(rafId);
       instance.destroy();
       setLenis(null);
     };

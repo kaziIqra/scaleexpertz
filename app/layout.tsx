@@ -29,8 +29,6 @@ export const viewport: Viewport = {
 /** Runs pre-paint so returning visitors never see the preloader flash & default to dark theme. */
 const PRELOADER_SKIP = `try{var t=localStorage.getItem("theme");if(t==="dark"||!t)document.documentElement.classList.add("dark");else document.documentElement.classList.remove("dark");if(sessionStorage.getItem("sx-preloaded")==="1")document.documentElement.dataset.preloaded="1"}catch(e){}`;
 
-const GRAIN = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`;
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -53,12 +51,6 @@ export default function RootLayout({
           </ThemeProvider>
           <MotionToggle />
         </MotionPrefProvider>
-        {/* film grain over everything (including the preloader) */}
-        <div
-          aria-hidden
-          className="pointer-events-none fixed inset-0 z-[220] opacity-[0.035]"
-          style={{ backgroundImage: GRAIN }}
-        />
       </body>
     </html>
   );
