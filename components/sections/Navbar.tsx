@@ -11,6 +11,7 @@ import ThemeToggle from "@/components/ui/ThemeToggle";
 import { usePreloaderDone } from "@/lib/preloader";
 import { useLenis } from "@/components/providers/SmoothScroll";
 import { EASE_IN_OUT, EASE_OUT_EXPO } from "@/lib/animations";
+import { LuLock } from "react-icons/lu";
 
 const LINKS = [
   { label: "Framework", href: "#framework" },
@@ -182,7 +183,7 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <div className="flex shrink-0 items-center gap-3">
+          <div className="flex shrink-0 items-center gap-2.5 sm:gap-3">
             <ThemeToggle />
 
             <Magnetic className="hidden md:inline-block">
@@ -193,6 +194,16 @@ export default function Navbar() {
                 Book a Call
               </Link>
             </Magnetic>
+
+            {/* Subtle, elegant Login button at the very end of desktop nav */}
+            <Link
+              href="/admin"
+              className="hidden lg:inline-flex items-center gap-1.5 rounded-full border border-black/[0.08] dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] px-3 py-2 text-xs font-medium text-ink/60 dark:text-slate-400 backdrop-blur-sm transition-all duration-300 hover:border-black/20 dark:hover:border-white/20 hover:text-ink dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+              title="Admin Login"
+            >
+              <LuLock size={11} className="text-ink/50 dark:text-slate-400" />
+              <span>Login</span>
+            </Link>
 
             <button
               type="button"
@@ -311,6 +322,14 @@ export default function Navbar() {
               >
                 <span>Book a Call</span>
                 <span className="text-lg">→</span>
+              </Link>
+              <Link
+                href="/admin"
+                onClick={() => setOpen(false)}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-black/10 dark:border-white/12 bg-white/40 dark:bg-white/[0.04] px-6 py-3 text-sm font-semibold text-ink dark:text-white transition-all hover:border-accent hover:text-accent dark:hover:text-amber text-center"
+              >
+                <LuLock size={14} className="text-accent dark:text-amber" />
+                <span>Admin Login</span>
               </Link>
               <a
                 href="mailto:scalexpertz@gmail.com"
