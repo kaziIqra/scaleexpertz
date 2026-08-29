@@ -250,7 +250,7 @@ Date: ${new Date(lead.created_at).toLocaleString()}`;
         "Founder Name": l.name || "",
         "Work Email": l.work_email || "N/A",
         "Company Name": l.company_name || "",
-        "Website URL": l.website || "N/A",
+        "Website / Social Link": l.website || "N/A",
         "WhatsApp Number": l.whatsapp_number ? `${l.whatsapp_number}` : "",
         "Monthly Revenue Range": l.monthly_revenue_range || "",
         "Team Size": l.team_size || "",
@@ -810,7 +810,7 @@ Date: ${new Date(lead.created_at).toLocaleString()}`;
               {selectedLead.website && (
                 <div className="rounded-xl border border-black/10 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] p-3">
                   <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                    Website URL
+                    Website / Social Link
                   </span>
                   <div className="mt-1">
                     <a

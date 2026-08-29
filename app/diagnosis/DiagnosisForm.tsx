@@ -203,14 +203,15 @@ export default function DiagnosisForm() {
         <div className="relative z-10 grid gap-4 sm:grid-cols-2">
           <label className="grid gap-1.5">
             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink/70 dark:text-pink-300/90 font-bold">
-              Website (Optional)
+              Website / Social Media Link *
             </span>
             <input
+              required
               type="text"
               name="website"
               value={formData.website}
               onChange={handleChange}
-              placeholder="https://company.com"
+              placeholder="company.com / LinkedIn / Instagram link"
               className={inputClass}
             />
           </label>
