@@ -23,7 +23,6 @@ import {
   LuX,
   LuBuilding,
 } from "react-icons/lu";
-import { supabase } from "@/lib/supabase";
 import * as XLSX from "xlsx";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
@@ -158,32 +157,24 @@ export default function AdminPage() {
     router.push("/");
   };
 
-  // 4. Initial fetch & Realtime subscription
+  // 4. Initial fetch & Auto-refresh polling
   useEffect(() => {
     if (!token) return;
 
     fetchLeads(token);
 
-    // Setup Supabase Realtime channel
-    const channel = supabase
-      .channel("admin-realtime-leads")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "founder_growth_leads" },
-        () => {
-          fetchLeads(token, true);
-        }
-      )
-      .subscribe();
-
-    // 6-second polling fallback
+    // Refresh every 5 seconds silently without console noise
     const interval = setInterval(() => {
       fetchLeads(token, true);
-    }, 6000);
+    }, 5000);
+
+    // Refresh immediately when tab gains focus
+    const onFocus = () => fetchLeads(token, true);
+    window.addEventListener("focus", onFocus);
 
     return () => {
-      supabase.removeChannel(channel);
       clearInterval(interval);
+      window.removeEventListener("focus", onFocus);
     };
   }, [token, fetchLeads]);
 
