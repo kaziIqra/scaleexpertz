@@ -148,6 +148,7 @@ export default function PricingCalculator({
                 src="/logo-mark-3d-dark.png"
                 alt="ScaleXpertz Logo Mark"
                 fill
+                sizes="(max-width: 640px) 96px, 128px"
                 className="hidden dark:block object-contain opacity-50 drop-shadow-[0_4px_20px_rgba(212,175,55,0.3)]"
               />
               {/* Light Theme: image.png */}
@@ -155,6 +156,7 @@ export default function PricingCalculator({
                 src="/image.png"
                 alt="ScaleXpertz Logo Mark"
                 fill
+                sizes="(max-width: 640px) 96px, 128px"
                 className="block dark:hidden object-contain opacity-35 drop-shadow-[0_4px_20px_rgba(212,175,55,0.25)]"
               />
             </div>

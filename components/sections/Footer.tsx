@@ -260,7 +260,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col items-center justify-center gap-4 border-t border-black/[0.05] pt-6 text-center sm:flex-row sm:flex-wrap sm:justify-between sm:text-left">
-          <p className="text-xs text-ink/40">
+          <p className="text-xs text-ink/40" suppressHydrationWarning>
             © {new Date().getFullYear()} ScaleXpertz. All rights reserved.
           </p>
           <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-ink/40">

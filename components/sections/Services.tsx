@@ -191,6 +191,7 @@ export default function Services() {
                     src={s.image.replace('.jpg', '_trans.png').replace('.png', '_trans.png').replace('_trans_trans.png', '_trans.png')}
                     alt=""
                     fill
+                    sizes="(max-width: 640px) 80px, 96px"
                     unoptimized
                     className="object-contain"
                   />
