@@ -24,6 +24,7 @@ const MEMBERS = [
       "Founder Consulting",
     ],
     image: "/ansh-perfect.jpg",
+    imagePosition: "center 8%",
     linkedin: "https://www.linkedin.com/in/ansh-sharma-6b1a18384",
     quoteColor: "border-amber-500 bg-amber-500/[0.08] dark:bg-amber-400/10 text-amber-950 dark:text-amber-200",
     badgeColor: "text-amber-600 dark:text-amber-300 bg-amber-500/10 border-amber-500/20",
@@ -200,7 +201,8 @@ export default function TeamsPage() {
                       alt={m.name}
                       fill
                       sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 90vw"
-                      className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                      style={{ objectPosition: m.imagePosition || "center top" }}
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       priority
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-surface/70 via-transparent to-transparent opacity-60 dark:from-[#141419]" />
@@ -279,7 +281,8 @@ export default function TeamsPage() {
                       alt={m.name}
                       fill
                       sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 90vw"
-                      className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                      style={{ objectPosition: m.imagePosition || "center top" }}
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-surface/70 via-transparent to-transparent opacity-60 dark:from-[#141419]" />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-accent/0 via-transparent to-accent/15 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
