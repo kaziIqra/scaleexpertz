@@ -6,20 +6,29 @@ export async function POST(request: Request) {
   try {
     const { username, password } = await request.json();
 
-    const expectedUsername = (process.env.ADMIN_USERNAME || "Ansh Sharma").trim().toLowerCase();
-    const expectedPassword = process.env.ADMIN_PASSWORD || "Ansh@scalexpertz";
+    const adminUsername = process.env.ADMIN_USERNAME;
+    const expectedPassword = process.env.ADMIN_PASSWORD;
+
+    if (!adminUsername || !expectedPassword) {
+      return NextResponse.json(
+        { error: "Admin login is not configured. Set ADMIN_USERNAME and ADMIN_PASSWORD." },
+        { status: 500 }
+      );
+    }
+
+    const expectedUsername = adminUsername.trim().toLowerCase();
 
     const inputUser = (username || "").trim().toLowerCase();
     const inputPass = password || "";
 
     if (inputUser === expectedUsername && inputPass === expectedPassword) {
       const token = Buffer.from(
-        `admin:${process.env.ADMIN_USERNAME || "Ansh Sharma"}:${expectedPassword}:${Date.now()}`
+        `admin:${adminUsername}:${expectedPassword}:${Date.now()}`
       ).toString("base64");
 
       return NextResponse.json({
         success: true,
-        user: { name: "Ansh Sharma" },
+        user: { name: adminUsername },
         token,
       });
     }

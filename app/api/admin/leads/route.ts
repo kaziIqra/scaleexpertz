@@ -6,9 +6,9 @@ export const dynamic = "force-dynamic";
 function isAuthorized(request: Request) {
   const authHeader = request.headers.get("authorization") || "";
   const token = authHeader.replace("Bearer ", "").trim();
-  const correctPassword = process.env.ADMIN_PASSWORD || "Ansh@scalexpertz";
+  const correctPassword = process.env.ADMIN_PASSWORD;
 
-  if (!token) return false;
+  if (!token || !correctPassword) return false;
 
   // Direct password match or encoded token match
   if (token === correctPassword) return true;
