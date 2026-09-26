@@ -1,38 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { LuChevronDown, LuChevronUp, LuArrowUp, LuArrowDown, LuTrash2 } from "react-icons/lu";
-import type { AuditPage, Block } from "@/lib/audits/types";
+import { LuChevronDown, LuChevronUp, LuArrowUp, LuArrowDown, LuTrash2, LuPlus } from "react-icons/lu";
+import type { AuditPage, Block, BlockType } from "@/lib/audits/types";
+import { ADDABLE_BLOCKS, BLOCK_LABELS, blankBlock, blankPage } from "@/lib/audits/blank";
 import { smallInputClass, textareaClass, mutedLabelClass, dangerBtnClass } from "../ui";
 
 interface Props {
   pages: AuditPage[];
   onChange: (pages: AuditPage[]) => void;
+  /** Template mode: allows adding/removing/renaming pages and adding blocks. */
+  structural?: boolean;
 }
-
-const BLOCK_LABELS: Record<Block["type"], string> = {
-  cover: "Cover",
-  heading: "Heading",
-  paragraph: "Paragraph",
-  bullets: "Bullet list",
-  twoColBullets: "Two-column bullets",
-  cardGrid: "Card grid",
-  circleFlow: "Circle flow",
-  funnel: "Funnel",
-  arrowFlowCards: "Arrow flow cards",
-  darkCards: "Dark cards",
-  hub: "Hub diagram",
-  table: "Table",
-  roadmapTable: "Roadmap table",
-  callout: "Dark callout",
-  note: "Small note",
-  boldLine: "Bold line",
-  investmentBox: "Investment box",
-  milestoneBar: "Milestone bar",
-  closingBox: "Closing box",
-  featureCards: "Feature cards",
-  spacer: "Spacer",
-};
 
 // ------------------------------------------------------------ field helpers
 
@@ -369,10 +348,20 @@ function BlockEditor({ block, onChange }: { block: Block; onChange: (b: Block) =
 
 // ---------------------------------------------------------------- editor
 
-export default function SectionEditor({ pages, onChange }: Props) {
+export default function SectionEditor({ pages, onChange, structural }: Props) {
   const [open, setOpen] = useState<string | null>(pages[1]?.id ?? pages[0]?.id ?? null);
+  const [addType, setAddType] = useState<BlockType>("paragraph");
 
   const updatePage = (pi: number, next: AuditPage) => onChange(pages.map((p, i) => (i === pi ? next : p)));
+  const movePage = (pi: number, dir: -1 | 1) => {
+    const next = [...pages];
+    const j = pi + dir;
+    if (j < 0 || j >= next.length) return;
+    [next[pi], next[j]] = [next[j], next[pi]];
+    onChange(next);
+  };
+
+  const iconBtn = `${dangerBtnClass} hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 disabled:opacity-30`;
 
   return (
     <div className="grid gap-2">
@@ -380,21 +369,51 @@ export default function SectionEditor({ pages, onChange }: Props) {
         const isOpen = open === page.id;
         return (
           <div key={page.id} className="overflow-hidden rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#131318]">
-            <button
-              type="button"
-              onClick={() => setOpen(isOpen ? null : page.id)}
-              className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left hover:bg-black/[0.02] dark:hover:bg-white/[0.03] cursor-pointer"
-            >
-              <span className="flex items-center gap-3 min-w-0">
-                <span className="font-mono text-[10px] text-amber font-bold w-6 shrink-0">{String(pi + 1).padStart(2, "0")}</span>
-                <span className="text-sm font-semibold text-slate-900 dark:text-white truncate">{page.label}</span>
-                <span className="text-[10px] text-slate-400 shrink-0">{page.blocks.length} blocks</span>
-              </span>
-              {isOpen ? <LuChevronUp size={16} className="text-slate-400" /> : <LuChevronDown size={16} className="text-slate-400" />}
-            </button>
+            <div className="flex items-center gap-1 pr-2">
+              <button
+                type="button"
+                onClick={() => setOpen(isOpen ? null : page.id)}
+                className="flex flex-1 items-center justify-between gap-3 px-4 py-3 text-left hover:bg-black/[0.02] dark:hover:bg-white/[0.03] cursor-pointer min-w-0"
+              >
+                <span className="flex items-center gap-3 min-w-0">
+                  <span className="font-mono text-[10px] text-amber font-bold w-6 shrink-0">{String(pi + 1).padStart(2, "0")}</span>
+                  <span className="text-sm font-semibold text-slate-900 dark:text-white truncate">{page.label}</span>
+                  <span className="text-[10px] text-slate-400 shrink-0">{page.blocks.length} blocks</span>
+                </span>
+                {isOpen ? <LuChevronUp size={16} className="text-slate-400" /> : <LuChevronDown size={16} className="text-slate-400" />}
+              </button>
+              {structural ? (
+                <div className="flex items-center gap-0.5 shrink-0">
+                  <button type="button" title="Move page up" disabled={pi === 0} onClick={() => movePage(pi, -1)} className={iconBtn}>
+                    <LuArrowUp size={12} />
+                  </button>
+                  <button type="button" title="Move page down" disabled={pi === pages.length - 1} onClick={() => movePage(pi, 1)} className={iconBtn}>
+                    <LuArrowDown size={12} />
+                  </button>
+                  <button
+                    type="button"
+                    title="Delete page"
+                    onClick={() => {
+                      if (!confirm(`Delete page "${page.label}"?`)) return;
+                      onChange(pages.filter((_, i) => i !== pi));
+                    }}
+                    className={dangerBtnClass}
+                  >
+                    <LuTrash2 size={12} />
+                  </button>
+                </div>
+              ) : null}
+            </div>
 
             {isOpen ? (
               <div className="grid gap-3 border-t border-black/5 dark:border-white/5 bg-slate-50/60 dark:bg-black/20 p-3">
+                {structural ? (
+                  <label className="grid gap-1">
+                    <span className={mutedLabelClass}>Page label (editor only)</span>
+                    <input value={page.label} onChange={(e) => updatePage(pi, { ...page, label: e.target.value })} className={smallInputClass} />
+                  </label>
+                ) : null}
+
                 {page.blocks.map((block, bi) => (
                   <div key={bi} className="rounded-lg border border-black/10 dark:border-white/10 bg-white dark:bg-[#17171d] p-3">
                     <div className="mb-2 flex items-center justify-between gap-2">
@@ -411,7 +430,7 @@ export default function SectionEditor({ pages, onChange }: Props) {
                             [blocks[bi - 1], blocks[bi]] = [blocks[bi], blocks[bi - 1]];
                             updatePage(pi, { ...page, blocks });
                           }}
-                          className={`${dangerBtnClass} hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 disabled:opacity-30`}
+                          className={iconBtn}
                         >
                           <LuArrowUp size={12} />
                         </button>
@@ -424,7 +443,7 @@ export default function SectionEditor({ pages, onChange }: Props) {
                             [blocks[bi + 1], blocks[bi]] = [blocks[bi], blocks[bi + 1]];
                             updatePage(pi, { ...page, blocks });
                           }}
-                          className={`${dangerBtnClass} hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 disabled:opacity-30`}
+                          className={iconBtn}
                         >
                           <LuArrowDown size={12} />
                         </button>
@@ -447,11 +466,42 @@ export default function SectionEditor({ pages, onChange }: Props) {
                     />
                   </div>
                 ))}
+
+                <div className="flex items-center gap-2">
+                  <select value={addType} onChange={(e) => setAddType(e.target.value as BlockType)} className={`${smallInputClass} max-w-[220px]`}>
+                    {ADDABLE_BLOCKS.map((t) => (
+                      <option key={t} value={t}>
+                        {BLOCK_LABELS[t]}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    onClick={() => updatePage(pi, { ...page, blocks: [...page.blocks, blankBlock(addType)] })}
+                    className="inline-flex items-center gap-1 rounded-lg border border-accent/30 bg-accent/15 px-3 py-1.5 text-xs font-bold text-amber hover:bg-accent/25 cursor-pointer"
+                  >
+                    <LuPlus size={12} /> Add block
+                  </button>
+                </div>
               </div>
             ) : null}
           </div>
         );
       })}
+
+      {structural ? (
+        <button
+          type="button"
+          onClick={() => {
+            const page = blankPage(pages.length);
+            onChange([...pages, page]);
+            setOpen(page.id);
+          }}
+          className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-dashed border-black/15 dark:border-white/15 px-4 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:border-amber hover:text-amber transition-all cursor-pointer"
+        >
+          <LuPlus size={13} /> Add page
+        </button>
+      ) : null}
     </div>
   );
 }

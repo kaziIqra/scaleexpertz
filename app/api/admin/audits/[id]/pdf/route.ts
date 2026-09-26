@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { isAuthorized, unauthorized } from "@/lib/adminAuth";
-import { getTemplate } from "@/lib/audits/templates";
+import { loadTemplate } from "@/lib/audits/templateStore";
 import { renderAuditPdf, auditFileName } from "@/lib/audits/pdf/render";
 import type { AuditPage, ClientAudit, PlaceholderValues } from "@/lib/audits/types";
 
@@ -43,7 +43,7 @@ export async function POST(request: Request, { params }: Ctx) {
   const audit = await loadAudit(id);
   if (!audit) return NextResponse.json({ error: "Audit not found" }, { status: 404 });
 
-  const template = getTemplate(audit.template_slug);
+  const template = await loadTemplate(audit.template_slug);
   if (!template) return NextResponse.json({ error: `Template "${audit.template_slug}" no longer exists` }, { status: 500 });
 
   const placeholderValues = (mode === "preview" && body.draft?.placeholder_values) || audit.placeholder_values;

@@ -23,10 +23,10 @@ function formatDate(d = new Date()): string {
  * Build the full token map for a template + stored values:
  * defaults ← stored values ← derived values ← built-ins (date, doc_title).
  */
-export function resolveValues(
-  template: Pick<AuditTemplate, "placeholders" | "derive" | "docTitle">,
-  stored: PlaceholderValues
-): PlaceholderValues {
+export type ResolvableTemplate = Pick<AuditTemplate, "placeholders" | "docTitle"> &
+  Partial<Pick<AuditTemplate, "derive" | "derived">>;
+
+export function resolveValues(template: ResolvableTemplate, stored: PlaceholderValues): PlaceholderValues {
   const values: PlaceholderValues = {};
 
   for (const def of template.placeholders) {
@@ -41,6 +41,31 @@ export function resolveValues(
     if (def.type === "currency" && values[def.key]) {
       values[`${def.key}_fmt`] = formatINR(values[def.key]);
     }
+  }
+
+  // Textarea placeholders get a comma-joined twin: marketplaces → marketplaces_joined
+  for (const def of template.placeholders) {
+    if (def.type === "textarea" && values[def.key]) {
+      values[`${def.key}_joined`] = splitLines(values[def.key]).join(", ");
+    }
+  }
+
+  // Data-only percentage derivations (usable by DB templates)
+  for (const rule of template.derived ?? []) {
+    if (!rule.key || !rule.source) continue;
+    values[rule.key] = formatINR((parseAmount(values[rule.source]) * Number(rule.pct || 0)) / 100);
+  }
+
+  // Built-in: split a `timeline_days` number into three phases
+  const days = Number(values.timeline_days);
+  if (Number.isFinite(days) && days > 0) {
+    const third = Math.round(days / 3);
+    values.phase_1_range = `Days 1–${third}`;
+    values.phase_2_range = `Days ${third + 1}–${third * 2}`;
+    values.phase_3_range = `Days ${third * 2 + 1}–${days}`;
+    values.phase_1_short = `01–${String(third).padStart(2, "0")}`;
+    values.phase_2_short = `${third + 1}–${third * 2}`;
+    values.phase_3_short = `${third * 2 + 1}–${days}`;
   }
 
   if (template.derive) Object.assign(values, template.derive(values));

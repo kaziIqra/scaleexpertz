@@ -1,5 +1,4 @@
 import type { AuditTemplate } from "../types";
-import { formatINR, parseAmount } from "../interpolate";
 
 /**
  * Growth Audit & Execution Blueprint — E-commerce / D2C product brand.
@@ -33,27 +32,11 @@ export const ecommerceGrowthAudit: AuditTemplate = {
         "Business, market and competitor understanding\nA stronger USP and brand positioning\nSales-focused marketing\nMeta Ads and Google Ads\nCustom e-commerce website, online selling and shipping integration\nCreative, UGC, models, influencers, creators and production\nAmazon, Flipkart, Myntra, Meesho and other relevant marketplaces",
     },
   ],
-  derive: (v) => {
-    const total = parseAmount(v.investment_total);
-    const days = Number(v.timeline_days) || 90;
-    const third = Math.round(days / 3);
-    return {
-      milestone_1_amount: formatINR(total * 0.5),
-      milestone_2_amount: formatINR(total * 0.3),
-      milestone_3_amount: formatINR(total * 0.2),
-      phase_1_range: `Days 1–${third}`,
-      phase_2_range: `Days ${third + 1}–${third * 2}`,
-      phase_3_range: `Days ${third * 2 + 1}–${days}`,
-      phase_1_short: `01–${String(third).padStart(2, "0")}`,
-      phase_2_short: `${third + 1}–${third * 2}`,
-      phase_3_short: `${third * 2 + 1}–${days}`,
-      marketplaces_joined: (v.marketplaces || "")
-        .split(/\r?\n/)
-        .map((s) => s.trim())
-        .filter(Boolean)
-        .join(", "),
-    };
-  },
+  derived: [
+    { key: "milestone_1_amount", source: "investment_total", pct: 50 },
+    { key: "milestone_2_amount", source: "investment_total", pct: 30 },
+    { key: "milestone_3_amount", source: "investment_total", pct: 20 },
+  ],
   pages: [
     {
       id: "cover",

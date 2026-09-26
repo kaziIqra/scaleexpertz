@@ -183,6 +183,18 @@ export interface AuditPage {
 
 export type PlaceholderValues = Record<string, string>;
 
+/**
+ * Data-only derivation: `{{key}}` = formatted INR of `source` × pct / 100.
+ * Lets DB templates compute milestone splits without code.
+ */
+export interface DerivedRule {
+  key: string;
+  source: string;
+  pct: number;
+}
+
+export type TemplateSource = "code" | "custom";
+
 export interface AuditTemplate {
   slug: string;
   version: number;
@@ -191,9 +203,14 @@ export interface AuditTemplate {
   /** Appears in the page footer: "ScaleXpertz | {docTitle}". May use tokens. */
   docTitle: string;
   placeholders: PlaceholderDef[];
-  /** Compute extra tokens from the stored values (e.g. milestone amounts). */
+  /** Percentage-of-amount tokens (e.g. milestone amounts). */
+  derived?: DerivedRule[];
+  /** Code templates may add arbitrary computed tokens. */
   derive?: (values: PlaceholderValues) => PlaceholderValues;
   pages: AuditPage[];
+  source?: TemplateSource;
+  /** DB id for custom templates. */
+  id?: string;
 }
 
 /** Template metadata safe to send to the client (no functions/pages). */
@@ -202,8 +219,17 @@ export interface AuditTemplateSummary {
   version: number;
   name: string;
   description: string;
+  docTitle: string;
   placeholders: PlaceholderDef[];
+  derived: DerivedRule[];
   pageCount: number;
+  source: TemplateSource;
+  updated_at?: string;
+}
+
+/** Full editable template as sent to / from the admin template editor. */
+export interface AuditTemplateDoc extends AuditTemplateSummary {
+  pages: AuditPage[];
 }
 
 // ---------------------------------------------------------------- audits

@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { LuLogOut, LuUsers, LuFileText } from "react-icons/lu";
+import { LuLogOut, LuUsers, LuFileText, LuLayoutTemplate } from "react-icons/lu";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useAdminAuth } from "./AdminAuthProvider";
 
 const TABS = [
   { href: "/admin", label: "Leads", icon: LuUsers, exact: true },
   { href: "/admin/audits", label: "Audits", icon: LuFileText, exact: false },
+  { href: "/admin/templates", label: "Templates", icon: LuLayoutTemplate, exact: false },
 ];
 
 export const adminBtnClass =

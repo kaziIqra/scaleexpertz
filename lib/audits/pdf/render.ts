@@ -1,12 +1,12 @@
 import React from "react";
 import { renderToBuffer } from "@react-pdf/renderer";
-import type { AuditPage, AuditTemplate, PlaceholderValues } from "../types";
-import { interpolatePages, resolveValues } from "../interpolate";
+import type { AuditPage, PlaceholderValues } from "../types";
+import { interpolatePages, resolveValues, type ResolvableTemplate } from "../interpolate";
 import { registerFonts } from "./fonts";
 import AuditDocument from "./AuditDocument";
 
 export interface RenderInput {
-  template: Pick<AuditTemplate, "placeholders" | "derive" | "docTitle">;
+  template: ResolvableTemplate;
   placeholderValues: PlaceholderValues;
   sections: AuditPage[];
 }

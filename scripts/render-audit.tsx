@@ -5,7 +5,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { getTemplate, listTemplateSummaries } from "../lib/audits/templates";
+import { getTemplate, TEMPLATES } from "../lib/audits/templates";
 import { renderAuditPdf } from "../lib/audits/pdf/render";
 
 async function main() {
@@ -14,7 +14,7 @@ async function main() {
 
   const template = getTemplate(slug);
   if (!template) {
-    console.error(`Unknown template "${slug}". Available:`, listTemplateSummaries().map((t) => t.slug));
+    console.error(`Unknown template "${slug}". Available:`, Object.keys(TEMPLATES));
     process.exit(1);
   }
 

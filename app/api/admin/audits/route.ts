@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { isAuthorized, unauthorized } from "@/lib/adminAuth";
-import { getTemplate } from "@/lib/audits/templates";
+import { loadTemplate } from "@/lib/audits/templateStore";
 import type { PlaceholderValues } from "@/lib/audits/types";
 
 export const dynamic = "force-dynamic";
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const template = body.template_slug ? getTemplate(body.template_slug) : undefined;
+  const template = body.template_slug ? await loadTemplate(body.template_slug) : null;
   if (!template) {
     return NextResponse.json({ error: "Unknown template" }, { status: 400 });
   }

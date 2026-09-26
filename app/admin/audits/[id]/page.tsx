@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import { LuArrowLeft, LuRefreshCw, LuSave, LuDownload, LuEye, LuSparkles } from "react-icons/lu";
+import { useParams, useRouter } from "next/navigation";
+import { LuArrowLeft, LuRefreshCw, LuSave, LuDownload, LuEye, LuSparkles, LuLayoutTemplate } from "react-icons/lu";
 import AdminHeader, { adminBtnClass, adminAccentBtnClass } from "@/components/admin/AdminHeader";
 import { useAdminAuth } from "@/components/admin/AdminAuthProvider";
 import PlaceholderForm from "@/components/admin/audits/PlaceholderForm";
@@ -15,6 +15,7 @@ import type { AuditPage, AuditTemplateSummary, ClientAudit, PlaceholderValues } 
 export default function AuditEditorPage() {
   const params = useParams<{ id: string }>();
   const id = params.id;
+  const router = useRouter();
   const { authFetch } = useAdminAuth();
 
   const [audit, setAudit] = useState<ClientAudit | null>(null);
@@ -165,6 +166,27 @@ export default function AuditEditorPage() {
     }
   };
 
+  const saveAsTemplate = async () => {
+    const name = prompt("Template name:", `${values.industry || audit?.industry || "New"} Growth Audit`);
+    if (!name?.trim()) return;
+    if (dirty) {
+      const ok = await save();
+      if (!ok) return;
+    }
+    const res = await authFetch("/api/admin/templates", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: name.trim(), from_audit: id }),
+    });
+    const data = await res.json();
+    if (res.ok && data.template?.slug) {
+      showToast("Template created");
+      router.push(`/admin/templates/${data.template.slug}`);
+    } else {
+      setError(data.error || "Could not create template.");
+    }
+  };
+
   const download = async () => {
     const res = await authFetch(`/api/admin/audits/${id}/pdf`);
     const data = await res.json();
@@ -226,12 +248,20 @@ export default function AuditEditorPage() {
               </div>
             ) : null}
           </div>
-          {audit?.pdf_path ? (
-            <button onClick={download} className={adminBtnClass}>
-              <LuDownload size={13} />
-              <span>Download v{audit.version}</span>
-            </button>
-          ) : null}
+          <div className="flex items-center gap-2">
+            {audit ? (
+              <button onClick={saveAsTemplate} title="Turn this audit's pages into a reusable template" className={adminBtnClass}>
+                <LuLayoutTemplate size={13} />
+                <span>Save as template</span>
+              </button>
+            ) : null}
+            {audit?.pdf_path ? (
+              <button onClick={download} className={adminBtnClass}>
+                <LuDownload size={13} />
+                <span>Download v{audit.version}</span>
+              </button>
+            ) : null}
+          </div>
         </div>
 
         {error && (

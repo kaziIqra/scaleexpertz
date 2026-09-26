@@ -55,3 +55,26 @@ alter table public.client_audits enable row level security;
 insert into storage.buckets (id, name, public)
 values ('audits', 'audits', false)
 on conflict (id) do nothing;
+
+-- ---------------------------------------------------------------------------
+-- Custom audit templates created by admins in the panel.
+-- Code templates (lib/audits/templates) stay read-only; custom ones live here
+-- and share the same slug namespace.
+-- ---------------------------------------------------------------------------
+
+create table if not exists public.audit_templates (
+  id uuid primary key default gen_random_uuid(),
+  slug text not null unique,
+  name text not null,
+  description text not null default '',
+  doc_title text not null default '{{industry}} Growth Blueprint',
+  placeholders jsonb not null default '[]'::jsonb,   -- PlaceholderDef[]
+  derived jsonb not null default '[]'::jsonb,        -- DerivedRule[]
+  pages jsonb not null default '[]'::jsonb,          -- AuditPage[]
+  version int not null default 1,
+  is_active boolean not null default true,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.audit_templates enable row level security;
