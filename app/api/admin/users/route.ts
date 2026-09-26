@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabase, isSupabaseConfigured, friendlyDbError } from "@/lib/supabase";
 import {
   getSession,
   unauthorized,
@@ -26,10 +26,7 @@ export async function GET(request: Request) {
 
   const { data, error } = await supabase.from("admin_users").select(PUBLIC_COLUMNS).order("created_at", { ascending: true });
   if (error) {
-    return NextResponse.json(
-      { error: `${error.message}. Run the admin_users SQL from supabase/schema.sql.` },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: friendlyDbError(error) }, { status: 500 });
   }
 
   const envOwner = process.env.ADMIN_USERNAME
@@ -86,7 +83,7 @@ export async function POST(request: Request) {
     .single();
 
   if (error) {
-    const msg = error.code === "23505" ? "Username already exists." : error.message;
+    const msg = error.code === "23505" ? "Username already exists." : friendlyDbError(error);
     return NextResponse.json({ error: msg }, { status: error.code === "23505" ? 409 : 500 });
   }
   return NextResponse.json({ success: true, user: data as Partial<AdminUserRow> }, { status: 201 });

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabase, isSupabaseConfigured, friendlyDbError } from "@/lib/supabase";
 import { isAuthorized, unauthorized, getSession } from "@/lib/adminAuth";
 import { loadTemplate } from "@/lib/audits/templateStore";
 import type { PlaceholderValues } from "@/lib/audits/types";
@@ -28,7 +28,7 @@ export async function GET(request: Request) {
 
   if (error) {
     console.error("List audits error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: friendlyDbError(error) }, { status: 500 });
   }
   return NextResponse.json({ success: true, audits: data ?? [] });
 }
@@ -92,7 +92,7 @@ export async function POST(request: Request) {
 
   if (error) {
     console.error("Create audit error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: friendlyDbError(error) }, { status: 500 });
   }
   return NextResponse.json({ success: true, audit: data }, { status: 201 });
 }

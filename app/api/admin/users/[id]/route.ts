@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabase, isSupabaseConfigured, friendlyDbError } from "@/lib/supabase";
 import { getSession, unauthorized, forbidden, hashPassword, MIN_PASSWORD_LENGTH } from "@/lib/adminAuth";
 
 export const dynamic = "force-dynamic";
@@ -47,7 +47,7 @@ export async function PATCH(request: Request, { params }: Ctx) {
   if (!Object.keys(patch).length) return NextResponse.json({ error: "Nothing to update" }, { status: 400 });
 
   const { data, error } = await supabase.from("admin_users").update(patch).eq("id", id).select(PUBLIC_COLUMNS).maybeSingle();
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) return NextResponse.json({ error: friendlyDbError(error) }, { status: 500 });
   if (!data) return NextResponse.json({ error: "User not found" }, { status: 404 });
   return NextResponse.json({ success: true, user: data });
 }
@@ -63,7 +63,7 @@ export async function DELETE(request: Request, { params }: Ctx) {
   if (session.id === id) return NextResponse.json({ error: "You cannot delete yourself." }, { status: 400 });
 
   const { error, count } = await supabase.from("admin_users").delete({ count: "exact" }).eq("id", id);
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) return NextResponse.json({ error: friendlyDbError(error) }, { status: 500 });
   if (!count) return NextResponse.json({ error: "User not found" }, { status: 404 });
   return NextResponse.json({ success: true, id });
 }

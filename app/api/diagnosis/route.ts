@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabase, friendlyDbError } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const payload: Record<string, any> = {
+    const payload: Record<string, string | null> = {
       name: name.trim(),
       company_name: company_name.trim(),
       website: typeof website === "string" && website.trim() ? website.trim() : null,
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error("Supabase insert error:", error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: friendlyDbError(error) }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, lead: data }, { status: 201 });

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabase, isSupabaseConfigured, friendlyDbError } from "@/lib/supabase";
 import { isAuthorized, unauthorized, getSession } from "@/lib/adminAuth";
 import { listTemplates, loadTemplate, uniqueSlug, rowToTemplate, toDoc, type TemplateRow } from "@/lib/audits/templateStore";
 import { BASE_PLACEHOLDERS, blankPage, blankBlock } from "@/lib/audits/blank";
@@ -75,10 +75,7 @@ export async function POST(request: Request) {
 
   if (error) {
     console.error("Create template error:", error);
-    return NextResponse.json(
-      { error: `${error.message}. Make sure the audit_templates table exists (see supabase/schema.sql).` },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: friendlyDbError(error) }, { status: 500 });
   }
   const row = data as TemplateRow;
   return NextResponse.json({ success: true, template: toDoc(rowToTemplate(row), row.updated_at) }, { status: 201 });

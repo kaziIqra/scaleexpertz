@@ -32,3 +32,29 @@ export function isSupabaseConfigured() {
     ) && !supabaseKey.includes("build_placeholder")
   );
 }
+
+/** True when the server-side key is a service_role key (bypasses RLS). */
+export function isServiceRoleKey(): boolean {
+  try {
+    const payload = JSON.parse(Buffer.from(supabaseKey.split(".")[1], "base64url").toString("utf-8"));
+    return payload?.role === "service_role";
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Turn a PostgREST error into an actionable message. RLS violations (42501)
+ * almost always mean the deployment is running with the anon key.
+ */
+export function friendlyDbError(error: { code?: string; message: string }): string {
+  if (error.code === "42501" || /row-level security/i.test(error.message)) {
+    return isServiceRoleKey()
+      ? `${error.message}. The service role key is set, so check the table's RLS policies.`
+      : `${error.message}. The server is using the anon key; set SUPABASE_SERVICE_ROLE_KEY in your hosting environment variables (Netlify: Site settings → Environment variables) and redeploy.`;
+  }
+  if (error.code === "42P01" || /schema cache/i.test(error.message)) {
+    return `${error.message}. Run supabase/schema.sql in the Supabase SQL Editor.`;
+  }
+  return error.message;
+}

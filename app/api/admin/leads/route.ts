@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabase, isSupabaseConfigured, friendlyDbError } from "@/lib/supabase";
 import { isAuthorized } from "@/lib/adminAuth";
 
 export const dynamic = "force-dynamic";
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
 
     if (error) {
       console.error("Fetch leads error:", error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: friendlyDbError(error) }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, leads: data || [] }, { status: 200 });
