@@ -256,7 +256,7 @@ Date: ${new Date(lead.created_at).toLocaleString()}`;
               className={adminAccentBtnClass}
             >
               <LuDownload size={13} />
-              <span>Export Excel (.xlsx)</span>
+              <span className="hidden sm:inline">Export Excel (.xlsx)</span>
             </button>
           </>
         }

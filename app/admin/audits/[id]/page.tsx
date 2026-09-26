@@ -220,7 +220,7 @@ export default function AuditEditorPage() {
             </button>
             <button onClick={generate} disabled={generating || loading} title="Save, generate and download PDF" className={adminAccentBtnClass}>
               {generating ? <LuRefreshCw className="animate-spin" size={13} /> : <LuSparkles size={13} />}
-              <span>Generate PDF</span>
+              <span className="hidden sm:inline">Generate PDF</span>
             </button>
           </>
         }

@@ -96,7 +96,7 @@ export default function TemplatesPage() {
             </button>
             <button onClick={() => openCreate()} className={adminAccentBtnClass}>
               <LuPlus size={13} />
-              <span>New template</span>
+              <span className="hidden sm:inline">New template</span>
             </button>
           </>
         }

@@ -175,7 +175,7 @@ export default function TemplateEditorPage() {
             </button>
             <button onClick={save} disabled={saving || loading || !dirty || readOnly} className={adminAccentBtnClass}>
               {saving ? <LuRefreshCw className="animate-spin" size={13} /> : <LuSave size={13} />}
-              <span>{readOnly ? "Read-only" : dirty ? "Save template" : "Saved"}</span>
+              <span className="hidden sm:inline">{readOnly ? "Read-only" : dirty ? "Save template" : "Saved"}</span>
             </button>
           </>
         }

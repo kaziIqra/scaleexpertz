@@ -20,55 +20,80 @@ export const adminBtnClass =
 export const adminAccentBtnClass =
   "inline-flex items-center gap-1.5 rounded-lg border border-accent/30 bg-accent/15 px-3 py-1.5 text-xs font-bold text-amber hover:bg-accent/25 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed";
 
+const logoutClass =
+  "inline-flex items-center gap-1 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] px-2.5 sm:px-3 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 hover:border-rose-500/30 hover:bg-rose-500/10 transition-all cursor-pointer shrink-0";
+
+function Tabs({ pathname, role }: { pathname: string; role: "owner" | "admin" }) {
+  return (
+    <>
+      {TABS.filter((tab) => !tab.ownerOnly || role === "owner").map((tab) => {
+        const active = tab.exact ? pathname === tab.href : pathname.startsWith(tab.href);
+        const Icon = tab.icon;
+        return (
+          <Link
+            key={tab.href}
+            href={tab.href}
+            className={`inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
+              active
+                ? "bg-white dark:bg-[#1d1d24] text-amber shadow-sm"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
+          >
+            <Icon size={13} />
+            <span>{tab.label}</span>
+          </Link>
+        );
+      })}
+    </>
+  );
+}
+
 export default function AdminHeader({ actions }: { actions?: ReactNode }) {
   const pathname = usePathname();
   const { logout, user } = useAdminAuth();
 
   return (
-    <header className="sticky top-0 z-30 border-b border-black/10 dark:border-white/10 bg-white/80 dark:bg-[#111115]/90 backdrop-blur-xl px-4 sm:px-8 py-3">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
-        <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+    <header className="sticky top-0 z-30 border-b border-black/10 dark:border-white/10 bg-white/80 dark:bg-[#111115]/90 backdrop-blur-xl px-3 sm:px-8 py-2.5 sm:py-3">
+      <div className="mx-auto flex max-w-7xl flex-col gap-2 md:flex-row md:items-center md:justify-between md:gap-3">
+        {/* Row 1 on mobile: brand + actions. On md+: brand + tabs on the left. */}
+        <div className="flex items-center justify-between gap-2 md:justify-start md:gap-5 min-w-0">
           <Link
             href="/"
-            className="font-display text-lg font-extrabold tracking-tight text-slate-900 dark:text-white hover:text-amber transition-colors shrink-0"
+            className="font-display text-base sm:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white hover:text-amber transition-colors shrink-0"
           >
             ScaleXpertz<span className="text-accent">.</span>
           </Link>
 
-          <nav className="flex items-center gap-1 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] p-1">
-            {TABS.filter((tab) => !tab.ownerOnly || user.role === "owner").map((tab) => {
-              const active = tab.exact ? pathname === tab.href : pathname.startsWith(tab.href);
-              const Icon = tab.icon;
-              return (
-                <Link
-                  key={tab.href}
-                  href={tab.href}
-                  className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
-                    active
-                      ? "bg-white dark:bg-[#1d1d24] text-amber shadow-sm"
-                      : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                  }`}
-                >
-                  <Icon size={13} />
-                  <span>{tab.label}</span>
-                </Link>
-              );
-            })}
+          <nav className="hidden md:flex items-center gap-1 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] p-1">
+            <Tabs pathname={pathname} role={user.role} />
           </nav>
+
+          <div className="flex md:hidden items-center gap-1.5 min-w-0">
+            <ThemeToggle />
+            {actions}
+            <button onClick={logout} title="Log out" className={logoutClass}>
+              <LuLogOut size={13} />
+            </button>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* Row 2 on mobile: scrollable tabs */}
+        <nav className="flex md:hidden items-center gap-1 overflow-x-auto rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] p-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <Tabs pathname={pathname} role={user.role} />
+        </nav>
+
+        {/* md+: right cluster */}
+        <div className="hidden md:flex items-center gap-2 sm:gap-3">
           <ThemeToggle />
           {actions}
-          <span className="hidden md:inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-[11px] text-slate-500 dark:text-slate-400" title={`Signed in as @${user.username} (${user.role})`}>
+          <span
+            className="hidden lg:inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-[11px] text-slate-500 dark:text-slate-400"
+            title={`Signed in as @${user.username} (${user.role})`}
+          >
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             {user.name}
           </span>
-          <button
-            onClick={logout}
-            title="Log out"
-            className="inline-flex items-center gap-1 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 hover:border-rose-500/30 hover:bg-rose-500/10 transition-all cursor-pointer"
-          >
+          <button onClick={logout} title="Log out" className={logoutClass}>
             <LuLogOut size={13} />
             <span className="hidden sm:inline">Exit</span>
           </button>

@@ -144,7 +144,7 @@ export default function AuditsListPage() {
             </button>
             <button onClick={openCreate} disabled={!templates.length} className={adminAccentBtnClass}>
               <LuPlus size={13} />
-              <span>New audit</span>
+              <span className="hidden sm:inline">New audit</span>
             </button>
           </>
         }

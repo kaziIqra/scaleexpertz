@@ -126,7 +126,7 @@ export default function UsersPage() {
             {isOwner ? (
               <button onClick={() => setCreating(true)} className={adminAccentBtnClass}>
                 <LuPlus size={13} />
-                <span>Add user</span>
+                <span className="hidden sm:inline">Add user</span>
               </button>
             ) : null}
           </>
