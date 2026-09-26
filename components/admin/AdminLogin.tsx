@@ -5,18 +5,26 @@ import Link from "next/link";
 import { LuLock, LuRefreshCw } from "react-icons/lu";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
+import type { AdminUser } from "./AdminAuthProvider";
+
 interface Props {
   initialError?: string | null;
-  onSuccess: (token: string) => void;
+  onSuccess: (token: string, user: AdminUser) => void;
 }
 
 const inputClass =
   "w-full rounded-xl border border-black/10 dark:border-white/10 bg-slate-50 dark:bg-white/[0.04] px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 focus:border-amber focus:ring-1 focus:ring-amber outline-none transition-all";
 
 export default function AdminLogin({ initialError, onSuccess }: Props) {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(() => {
+    try {
+      return localStorage.getItem("scalexpertz_saved_username") ?? "";
+    } catch {
+      return "";
+    }
+  });
   const [password, setPassword] = useState("");
-  const [rememberCreds, setRememberCreds] = useState(true);
+  const [rememberUser, setRememberUser] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(initialError ?? null);
 
@@ -33,19 +41,15 @@ export default function AdminLogin({ initialError, onSuccess }: Props) {
       });
       const data = await res.json();
 
-      if (res.ok && data.token) {
+      if (res.ok && data.token && data.user) {
         try {
-          if (rememberCreds) {
-            localStorage.setItem("scalexpertz_saved_username", username);
-            localStorage.setItem("scalexpertz_saved_password", password);
-            localStorage.setItem("scalexpertz_remember_creds", "true");
-          } else {
-            localStorage.removeItem("scalexpertz_saved_username");
-            localStorage.removeItem("scalexpertz_saved_password");
-            localStorage.setItem("scalexpertz_remember_creds", "false");
-          }
+          // Never persist passwords; only the username as a convenience.
+          localStorage.removeItem("scalexpertz_saved_password");
+          localStorage.removeItem("scalexpertz_remember_creds");
+          if (rememberUser) localStorage.setItem("scalexpertz_saved_username", username.trim());
+          else localStorage.removeItem("scalexpertz_saved_username");
         } catch {}
-        onSuccess(data.token);
+        onSuccess(data.token, data.user);
       } else {
         setError(data.error || "Invalid credentials.");
       }
@@ -72,7 +76,7 @@ export default function AdminLogin({ initialError, onSuccess }: Props) {
             ScaleXpertz Admin
           </h1>
           <p className="mt-2 text-xs text-slate-600 dark:text-slate-400 font-medium">
-            Enter your credentials to access leads and client audits.
+            Sign in with your admin account.
           </p>
 
           <form onSubmit={handleLogin} className="mt-6 flex flex-col gap-4 text-left">
@@ -109,11 +113,11 @@ export default function AdminLogin({ initialError, onSuccess }: Props) {
             <label className="flex items-center gap-2.5 cursor-pointer select-none text-xs text-slate-600 dark:text-slate-400">
               <input
                 type="checkbox"
-                checked={rememberCreds}
-                onChange={(e) => setRememberCreds(e.target.checked)}
+                checked={rememberUser}
+                onChange={(e) => setRememberUser(e.target.checked)}
                 className="h-4 w-4 rounded border-slate-300 text-amber focus:ring-amber accent-amber cursor-pointer"
               />
-              <span>Remember credentials on this device</span>
+              <span>Remember my username on this device</span>
             </label>
 
             {error && (

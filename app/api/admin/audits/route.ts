@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
-import { isAuthorized, unauthorized } from "@/lib/adminAuth";
+import { isAuthorized, unauthorized, getSession } from "@/lib/adminAuth";
 import { loadTemplate } from "@/lib/audits/templateStore";
 import type { PlaceholderValues } from "@/lib/audits/types";
 
@@ -84,6 +84,7 @@ export async function POST(request: Request) {
         placeholder_values: values,
         sections: template.pages, // snapshot; {{tokens}} stay intact until render
         status: "draft",
+        created_by: getSession(request)?.username ?? null,
       },
     ])
     .select("*")

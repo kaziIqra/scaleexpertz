@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
-import { isAuthorized, unauthorized } from "@/lib/adminAuth";
+import { isAuthorized, unauthorized, getSession } from "@/lib/adminAuth";
 import { listTemplates, loadTemplate, uniqueSlug, rowToTemplate, toDoc, type TemplateRow } from "@/lib/audits/templateStore";
 import { BASE_PLACEHOLDERS, blankPage, blankBlock } from "@/lib/audits/blank";
 import type { AuditPage, ClientAudit, DerivedRule, PlaceholderDef } from "@/lib/audits/types";
@@ -69,7 +69,7 @@ export async function POST(request: Request) {
   const slug = await uniqueSlug(name);
   const { data, error } = await supabase
     .from("audit_templates")
-    .insert([{ slug, name, description, doc_title: docTitle, placeholders, derived, pages }])
+    .insert([{ slug, name, description, doc_title: docTitle, placeholders, derived, pages, created_by: getSession(request)?.username ?? null }])
     .select("*")
     .single();
 

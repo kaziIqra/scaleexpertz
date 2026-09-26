@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { LuLogOut, LuUsers, LuFileText, LuLayoutTemplate } from "react-icons/lu";
+import { LuLogOut, LuUsers, LuFileText, LuLayoutTemplate, LuUserCog } from "react-icons/lu";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useAdminAuth } from "./AdminAuthProvider";
 
@@ -11,6 +11,7 @@ const TABS = [
   { href: "/admin", label: "Leads", icon: LuUsers, exact: true },
   { href: "/admin/audits", label: "Audits", icon: LuFileText, exact: false },
   { href: "/admin/templates", label: "Templates", icon: LuLayoutTemplate, exact: false },
+  { href: "/admin/users", label: "Users", icon: LuUserCog, exact: false, ownerOnly: true },
 ];
 
 export const adminBtnClass =
@@ -21,7 +22,7 @@ export const adminAccentBtnClass =
 
 export default function AdminHeader({ actions }: { actions?: ReactNode }) {
   const pathname = usePathname();
-  const { logout } = useAdminAuth();
+  const { logout, user } = useAdminAuth();
 
   return (
     <header className="sticky top-0 z-30 border-b border-black/10 dark:border-white/10 bg-white/80 dark:bg-[#111115]/90 backdrop-blur-xl px-4 sm:px-8 py-3">
@@ -35,7 +36,7 @@ export default function AdminHeader({ actions }: { actions?: ReactNode }) {
           </Link>
 
           <nav className="flex items-center gap-1 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] p-1">
-            {TABS.map((tab) => {
+            {TABS.filter((tab) => !tab.ownerOnly || user.role === "owner").map((tab) => {
               const active = tab.exact ? pathname === tab.href : pathname.startsWith(tab.href);
               const Icon = tab.icon;
               return (
@@ -59,6 +60,10 @@ export default function AdminHeader({ actions }: { actions?: ReactNode }) {
         <div className="flex items-center gap-2 sm:gap-3">
           <ThemeToggle />
           {actions}
+          <span className="hidden md:inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-[11px] text-slate-500 dark:text-slate-400" title={`Signed in as @${user.username} (${user.role})`}>
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            {user.name}
+          </span>
           <button
             onClick={logout}
             title="Log out"
