@@ -22,3 +22,36 @@ create index if not exists founder_growth_leads_created_at_idx
 -- Lock table down. Server routes use the service role key, which bypasses RLS.
 -- Anon/public clients get no access.
 alter table public.founder_growth_leads enable row level security;
+
+-- ---------------------------------------------------------------------------
+-- Client audits (admin-generated Growth Audit PDFs)
+-- Templates live in code (lib/audits/templates). Each audit stores a snapshot
+-- of the template pages so later template edits do not change existing docs.
+-- ---------------------------------------------------------------------------
+
+create table if not exists public.client_audits (
+  id uuid primary key default gen_random_uuid(),
+  template_slug text not null,
+  template_version int not null default 1,
+  client_name text not null,
+  company text not null,
+  industry text,
+  placeholder_values jsonb not null default '{}'::jsonb,
+  sections jsonb not null,            -- AuditPage[] snapshot, {{tokens}} intact
+  status text not null default 'draft' check (status in ('draft', 'final')),
+  pdf_path text,
+  version int not null default 1,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists client_audits_updated_at_idx
+  on public.client_audits (updated_at desc);
+
+alter table public.client_audits enable row level security;
+
+-- Private bucket for generated PDFs. Server routes use the service role key,
+-- downloads go through short-lived signed URLs.
+insert into storage.buckets (id, name, public)
+values ('audits', 'audits', false)
+on conflict (id) do nothing;
