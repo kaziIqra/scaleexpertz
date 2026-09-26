@@ -1,14 +1,10 @@
 "use client";
 
 import { useState, useEffect, useCallback, useMemo } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   LuSearch,
   LuRefreshCw,
   LuDownload,
-  LuLogOut,
-  LuLock,
   LuTrendingUp,
   LuUsers,
   LuCalendar,
@@ -24,7 +20,8 @@ import {
   LuBuilding,
 } from "react-icons/lu";
 import * as XLSX from "xlsx";
-import ThemeToggle from "@/components/ui/ThemeToggle";
+import AdminHeader, { adminBtnClass, adminAccentBtnClass } from "@/components/admin/AdminHeader";
+import { useAdminAuth } from "@/components/admin/AdminAuthProvider";
 
 interface Lead {
   id: string;
@@ -39,14 +36,8 @@ interface Lead {
   created_at: string;
 }
 
-export default function AdminPage() {
-  const router = useRouter();
-  const [token, setToken] = useState<string | null>(null);
-  const [usernameInput, setUsernameInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
-  const [rememberCreds, setRememberCreds] = useState(true);
-  const [authLoading, setAuthLoading] = useState(false);
-  const [authError, setAuthError] = useState<string | null>(null);
+export default function AdminLeadsPage() {
+  const { authFetch } = useAdminAuth();
   const [dashboardError, setDashboardError] = useState<string | null>(null);
 
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -58,38 +49,14 @@ export default function AdminPage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // 1. Prefetch home page and load local session + saved credentials on mount
-  useEffect(() => {
-    // Prefetch homepage for instant zero-latency exit
-    router.prefetch("/");
-
-    // Check active session
-    const savedToken = localStorage.getItem("scalexpertz_admin_token");
-    if (savedToken) {
-      setToken(savedToken);
-    } else {
-      setLoading(false);
-    }
-  }, [router]);
-
-  // 2. Fetch leads from API
+  // Fetch leads from API
   const fetchLeads = useCallback(
-    async (authToken: string, isSilent = false) => {
+    async (isSilent = false) => {
       if (!isSilent) setIsRefreshing(true);
       setDashboardError(null);
       try {
-        const res = await fetch("/api/admin/leads", {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
-
-        if (res.status === 401) {
-          localStorage.removeItem("scalexpertz_admin_token");
-          setToken(null);
-          setAuthError("Session expired. Please log in again.");
-          return;
-        }
+        const res = await authFetch("/api/admin/leads");
+        if (res.status === 401) return;
 
         const data = await res.json();
         if (data.success && Array.isArray(data.leads)) {
@@ -105,90 +72,34 @@ export default function AdminPage() {
         setIsRefreshing(false);
       }
     },
-    []
+    [authFetch]
   );
 
-  // 3. Handle login submission
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setAuthLoading(true);
-    setAuthError(null);
-
-    try {
-      const res = await fetch("/api/admin/auth", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: usernameInput,
-          password: passwordInput,
-        }),
-      });
-
-      const data = await res.json();
-      if (res.ok && data.token) {
-        localStorage.setItem("scalexpertz_admin_token", data.token);
-
-        // Store or clear credentials locally based on preference
-        if (rememberCreds) {
-          localStorage.setItem("scalexpertz_saved_username", usernameInput);
-          localStorage.setItem("scalexpertz_saved_password", passwordInput);
-          localStorage.setItem("scalexpertz_remember_creds", "true");
-        } else {
-          localStorage.removeItem("scalexpertz_saved_username");
-          localStorage.removeItem("scalexpertz_saved_password");
-          localStorage.setItem("scalexpertz_remember_creds", "false");
-        }
-
-        setToken(data.token);
-        fetchLeads(data.token);
-      } else {
-        setAuthError(data.error || "Invalid credentials.");
-      }
-    } catch {
-      setAuthError("Unable to authenticate. Check connection.");
-    } finally {
-      setAuthLoading(false);
-    }
-  };
-
-  // Instant exit to dashboard
-  const handleLogout = () => {
-    localStorage.removeItem("scalexpertz_admin_token");
-    router.push("/");
-  };
-
-  // 4. Initial fetch & Auto-refresh polling
+  // Initial fetch & auto-refresh polling
   useEffect(() => {
-    if (!token) return;
+    // Kick off the first load outside the synchronous effect body.
+    const initial = setTimeout(() => fetchLeads(), 0);
 
-    fetchLeads(token);
-
-    // Refresh every 5 seconds silently without console noise
     const interval = setInterval(() => {
-      fetchLeads(token, true);
+      fetchLeads(true);
     }, 5000);
 
-    // Refresh immediately when tab gains focus
-    const onFocus = () => fetchLeads(token, true);
+    const onFocus = () => fetchLeads(true);
     window.addEventListener("focus", onFocus);
 
     return () => {
+      clearTimeout(initial);
       clearInterval(interval);
       window.removeEventListener("focus", onFocus);
     };
-  }, [token, fetchLeads]);
+  }, [fetchLeads]);
 
-  // 5. Delete lead
+  // Delete lead
   const handleDelete = async (id: string, name: string) => {
     if (!confirm(`Are you sure you want to delete lead for "${name}"?`)) return;
 
     try {
-      const res = await fetch(`/api/admin/leads?id=${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await authFetch(`/api/admin/leads?id=${id}`, { method: "DELETE" });
 
       if (res.ok) {
         setLeads((prev) => prev.filter((l) => l.id !== id));
@@ -218,6 +129,30 @@ Date: ${new Date(lead.created_at).toLocaleString()}`;
     setCopiedId(lead.id);
     setTimeout(() => setCopiedId(null), 2000);
   };
+
+  // 8. Filters & Search computation
+  const filteredLeads = useMemo(() => {
+    return leads.filter((lead) => {
+      const q = searchQuery.toLowerCase().trim();
+      const matchesSearch =
+        !q ||
+        lead.name?.toLowerCase().includes(q) ||
+        lead.work_email?.toLowerCase().includes(q) ||
+        lead.company_name?.toLowerCase().includes(q) ||
+        lead.whatsapp_number?.toLowerCase().includes(q) ||
+        lead.biggest_challenge?.toLowerCase().includes(q);
+
+      const matchesRevenue =
+        revenueFilter === "all" ||
+        lead.monthly_revenue_range?.toLowerCase().includes(revenueFilter.toLowerCase());
+
+      const matchesTeam =
+        teamSizeFilter === "all" ||
+        lead.team_size?.toLowerCase().includes(teamSizeFilter.toLowerCase());
+
+      return matchesSearch && matchesRevenue && matchesTeam;
+    });
+  }, [leads, searchQuery, revenueFilter, teamSizeFilter]);
 
   // 7. Export leads to native Excel (.xlsx) with auto-fitted column widths
   const handleExportExcel = () => {
@@ -277,30 +212,6 @@ Date: ${new Date(lead.created_at).toLocaleString()}`;
     );
   };
 
-  // 8. Filters & Search computation
-  const filteredLeads = useMemo(() => {
-    return leads.filter((lead) => {
-      const q = searchQuery.toLowerCase().trim();
-      const matchesSearch =
-        !q ||
-        lead.name?.toLowerCase().includes(q) ||
-        lead.work_email?.toLowerCase().includes(q) ||
-        lead.company_name?.toLowerCase().includes(q) ||
-        lead.whatsapp_number?.toLowerCase().includes(q) ||
-        lead.biggest_challenge?.toLowerCase().includes(q);
-
-      const matchesRevenue =
-        revenueFilter === "all" ||
-        lead.monthly_revenue_range?.toLowerCase().includes(revenueFilter.toLowerCase());
-
-      const matchesTeam =
-        teamSizeFilter === "all" ||
-        lead.team_size?.toLowerCase().includes(teamSizeFilter.toLowerCase());
-
-      return matchesSearch && matchesRevenue && matchesTeam;
-    });
-  }, [leads, searchQuery, revenueFilter, teamSizeFilter]);
-
   // 9. Quick KPI counts
   const stats = useMemo(() => {
     const today = new Date().toDateString();
@@ -322,126 +233,17 @@ Date: ${new Date(lead.created_at).toLocaleString()}`;
     };
   }, [leads]);
 
-  // LOGIN SCREEN
-  if (!token) {
-    return (
-      <div className="min-h-dvh flex flex-col items-center justify-center bg-[#f8f9fc] dark:bg-[#0a0a0d] p-4 text-slate-900 dark:text-white transition-colors duration-300 relative">
-        {/* Top right theme toggle */}
-        <div className="absolute top-5 right-5">
-          <ThemeToggle />
-        </div>
-
-        <div className="relative w-full max-w-md overflow-hidden rounded-3xl p-[1.5px] bg-gradient-to-b from-accent/50 via-amber/40 to-pink-500/40 shadow-[0_0_40px_rgba(212,175,55,0.15)]">
-          <div className="relative rounded-[22.5px] bg-white/95 dark:bg-[#121217]/95 p-8 sm:p-10 backdrop-blur-2xl text-center shadow-xl">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-accent/30 bg-accent/15 text-accent shadow-inner">
-              <LuLock size={26} />
-            </div>
-
-            <h1 className="mt-6 font-display text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-              ScaleXpertz Admin
-            </h1>
-            <p className="mt-2 text-xs text-slate-600 dark:text-slate-400 font-medium">
-              Enter your credentials to access founder growth diagnosis leads.
-            </p>
-
-            <form onSubmit={handleLogin} className="mt-6 flex flex-col gap-4 text-left">
-              <label className="grid gap-1.5">
-                <span className="font-mono text-[10px] uppercase tracking-widest text-amber font-bold">
-                  Username
-                </span>
-                <input
-                  type="text"
-                  required
-                  autoComplete="username"
-                  value={usernameInput}
-                  onChange={(e) => setUsernameInput(e.target.value)}
-                  placeholder="Enter username..."
-                  className="w-full rounded-xl border border-black/10 dark:border-white/10 bg-slate-50 dark:bg-white/[0.04] px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 focus:border-amber focus:ring-1 focus:ring-amber outline-none transition-all"
-                />
-              </label>
-
-              <label className="grid gap-1.5">
-                <span className="font-mono text-[10px] uppercase tracking-widest text-amber font-bold">
-                  Password
-                </span>
-                <input
-                  type="password"
-                  required
-                  autoComplete="current-password"
-                  value={passwordInput}
-                  onChange={(e) => setPasswordInput(e.target.value)}
-                  placeholder="Enter password..."
-                  className="w-full rounded-xl border border-black/10 dark:border-white/10 bg-slate-50 dark:bg-white/[0.04] px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 focus:border-amber focus:ring-1 focus:ring-amber outline-none transition-all"
-                />
-              </label>
-
-              {/* Remember credentials checkbox */}
-              <label className="flex items-center gap-2.5 cursor-pointer select-none text-xs text-slate-600 dark:text-slate-400">
-                <input
-                  type="checkbox"
-                  checked={rememberCreds}
-                  onChange={(e) => setRememberCreds(e.target.checked)}
-                  className="h-4 w-4 rounded border-slate-300 text-amber focus:ring-amber accent-amber cursor-pointer"
-                />
-                <span>Remember credentials on this device</span>
-              </label>
-
-              {authError && (
-                <p className="text-xs font-semibold text-rose-500 dark:text-rose-400 bg-rose-500/10 border border-rose-500/30 rounded-lg p-2.5 text-center">
-                  {authError}
-                </p>
-              )}
-
-              <button
-                type="submit"
-                disabled={authLoading}
-                className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-accent via-amber to-pink-500 py-3 text-sm font-extrabold text-ink shadow-lg shadow-accent/20 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 cursor-pointer"
-              >
-                {authLoading ? (
-                  <LuRefreshCw className="animate-spin" size={16} />
-                ) : (
-                  <span>Access Dashboard &rarr;</span>
-                )}
-              </button>
-
-              <div className="mt-2 text-center">
-                <Link
-                  href="/"
-                  className="text-xs font-mono text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
-                >
-                  &larr; Back to Website
-                </Link>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   // DASHBOARD SCREEN
   return (
     <div className="min-h-dvh bg-[#f8f9fc] dark:bg-[#09090b] text-slate-800 dark:text-slate-200 font-sans transition-colors duration-300">
-      {/* Top Navbar */}
-      <header className="sticky top-0 z-30 border-b border-black/10 dark:border-white/10 bg-white/80 dark:bg-[#111115]/90 backdrop-blur-xl px-4 sm:px-8 py-3.5">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link
-              href="/"
-              className="font-display text-lg font-extrabold tracking-tight text-slate-900 dark:text-white hover:text-amber transition-colors"
-            >
-              ScaleXpertz<span className="text-accent">.</span>
-            </Link>
-          </div>
-
-          <div className="flex items-center gap-2 sm:gap-3">
-            <ThemeToggle />
-
+      <AdminHeader
+        actions={
+          <>
             <button
-              onClick={() => fetchLeads(token)}
+              onClick={() => fetchLeads()}
               disabled={isRefreshing}
               title="Refresh leads"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-white hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-all cursor-pointer"
+              className={adminBtnClass}
             >
               <LuRefreshCw className={isRefreshing ? "animate-spin text-amber" : ""} size={13} />
               <span className="hidden sm:inline">Refresh</span>
@@ -451,23 +253,14 @@ Date: ${new Date(lead.created_at).toLocaleString()}`;
               onClick={handleExportExcel}
               disabled={!leads.length}
               title="Download Excel Workbook (.xlsx)"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-accent/30 bg-accent/15 px-3 py-1.5 text-xs font-bold text-amber hover:bg-accent/25 transition-all cursor-pointer disabled:opacity-50"
+              className={adminAccentBtnClass}
             >
               <LuDownload size={13} />
               <span>Export Excel (.xlsx)</span>
             </button>
-
-            <button
-              onClick={handleLogout}
-              title="Log out"
-              className="inline-flex items-center gap-1 rounded-lg border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 hover:border-rose-500/30 hover:bg-rose-500/10 transition-all cursor-pointer"
-            >
-              <LuLogOut size={13} />
-              <span className="hidden sm:inline">Exit</span>
-            </button>
-          </div>
-        </div>
-      </header>
+          </>
+        }
+      />
 
       {/* Main Content */}
       <main className="mx-auto max-w-7xl px-4 sm:px-8 py-6 sm:py-8 space-y-6">
@@ -475,7 +268,7 @@ Date: ${new Date(lead.created_at).toLocaleString()}`;
           <div className="rounded-2xl border border-rose-500/30 bg-rose-500/10 p-4 text-xs sm:text-sm text-rose-500 dark:text-rose-400 font-medium flex items-center justify-between gap-3">
             <span>{dashboardError}</span>
             <button
-              onClick={() => fetchLeads(token)}
+              onClick={() => fetchLeads()}
               className="px-3 py-1 bg-rose-500/20 hover:bg-rose-500/30 rounded-lg text-xs font-bold cursor-pointer transition-all shrink-0"
             >
               Retry

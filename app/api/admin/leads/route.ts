@@ -1,26 +1,8 @@
 import { NextResponse } from "next/server";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { isAuthorized } from "@/lib/adminAuth";
 
 export const dynamic = "force-dynamic";
-
-function isAuthorized(request: Request) {
-  const authHeader = request.headers.get("authorization") || "";
-  const token = authHeader.replace("Bearer ", "").trim();
-  const correctPassword = process.env.ADMIN_PASSWORD;
-
-  if (!token || !correctPassword) return false;
-
-  // Direct password match or encoded token match
-  if (token === correctPassword) return true;
-
-  try {
-    const decoded = Buffer.from(token, "base64").toString("utf-8");
-    const parts = decoded.split(":");
-    return parts[0] === "admin" && (parts[2] === correctPassword || parts[1] === correctPassword);
-  } catch {
-    return false;
-  }
-}
 
 export async function GET(request: Request) {
   if (!isAuthorized(request)) {
