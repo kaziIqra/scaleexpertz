@@ -3,12 +3,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { LuArrowLeft, LuRefreshCw, LuSave, LuDownload, LuEye, LuSparkles, LuLayoutTemplate } from "react-icons/lu";
+import { LuArrowLeft, LuRefreshCw, LuSave, LuDownload, LuEye, LuSparkles, LuLayoutTemplate, LuShare2 } from "react-icons/lu";
 import AdminHeader, { adminBtnClass, adminAccentBtnClass } from "@/components/admin/AdminHeader";
 import { useAdminAuth } from "@/components/admin/AdminAuthProvider";
 import PlaceholderForm from "@/components/admin/audits/PlaceholderForm";
 import SectionEditor from "@/components/admin/audits/SectionEditor";
 import PdfPreview from "@/components/admin/audits/PdfPreview";
+import ShareDialog from "@/components/admin/audits/ShareDialog";
 import { cardClass, chipClass, labelClass } from "@/components/admin/ui";
 import type { AuditPage, AuditTemplateSummary, ClientAudit, PlaceholderValues } from "@/lib/audits/types";
 
@@ -31,6 +32,7 @@ export default function AuditEditorPage() {
   const [previewing, setPreviewing] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [sharing, setSharing] = useState(false);
 
   // Snapshots of what was last saved / last previewed, so "dirty" and "stale"
   // are derived during render instead of tracked with effects.
@@ -261,6 +263,12 @@ export default function AuditEditorPage() {
                 <span>Download v{audit.version}</span>
               </button>
             ) : null}
+            {audit ? (
+              <button onClick={() => setSharing(true)} title="Share a client link" className={adminAccentBtnClass}>
+                <LuShare2 size={13} />
+                <span>Share</span>
+              </button>
+            ) : null}
           </div>
         </div>
 
@@ -320,6 +328,10 @@ export default function AuditEditorPage() {
           </div>
         ) : null}
       </main>
+
+      {sharing && audit ? (
+        <ShareDialog auditId={audit.id} company={values.company || audit.company} hasPdf={Boolean(audit.pdf_path)} onClose={() => setSharing(false)} />
+      ) : null}
 
       {toast ? (
         <div className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded-xl bg-slate-900 dark:bg-white px-4 py-2.5 text-xs font-semibold text-white dark:text-slate-900 shadow-xl">

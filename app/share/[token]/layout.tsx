@@ -1,0 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Growth Audit | ScaleXpertz",
+  description: "Your Growth Audit & Execution Blueprint from ScaleXpertz.",
+  robots: { index: false, follow: false, nocache: true },
+};
+
+export default function ShareLayout({ children }: { children: React.ReactNode }) {
+  return children;
+}

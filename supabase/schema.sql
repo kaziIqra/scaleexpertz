@@ -78,3 +78,24 @@ create table if not exists public.audit_templates (
 );
 
 alter table public.audit_templates enable row level security;
+
+-- ---------------------------------------------------------------------------
+-- Client share links: /share/<token> shows the audit PDF without login.
+-- ---------------------------------------------------------------------------
+
+create table if not exists public.audit_shares (
+  id uuid primary key default gen_random_uuid(),
+  audit_id uuid not null references public.client_audits (id) on delete cascade,
+  token text not null unique,
+  expires_at timestamptz,
+  passcode_hash text,
+  revoked boolean not null default false,
+  view_count int not null default 0,
+  last_viewed_at timestamptz,
+  created_by text,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists audit_shares_audit_id_idx on public.audit_shares (audit_id);
+
+alter table public.audit_shares enable row level security;
