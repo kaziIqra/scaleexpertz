@@ -27,7 +27,7 @@ const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] =
     {
       heading: "Resources",
       links: [
-        { label: "Case Studies", href: "#work" },
+        { label: "Case Studies", href: "/case-studies" },
         { label: "Careers", href: "/careers" },
         { label: "Teams", href: "/teams" },
         { label: "Admin Login", href: "/admin" },

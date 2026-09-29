@@ -2,128 +2,19 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Eyebrow from "@/components/ui/Eyebrow";
 import TextReveal from "@/components/ui/TextReveal";
 import Magnetic from "@/components/ui/Magnetic";
 import { useLenis } from "@/components/providers/SmoothScroll";
 import { EASE_OUT_EXPO } from "@/lib/animations";
-
-export interface Metric {
-  label: string;
-  value: string;
-  sub?: string;
-}
-
-export interface CaseStudy {
-  id: string;
-  client: string;
-  category: string;
-  headline: string;
-  outcome: string;
-  problem: string;
-  solution: string;
-  metrics: Metric[];
-  image: string;
-}
-
-const CASE_STUDIES: CaseStudy[] = [
-  {
-    id: "toy-ecommerce",
-    client: "Toy eCommerce",
-    category: "eCommerce",
-    headline: "12X ROAS",
-    outcome:
-      "Turned ₹2.6L in ad spend into ₹31.2L in revenue by rebuilding the growth strategy—not just increasing the budget.",
-    problem:
-      "A toy eCommerce brand had a working product but a stalling ad account — spend was capped low because every attempt to scale further killed ROAS.",
-    solution:
-      "We rebuilt campaign structure around targeted Facebook ad sets, layer audience segmentation by parent demographics, and ran rapid creative testing.",
-    metrics: [
-      { label: "Duration", value: "5 Months" },
-      { label: "Ad Spend", value: "₹2.6L" },
-      { label: "Revenue", value: "₹31.2L" },
-      { label: "ROAS", value: "12X" },
-    ],
-    image: "/works/toy-ecommerce.jpeg",
-  },
-  {
-    id: "jewellery-ecommerce",
-    client: "Jewellery eCommerce",
-    category: "eCommerce",
-    headline: "11,500+ Orders",
-    outcome:
-      "Built a scalable growth engine that generated ₹80L in revenue while handling high-volume order demand.",
-    problem:
-      "This jewellery brand needed order volume at scale without the ad account or fulfillment funnel breaking down.",
-    solution:
-      "We ran a full-funnel Meta Ads operation with multiple concurrent catalog & collection campaigns, reallocating budget to converting SKUs.",
-    metrics: [
-      { label: "Duration", value: "2.5 Months" },
-      { label: "Ad Spend", value: "₹33.7L" },
-      { label: "Revenue", value: "₹80.0L" },
-      { label: "Orders", value: "11,500+" },
-    ],
-    image: "/works/jewellery-ecommerce.jpeg",
-  },
-  {
-    id: "astrology-ecommerce",
-    client: "Astrology & Spiritual eCommerce",
-    category: "eCommerce",
-    headline: "Trust Before Products",
-    outcome:
-      "When trust was the biggest barrier to purchase, we built campaigns that earned credibility before asking for the sale.",
-    problem:
-      "High-consideration spiritual products needed buyer trust before product sales. Generic ad creative was failing cold traffic.",
-    solution:
-      "We built creative around credibility signals and outcome-driven messaging paired with high-intent audience targeting.",
-    metrics: [
-      { label: "Duration", value: "2 Months" },
-      { label: "Ad Spend", value: "₹3.35L" },
-      { label: "Revenue", value: "₹22.6L" },
-      { label: "ROAS", value: "6.7X" },
-    ],
-    image: "/works/astrology-ecommerce.jpeg",
-  },
-  {
-    id: "ev-mobility",
-    client: "EV & Mobility Brand",
-    category: "EV & Mobility",
-    headline: "150+ Qualified Leads Every Day",
-    outcome:
-      "Generated consistent, high-quality leads while reducing acquisition costs by 90% below the industry average.",
-    problem:
-      "Needed high-volume D2C leads across multiple regional markets simultaneously without cost-per-lead ballooning.",
-    solution:
-      "Built 48 segmented campaigns with WhatsApp lead funnels, reducing CPL to ₹5.40 compared to the ₹54 industry average.",
-    metrics: [
-      { label: "Campaigns", value: "48 Active" },
-      { label: "Peak Leads", value: "150+/day" },
-      { label: "Lowest CPL", value: "₹5.40" },
-      { label: "CPL Reduction", value: "90% Lower" },
-    ],
-    image: "/works/150_leads.jpeg",
-  },
-  {
-    id: "battery-swap",
-    client: "Battery-Swap Mobility Startup",
-    category: "Brand Launch",
-    headline: "From Zero History",
-    outcome:
-      "Built a complete customer acquisition system from scratch and launched a brand with no historical campaign data.",
-    problem:
-      "Brand-new startup with zero ad account history needed both B2B and D2C lead streams on day one.",
-    solution:
-      "Architected dedicated B2B form streams, city-specific D2C campaigns, and awareness pushes running simultaneously.",
-    metrics: [
-      { label: "Opportunity Score", value: "100/100" },
-      { label: "B2B Leads", value: "73" },
-      { label: "B2B CPL", value: "₹14.73" },
-      { label: "Awareness Reach", value: "86,779" },
-    ],
-    image: "/works/from-zero-history.jpeg",
-  },
-];
+import {
+  CASE_STUDIES,
+  CASE_STUDIES_PATH,
+  CASE_STUDIES_PDF,
+  type CaseStudy,
+} from "@/lib/caseStudies";
 
 export default function FeaturedWork() {
   const [selectedCase, setSelectedCase] = useState<CaseStudy | null>(null);
@@ -267,7 +158,7 @@ export default function FeaturedWork() {
             <div className="w-full sm:w-auto shrink-0">
               <Magnetic strength={12}>
                 <a
-                  href="/ScaleXpertz_Case_Studies_Report.pdf"
+                  href={CASE_STUDIES_PDF}
                   download="ScaleXpertz_Growth_Research.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -369,7 +260,7 @@ export default function FeaturedWork() {
                 <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-black/[0.08] dark:border-white/10 pt-6">
                   <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                     <a
-                      href="/ScaleXpertz_Case_Studies_Report.pdf"
+                      href={CASE_STUDIES_PDF}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded-full bg-ink dark:bg-accent px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white dark:text-ink shadow-card transition-colors duration-300 hover:bg-accent hover:text-ink dark:hover:bg-accent-strong"
@@ -377,14 +268,12 @@ export default function FeaturedWork() {
                       Download Report PDF →
                     </a>
 
-                    <a
-                      href="/ScaleXpertz_Case_Studies_Report.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link
+                      href={`${CASE_STUDIES_PATH}/${selectedCase.id}`}
                       className="inline-flex items-center gap-2 rounded-full border border-ink/20 dark:border-accent/50 bg-transparent px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-ink dark:text-accent transition-colors duration-300 hover:border-accent hover:bg-accent/10 dark:hover:border-accent dark:hover:bg-accent/15"
                     >
                       Read More →
-                    </a>
+                    </Link>
                   </div>
 
                   <button
