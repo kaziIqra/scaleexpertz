@@ -4,7 +4,12 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/sections/Navbar";
 import Footer from "@/components/sections/Footer";
 import CaseReport, { caseNumber } from "@/components/case-studies/CaseReport";
-import { CASE_STUDIES, CASE_STUDIES_PATH, CASE_STUDIES_PDF } from "@/lib/caseStudies";
+import {
+  CASE_STUDIES,
+  CASE_STUDIES_PATH,
+  CASE_STUDIES_PDF,
+  caseStudyFile,
+} from "@/lib/caseStudies";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -99,6 +104,15 @@ export default async function CaseStudyPage({ params }: Props) {
 
         <p className="mt-8 text-center text-sm text-body dark:text-slate-400">
           Prefer a copy?{" "}
+          <a
+            href={caseStudyFile(study)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-accent underline-offset-4 hover:underline dark:text-amber"
+          >
+            Download this case
+          </a>
+          {" · "}
           <a
             href={CASE_STUDIES_PDF}
             download="ScaleXpertz_Growth_Research.pdf"

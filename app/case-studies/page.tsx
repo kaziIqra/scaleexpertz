@@ -15,7 +15,7 @@ import {
 export const metadata: Metadata = {
   title: "Case Studies — ScaleXpertz",
   description:
-    "Real campaigns, real numbers, real growth — five verified engagements across eCommerce, EV & mobility, and new-brand launches.",
+    "Real campaigns, real numbers, real growth — sixteen verified engagements across eCommerce, fashion, catalogue, lead generation, and Shopify growth.",
 };
 
 export default function CaseStudiesPage() {

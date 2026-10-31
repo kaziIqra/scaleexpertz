@@ -10,14 +10,101 @@ import Magnetic from "@/components/ui/Magnetic";
 import { useLenis } from "@/components/providers/SmoothScroll";
 import { EASE_OUT_EXPO } from "@/lib/animations";
 import {
-  CASE_STUDIES,
   CASE_STUDIES_PATH,
   CASE_STUDIES_PDF,
+  caseStudyFile,
+  featuredCaseStudies,
+  remainingCaseStudies,
   type CaseStudy,
 } from "@/lib/caseStudies";
 
+function CaseCard({
+  study,
+  index,
+  onSelect,
+}: {
+  study: CaseStudy;
+  index: number;
+  onSelect: (study: CaseStudy) => void;
+}) {
+  return (
+    <motion.div
+      key={study.id}
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.8, ease: EASE_OUT_EXPO, delay: (index % 6) * 0.08 }}
+      className="group cursor-pointer relative flex flex-col justify-between overflow-hidden rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-[#141419] p-6 shadow-card transition-all duration-500 hover:-translate-y-2 hover:border-slate-800/40 dark:hover:border-accent/60 hover:shadow-2xl"
+      onClick={() => onSelect(study)}
+    >
+      <motion.div
+        initial={{ x: "-100%", opacity: 0 }}
+        whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.7, 0] }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 1.3, ease: "easeInOut", delay: (index % 3) * 0.12 }}
+        className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-amber-400/35 via-amber-500/25 dark:via-accent/35 dark:via-amber-500/20 to-transparent -skew-x-12"
+        aria-hidden
+      />
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 0.5 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.8, delay: (index % 6) * 0.08 }}
+        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/18 via-amber-400/12 to-amber-300/15 dark:from-accent/30 dark:via-amber/18 transition-opacity duration-500 group-hover:!opacity-100 group-active:!opacity-100"
+        aria-hidden
+      />
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 0.45 }}
+        viewport={{ once: false, amount: 0.25 }}
+        transition={{ duration: 0.8, delay: (index % 6) * 0.08 }}
+        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/18 via-amber-400/12 to-amber-300/15 dark:from-accent/30 dark:via-amber/18 transition-opacity duration-500 sm:hidden"
+        aria-hidden
+      />
+
+      <div className="relative z-10">
+        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-ink/5 ring-1 ring-black/[0.06] dark:bg-white/5 dark:ring-white/10">
+          <div className="absolute inset-0 scale-[1.1] transition-transform duration-500 group-hover:scale-[1.16]">
+            <Image
+              src={study.image}
+              alt={study.client}
+              fill
+              sizes="(min-width: 768px) 30vw, 90vw"
+              className="object-cover object-center"
+              priority={index < 2}
+            />
+          </div>
+          <span className="absolute left-3.5 top-3.5 rounded-full bg-black/80 px-3 py-1 font-mono text-[10px] uppercase font-bold text-amber border border-amber/30 backdrop-blur-md">
+            {study.client}
+          </span>
+          <span className="absolute right-3.5 top-3.5 rounded-full bg-accent px-3 py-1 font-mono text-[10px] uppercase font-extrabold text-ink shadow-md">
+            {study.category}
+          </span>
+        </div>
+
+        <h3 className="mt-5 font-display text-xl font-bold tracking-tight text-ink dark:text-white group-hover:text-emerald-800 dark:group-hover:text-amber transition-colors duration-300">
+          {study.headline}
+        </h3>
+        <p className="mt-2 text-sm leading-relaxed text-body dark:text-slate-300 font-medium">
+          {study.outcome}
+        </p>
+      </div>
+
+      <div className="relative z-10 mt-6 border-t border-black/[0.06] dark:border-white/10 pt-4 flex items-center justify-between text-xs font-mono font-bold uppercase tracking-wider text-accent dark:text-amber">
+        <span>See Full Case Study</span>
+        <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function FeaturedWork() {
   const [selectedCase, setSelectedCase] = useState<CaseStudy | null>(null);
+  const [showAll, setShowAll] = useState(false);
+  const featured = featuredCaseStudies();
+  const remaining = remainingCaseStudies();
   const lenis = useLenis();
 
   useEffect(() => {
@@ -52,83 +139,38 @@ export default function FeaturedWork() {
         </p>
       </div>
 
-      {/* 5 Visually Engaging Case Study Cards Grid */}
+      {/* Featured 5, then 11 more behind More */}
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {CASE_STUDIES.map((p, i) => (
-          <motion.div
-            key={p.id}
-            initial={{ opacity: 0, y: 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.8, ease: EASE_OUT_EXPO, delay: i * 0.08 }}
-            className="group cursor-pointer relative flex flex-col justify-between overflow-hidden rounded-3xl border border-black/[0.08] dark:border-white/10 bg-surface dark:bg-[#141419] p-6 shadow-card transition-all duration-500 hover:-translate-y-2 hover:border-slate-800/40 dark:hover:border-accent/60 hover:shadow-2xl"
-            onClick={() => setSelectedCase(p)}
-          >
-            {/* Scroll Shimmer Light Sweep */}
-            <motion.div
-              initial={{ x: "-100%", opacity: 0 }}
-              whileInView={{ x: ["-100%", "120%"], opacity: [0, 0.7, 0] }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 1.3, ease: "easeInOut", delay: (i % 3) * 0.12 }}
-              className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-transparent via-amber-400/35 via-amber-500/25 dark:via-accent/35 dark:via-amber-500/20 to-transparent -skew-x-12"
-              aria-hidden
-            />
-
-            {/* Light & Dark Hover Gradient Effect — similar to Section 3 */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 0.5 }}
-              viewport={{ once: false, amount: 0.2 }}
-              transition={{ duration: 0.8, delay: i * 0.08 }}
-              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/18 via-amber-400/12 to-amber-300/15 dark:from-accent/30 dark:via-amber/18 transition-opacity duration-500 group-hover:!opacity-100 group-active:!opacity-100"
-              aria-hidden
-            />
-
-            {/* Mobile View Scroll Ambient Gold Gradient Overlay (sm:hidden: Mobile Only for both Light & Dark Theme) */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 0.45 }}
-              viewport={{ once: false, amount: 0.25 }}
-              transition={{ duration: 0.8, delay: i * 0.08 }}
-              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/18 via-amber-400/12 to-amber-300/15 dark:from-accent/30 dark:via-amber/18 transition-opacity duration-500 sm:hidden"
-              aria-hidden
-            />
-
-            <div className="relative z-10">
-              {/* Image thumbnail */}
-              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-ink/5 ring-1 ring-black/[0.06] dark:bg-white/5 dark:ring-white/10 group-hover:scale-[1.02] transition-transform duration-500">
-                <Image
-                  src={p.image}
-                  alt={p.client}
-                  fill
-                  sizes="(min-width: 768px) 30vw, 90vw"
-                  className="object-contain object-center"
-                  priority={i < 2}
-                />
-                <span className="absolute left-3.5 top-3.5 rounded-full bg-black/80 px-3 py-1 font-mono text-[10px] uppercase font-bold text-amber border border-amber/30 backdrop-blur-md">
-                  {p.client}
-                </span>
-                <span className="absolute right-3.5 top-3.5 rounded-full bg-accent px-3 py-1 font-mono text-[10px] uppercase font-extrabold text-ink shadow-md">
-                  {p.category}
-                </span>
-              </div>
-
-              {/* Bold headline & outcome */}
-              <h3 className="mt-5 font-display text-xl font-bold tracking-tight text-ink dark:text-white group-hover:text-emerald-800 dark:group-hover:text-amber transition-colors duration-300">
-                {p.headline}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-body dark:text-slate-300 font-medium">
-                {p.outcome}
-              </p>
-            </div>
-
-            {/* Action CTA */}
-            <div className="relative z-10 mt-6 border-t border-black/[0.06] dark:border-white/10 pt-4 flex items-center justify-between text-xs font-mono font-bold uppercase tracking-wider text-accent dark:text-amber">
-              <span>See Full Case Study</span>
-              <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
-            </div>
-          </motion.div>
+        {featured.map((study, i) => (
+          <CaseCard key={study.id} study={study} index={i} onSelect={setSelectedCase} />
         ))}
+        <AnimatePresence>
+          {showAll &&
+            remaining.map((study, i) => (
+              <CaseCard
+                key={study.id}
+                study={study}
+                index={featured.length + i}
+                onSelect={setSelectedCase}
+              />
+            ))}
+        </AnimatePresence>
+      </div>
+
+      <div className="mt-10 flex justify-center">
+        <Magnetic strength={12}>
+          <button
+            type="button"
+            onClick={() => setShowAll((open) => !open)}
+            aria-expanded={showAll}
+            className="inline-flex items-center justify-center gap-2.5 sm:gap-3 rounded-full bg-gradient-to-r from-accent via-amber to-accent bg-[length:200%_auto] px-5 sm:px-7 py-3.5 sm:py-4 text-sm sm:text-base font-bold text-ink shadow-xl shadow-accent/25 transition-all duration-500 hover:bg-[position:right_center] hover:scale-105 hover:shadow-2xl hover:shadow-accent/40 active:scale-95 group leading-none text-center"
+          >
+            <span>{showAll ? "Less" : "More"}</span>
+            <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">
+              {showAll ? "↑" : "→"}
+            </span>
+          </button>
+        </Magnetic>
       </div>
 
       {/* Closing Statement & Primary CTA — Premium Rearranged Layout */}
@@ -260,7 +302,7 @@ export default function FeaturedWork() {
                 <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-black/[0.08] dark:border-white/10 pt-6">
                   <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                     <a
-                      href={CASE_STUDIES_PDF}
+                      href={caseStudyFile(selectedCase)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded-full bg-ink dark:bg-accent px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white dark:text-ink shadow-card transition-colors duration-300 hover:bg-accent hover:text-ink dark:hover:bg-accent-strong"
