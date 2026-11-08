@@ -66,7 +66,7 @@ function CaseCard({
 
       <div className="relative z-10">
         <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-ink/5 ring-1 ring-black/[0.06] dark:bg-white/5 dark:ring-white/10">
-          <div className="absolute inset-0 scale-[1.1] transition-transform duration-500 group-hover:scale-[1.16]">
+          <div className="absolute inset-0 scale-[1.02] transition-transform duration-500 group-hover:scale-[1.05]">
             <Image
               src={study.image}
               alt={study.client}
