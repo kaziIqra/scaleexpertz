@@ -147,7 +147,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "ROAS", value: "5.80X" },
       { label: "Purchases", value: "82" },
     ],
-    image: "/case-studies/heritage-home-decor.png",
+    image: "/case-studies/heritage-home-decor.jpg",
     reportFile: FILES.heritage,
     report: {
       meta: "Meta Ads · Home Décor · International",
@@ -200,7 +200,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "Purchases", value: "987" },
       { label: "Campaigns", value: "6" },
     ],
-    image: "/case-studies/contemporary-ethnic-wear.png",
+    image: "/case-studies/contemporary-ethnic-wear.jpg",
     reportFile: FILES.ethnic,
     report: {
       meta: "Meta Ads · Fashion · Omnichannel",
@@ -254,7 +254,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "ROAS", value: "3.25X" },
       { label: "Purchases", value: "2,448" },
     ],
-    image: "/case-studies/festive-womens-wear.png",
+    image: "/case-studies/festive-womens-wear.jpg",
     featuredRank: 5,
     reportFile: FILES.festive,
     report: {
@@ -308,7 +308,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "Growth", value: "+189%" },
       { label: "Campaigns", value: "38" },
     ],
-    image: "/case-studies/bangles-fashion-jewellery.png",
+    image: "/case-studies/bangles-fashion-jewellery.jpg",
     featuredRank: 1,
     reportFile: FILES.bangles,
     report: {
@@ -363,7 +363,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "Hero ROAS", value: "7.06X" },
       { label: "Campaigns", value: "50" },
     ],
-    image: "/case-studies/mobile-accessories.png",
+    image: "/case-studies/mobile-accessories.jpg",
     reportFile: FILES.mobile,
     report: {
       meta: "Meta Ads · Mobile Accessories · Catalogue",
@@ -418,7 +418,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "Best Campaign", value: "22.30X" },
       { label: "Avg CPC", value: "₹0.92" },
     ],
-    image: "/case-studies/automotive-accessories.png",
+    image: "/case-studies/automotive-accessories.jpg",
     featuredRank: 3,
     reportFile: FILES.auto,
     report: {
@@ -474,7 +474,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "Purchases", value: "9,089" },
       { label: "Campaigns", value: "251" },
     ],
-    image: "/case-studies/multi-category-catalogue.png",
+    image: "/case-studies/multi-category-catalogue.jpg",
     featuredRank: 2,
     reportFile: FILES.catalogue,
     report: {
@@ -531,7 +531,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "Lowest Cost / Call", value: "₹6.62" },
       { label: "Messaging Cost", value: "₹19.72" },
     ],
-    image: "/case-studies/lead-generation-calls-whatsapp.png",
+    image: "/case-studies/lead-generation-calls-whatsapp.jpg",
     reportFile: FILES.leads,
     report: {
       meta: "Meta Ads · Calls · WhatsApp",
@@ -585,7 +585,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "CPC", value: "₹0.36" },
       { label: "Campaigns", value: "1" },
     ],
-    image: "/case-studies/global-luggage-house.png",
+    image: "/case-studies/global-luggage-house.jpg",
     reportFile: FILES.luggage,
     report: {
       meta: "Meta Ads · Traffic · Travel",
@@ -635,7 +635,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "Link Clicks", value: "135,049" },
       { label: "Avg CPC", value: "₹2.55" },
     ],
-    image: "/case-studies/broader-campaign-set-90-days.png",
+    image: "/case-studies/broader-campaign-set-90-days.jpg",
     reportFile: FILES.broader,
     report: {
       meta: "Meta Ads · Mixed Objectives · 90 Days",
@@ -688,7 +688,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "Spend", value: "₹4,801" },
       { label: "Objective", value: "Ad Recall" },
     ],
-    image: "/case-studies/brand-awareness-ad-recall.png",
+    image: "/case-studies/brand-awareness-ad-recall.jpg",
     reportFile: FILES.awareness,
     report: {
       meta: "Meta Ads · Brand Awareness · Ad Recall",
@@ -741,7 +741,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "Orders", value: "10.2K" },
       { label: "Peak Month", value: "~₹15 L" },
     ],
-    image: "/case-studies/shopify-store-a.png",
+    image: "/case-studies/shopify-store-a.jpg",
     reportFile: FILES.shopifyA,
     report: {
       meta: "Shopify · Store Growth · Paid Social Timing",
@@ -794,7 +794,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "Orders", value: "2,250" },
       { label: "Peak Month", value: "₹6–7 L" },
     ],
-    image: "/case-studies/shopify-store-b.png",
+    image: "/case-studies/shopify-store-b.jpg",
     reportFile: FILES.shopifyB,
     report: {
       meta: "Shopify · Store Growth",
@@ -847,7 +847,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "Orders", value: "1,475" },
       { label: "Peak Month", value: ">₹4 L" },
     ],
-    image: "/case-studies/shopify-store-c.png",
+    image: "/case-studies/shopify-store-c.jpg",
     reportFile: FILES.shopifyC,
     report: {
       meta: "Shopify · New Revenue Line",
@@ -900,7 +900,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "Orders", value: "1,636" },
       { label: "Trend", value: "Rising" },
     ],
-    image: "/case-studies/shopify-store-d.png",
+    image: "/case-studies/shopify-store-d.jpg",
     reportFile: FILES.shopifyD,
     report: {
       meta: "Shopify · Early Growth",
@@ -953,7 +953,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: "Orders", value: "26.3K" },
       { label: "Peak Month", value: "~₹30 L" },
     ],
-    image: "/case-studies/shopify-store-e.png",
+    image: "/case-studies/shopify-store-e.jpg",
     featuredRank: 4,
     reportFile: FILES.shopifyE,
     report: {
