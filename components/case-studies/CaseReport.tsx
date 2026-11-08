@@ -147,8 +147,8 @@ export default function CaseReport({ study, index }: { study: CaseStudy; index: 
       <div className="mt-8 grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-12">
         <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl bg-night ring-1 ring-black/[0.06] dark:ring-white/10 lg:col-span-7">
           <Image
-            src={study.image}
-            alt={`${study.client} — ${study.headline}`}
+            src={study.insightsImage}
+            alt={`${study.client} — campaign insights`}
             fill
             sizes="(min-width: 1024px) 56vw, 92vw"
             className="object-contain object-center"

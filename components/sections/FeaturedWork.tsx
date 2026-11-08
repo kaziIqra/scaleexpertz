@@ -261,6 +261,16 @@ export default function FeaturedWork() {
                   {selectedCase.outcome}
                 </p>
 
+                <div className="relative mt-6 aspect-[16/9] w-full overflow-hidden rounded-2xl bg-night ring-1 ring-black/[0.06] dark:ring-white/10">
+                  <Image
+                    src={selectedCase.insightsImage}
+                    alt={`${selectedCase.client} — campaign insights`}
+                    fill
+                    sizes="(min-width: 768px) 48vw, 92vw"
+                    className="object-contain object-center"
+                  />
+                </div>
+
                 {/* Metrics Grid */}
                 <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
                   {selectedCase.metrics.map((m) => (
